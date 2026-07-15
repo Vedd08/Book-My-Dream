@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { COMPANY } from '../data'
+import { API_URL } from '../config'
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -22,7 +23,7 @@ export default function ContactPage() {
     };
 
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/inquiries`, {
+      await fetch(`${API_URL}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

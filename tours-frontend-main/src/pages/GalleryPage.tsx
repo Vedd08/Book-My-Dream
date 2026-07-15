@@ -1,5 +1,6 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Compass, X, Image as ImageIcon, ExternalLink } from 'lucide-react'
+import { API_URL } from '../config'
 
 type GallerySlide = {
   id: string
@@ -31,7 +32,7 @@ export default function GalleryPage() {
   
   // Fetch data
   useEffect(() => {
-    fetch('http://localhost:5000/api/gallery-slides')
+    fetch(`${API_URL}/api/gallery-slides`)
       .then(res => res.json())
       .then(data => {
         if (data && data.length > 0) {
@@ -42,7 +43,7 @@ export default function GalleryPage() {
       })
       .catch(() => setError(true))
 
-    fetch('http://localhost:5000/api/gallery')
+    fetch(`${API_URL}/api/gallery`)
       .then(res => res.json())
       .then(data => setAllGalleryImages(data || []))
       .catch(err => console.error('Failed to load gallery images', err))

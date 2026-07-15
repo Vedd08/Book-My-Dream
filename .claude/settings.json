@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sleep 2; cat /tmp/vite7.log)",
+      "Read(//tmp/**)",
+      "Bash(node verify-gallery.js)",
+      "Bash(node verify-featured-dest.js)",
+      "Bash(node fd-fullsection.js)",
+      "Bash(node verify-grid-fix.js)"
+    ]
+  }
+}
