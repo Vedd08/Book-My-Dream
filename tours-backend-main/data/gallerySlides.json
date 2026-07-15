@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "title": "KERALA",
+    "subtitle": "God's Own Country",
+    "description": "Experience the serene backwaters of Kerala on a traditional houseboat. Navigate through lush green landscapes, palm-fringed canals, and enjoy the tranquil beauty of South India.",
+    "image": "/images/dest-kerala.png",
+    "cardSubtitle": "South India",
+    "cardTitle": "ALLEPPEY"
+  },
+  {
+    "id": "2",
+    "title": "RAJASTHAN",
+    "subtitle": "Land of Kings",
+    "description": "Immerse yourself in the majestic forts, opulent palaces, and rich cultural heritage of Rajasthan. A journey through the golden sands of the Thar Desert awaits.",
+    "image": "/images/dest-rajasthan.png",
+    "cardSubtitle": "North India",
+    "cardTitle": "JAIPUR"
+  },
+  {
+    "id": "3",
+    "title": "ANDAMAN",
+    "subtitle": "Tropical Paradise",
+    "description": "Discover the untouched beauty of the Andaman Islands. Crystal clear waters, white sandy beaches, and vibrant coral reefs make it a perfect tropical escape.",
+    "image": "/images/dest-andaman.png",
+    "cardSubtitle": "Bay of Bengal",
+    "cardTitle": "HAVELOCK"
+  },
+  {
+    "id": "4",
+    "title": "LADAKH",
+    "subtitle": "High Altitude Desert",
+    "description": "Explore the rugged beauty of Ladakh, with its breathtaking landscapes, high mountain passes, and serene Buddhist monasteries nestled in the Himalayas.",
+    "image": "/images/dest-ladakh.png",
+    "cardSubtitle": "Himalayas",
+    "cardTitle": "PANGONG"
+  },
+  {
+    "id": "5",
+    "title": "GOA",
+    "subtitle": "Sun, Sand & Sea",
+    "description": "Relax on the sun-kissed beaches of Goa. Enjoy the vibrant nightlife, Portuguese heritage architecture, and a laid-back coastal lifestyle.",
+    "image": "/images/dest-goa.png",
+    "cardSubtitle": "West Coast",
+    "cardTitle": "ANJUNA"
+  }
+]

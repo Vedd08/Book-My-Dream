@@ -1,0 +1,163 @@
+[
+  {
+    "slug": "goa-india",
+    "name": "Goa India",
+    "country": "IndiaIndia",
+    "state": "Andaman & Nicobar Islands",
+    "region": "International",
+    "description": "Sunny beaches of Goa",
+    "image": "",
+    "bestTime": "AnytimeNovember to February",
+    "attractions": [],
+    "tips": []
+  },
+  {
+    "slug": "andaman",
+    "name": "Andaman Islands",
+    "country": "India",
+    "state": "Andaman & Nicobar Islands",
+    "region": "Honeymoon",
+    "description": "An archipelago of pristine beaches, coral reefs, and turquoise waters — the perfect honeymoon and adventure destination.",
+    "image": "/images/andaman_package.jpg",
+    "bestTime": "October to May",
+    "attractions": [
+      "Radhanagar Beach",
+      "Cellular Jail",
+      "Elephant Beach",
+      "Neil Island"
+    ],
+    "tips": [
+      "Book ferries in advance",
+      "Carry reef-safe sunscreen",
+      "Plan snorkelling at Havelock"
+    ]
+  },
+  {
+    "slug": "hong-kong",
+    "name": "Hong Kong",
+    "country": "Hong Kong",
+    "state": "SAR China",
+    "region": "International",
+    "description": "A dazzling fusion of East and West — neon-lit skylines, dim sum, and world-class entertainment.",
+    "image": "/images/hongkong_package.jpg",
+    "bestTime": "October to March",
+    "attractions": [
+      "Victoria Peak",
+      "Victoria Harbour",
+      "Lantau Big Buddha",
+      "Temple Street Night Market"
+    ],
+    "tips": [
+      "Get an Octopus card",
+      "Book Peak Tram tickets online",
+      "Watch the Symphony of Lights at 8 PM"
+    ]
+  },
+  {
+    "slug": "baku",
+    "name": "Baku",
+    "country": "Azerbaijan",
+    "state": "Absheron Peninsula",
+    "region": "International",
+    "description": "A hidden gem where ancient Silk Road history meets ultra-modern architecture on the Caspian Sea.",
+    "image": "/images/baku_package.jpg",
+    "bestTime": "April to June, September to October",
+    "attractions": [
+      "Icherisheher Old City",
+      "Flame Towers",
+      "Heydar Aliyev Centre",
+      "Caspian Sea Promenade"
+    ],
+    "tips": [
+      "Book before 1 July for summer deals",
+      "Carry local currency (Manat)",
+      "Try local Azerbaijani cuisine"
+    ]
+  },
+  {
+    "slug": "ladakh",
+    "name": "Ladakh",
+    "country": "India",
+    "state": "Ladakh (UT)",
+    "region": "Domestic",
+    "description": "The land of high passes — a raw, breathtaking Himalayan landscape of monasteries, lakes, and epic roads.",
+    "image": "/images/ladakh_package.jpg",
+    "bestTime": "June to September",
+    "attractions": [
+      "Pangong Tso",
+      "Nubra Valley",
+      "Khardung La",
+      "Umling La",
+      "Hanle Dark Sky Reserve"
+    ],
+    "tips": [
+      "Acclimatize for 2 days",
+      "Carry oxygen & medicines",
+      "Inner Line Permit required"
+    ]
+  },
+  {
+    "slug": "kerala",
+    "name": "Kerala",
+    "country": "India",
+    "state": "Kerala",
+    "region": "Domestic",
+    "description": "God's Own Country with serene backwaters, mist-covered tea hills, beaches, and Ayurveda.",
+    "image": "/images/dest-kerala.png",
+    "bestTime": "September to March",
+    "attractions": [
+      "Alleppey backwaters",
+      "Munnar tea",
+      "Periyar wildlife",
+      "Fort Kochi",
+      "Kovalam beach"
+    ],
+    "tips": [
+      "Houseboat stay",
+      "Sadya meals on a banana leaf",
+      "Carry insect repellent"
+    ]
+  },
+  {
+    "slug": "rajasthan",
+    "name": "Rajasthan",
+    "country": "India",
+    "state": "Rajasthan",
+    "region": "Domestic",
+    "description": "The land of kings dazzles with forts, palaces, deserts and heritage.",
+    "image": "/images/jaipur_package.jpg",
+    "bestTime": "October to March",
+    "attractions": [
+      "Amber Fort",
+      "Lake Pichola",
+      "Jaisalmer dunes",
+      "Mehrangarh Fort"
+    ],
+    "tips": [
+      "Bargain at markets",
+      "Sun protection essential",
+      "Try Royal Rajasthani thali"
+    ]
+  },
+  {
+    "slug": "lonavala",
+    "name": "Lonavala",
+    "country": "India",
+    "state": "Maharashtra",
+    "region": "Domestic",
+    "description": "A lush hill station near Mumbai & Pune, magical during monsoon with waterfalls, misty valleys, and premium resorts.",
+    "image": "/images/lonavala.jpg",
+    "bestTime": "June to September (Monsoon Special)",
+    "attractions": [
+      "Bhushi Dam",
+      "Tiger Point",
+      "Karla & Bhaja Caves",
+      "Lonavala Lake"
+    ],
+    "tips": [
+      "Book resort early for monsoon weekends",
+      "Carry rainwear",
+      "Try local chikki (sweet)"
+    ]
+  }
+]

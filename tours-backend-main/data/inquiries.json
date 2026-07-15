@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1782473257454",
+    "subject": "international",
+    "name": "Devansh Prajapati",
+    "email": "devanshprajapati99@gmail.com",
+    "phone": "08780873606",
+    "travelers": 5,
+    "date": "",
+    "message": "New Popup Inquiry",
+    "status": "resolved",
+    "createdAt": "2026-06-26T11:27:37.454Z"
+  },
+  {
+    "id": "1782473276408",
+    "subject": "General",
+    "name": "Devansh Prajapati",
+    "email": "devanshprajapati99@gmail.com",
+    "phone": "08780873606",
+    "travelers": 2,
+    "date": "",
+    "message": "dfasdfasf",
+    "status": "read",
+    "createdAt": "2026-06-26T11:27:56.408Z"
+  },
+  {
+    "id": "1782473459554",
+    "subject": "General",
+    "name": "Devansh Prajapati",
+    "email": "devanshprajapati99@gmail.com",
+    "phone": "08780873606",
+    "travelers": 2,
+    "date": "",
+    "message": "asdfsdfasfd",
+    "status": "new",
+    "createdAt": "2026-06-26T11:30:59.554Z"
+  },
+  {
+    "id": "1782904606108",
+    "subject": "domestic",
+    "name": "Test User",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "travelers": 3,
+    "date": "",
+    "message": "New Popup Inquiry",
+    "status": "new",
+    "createdAt": "2026-07-01T11:16:46.108Z"
+  },
+  {
+    "id": "1782904695982",
+    "subject": "Domestic Tour",
+    "name": "Contact Form User",
+    "email": "contactuser@example.com",
+    "phone": "9876543210",
+    "travelers": 4,
+    "date": "",
+    "message": "This is a test message from the contact page.",
+    "status": "new",
+    "createdAt": "2026-07-01T11:18:15.982Z"
+  }
+]

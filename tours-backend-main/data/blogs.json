@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "ultimate-packing-checklist",
+    "title": "The Ultimate Travel Packing Checklist for Stress-Free Trips",
+    "excerpt": "Never forget an essential again. Our complete packing guide covers everything from documents to gadgets.",
+    "category": "Travel Tips",
+    "date": "Mar 12, 2025",
+    "readTime": "6 min read",
+    "image": "/images/blog-packing.png",
+    "author": "Team BMDT"
+  },
+  {
+    "slug": "best-honeymoon-destinations-2025",
+    "title": "10 Best Honeymoon Destinations to Fall in Love With in 2025",
+    "excerpt": "From the Maldives to Switzerland, discover the most romantic getaways for your perfect honeymoon.",
+    "category": "Honeymoon",
+    "date": "Feb 28, 2025",
+    "readTime": "8 min read",
+    "image": "/images/gallery-honeymoon.png",
+    "author": "Team BMDT"
+  },
+  {
+    "slug": "family-travel-guide-bali",
+    "title": "A Family Travel Guide to Bali: Things to Do With Kids",
+    "excerpt": "Planning a family trip to Bali? Here are the best kid-friendly activities and tips for a smooth vacation.",
+    "category": "Family",
+    "date": "Feb 10, 2025",
+    "readTime": "5 min read",
+    "image": "/images/gallery-family.png",
+    "author": "Team BMDT"
+  },
+  {
+    "slug": "kerala-backwaters-guide",
+    "title": "Exploring Kerala Backwaters: A Complete Houseboat Guide",
+    "excerpt": "Everything you need to know about planning the perfect houseboat experience in God's Own Country.",
+    "category": "Destinations",
+    "date": "Jan 22, 2025",
+    "readTime": "7 min read",
+    "image": "/images/dest-kerala.png",
+    "author": "Team BMDT"
+  },
+  {
+    "slug": "dubai-on-a-budget",
+    "title": "How to Experience Dubai on a Budget Without Missing Out",
+    "excerpt": "Luxury Dubai doesn't have to break the bank. Smart tips to enjoy the city for less.",
+    "category": "Travel Tips",
+    "date": "Jan 8, 2025",
+    "readTime": "6 min read",
+    "image": "/images/dest-dubai.png",
+    "author": "Team BMDT"
+  },
+  {
+    "slug": "visa-application-mistakes",
+    "title": "7 Common Visa Application Mistakes and How to Avoid Them",
+    "excerpt": "Avoid rejections and delays with our expert guide to smooth visa applications.",
+    "category": "Visa",
+    "date": "Dec 18, 2024",
+    "readTime": "5 min read",
+    "image": "/images/dest-paris.png",
+    "author": "Team BMDT"
+  }
+]

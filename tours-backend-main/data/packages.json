@@ -1,0 +1,767 @@
+[
+  {
+    "slug": "andaman-honeymoon-escape",
+    "name": "Andaman Honeymoon Escape",
+    "type": "Honeymoon",
+    "region": "Domestic",
+    "destination": "Andaman",
+    "country": "India",
+    "duration": "6 Days / 5 Nights",
+    "price": 75000,
+    "discountPrice": 69900,
+    "rating": 4.9,
+    "reviews": 186,
+    "image": "/images/andaman_package.jpg",
+    "featured": true,
+    "highlights": [
+      "Port Blair – 2 nights",
+      "Havelock Island – 3 nights",
+      "Complimentary snorkelling",
+      "Cruise dinner",
+      "Complimentary photo shoot"
+    ],
+    "inclusions": [
+      "5 nights 3★ Deluxe accommodation",
+      "Breakfast & dinner",
+      "Airport pick & drop",
+      "Welcome bouquet",
+      "Complimentary snorkelling",
+      "Complimentary cake",
+      "Complimentary photo shoot",
+      "Cruise dinner & cruise ticket",
+      "Entry tickets & sightseeing",
+      "Help Desk assistance"
+    ],
+    "exclusions": [
+      "Airfare",
+      "Travel insurance",
+      "Personal expenses",
+      "Lunch",
+      "Any activity not mentioned"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Port Blair",
+        "description": "Airport pick-up, check-in & welcome bouquet. Evening cellular jail light & sound show."
+      },
+      {
+        "day": 2,
+        "title": "Port Blair Sightseeing",
+        "description": "Corbyn's Cove beach, Samudrika museum, Chatham Saw Mill. Cruise dinner in the evening."
+      },
+      {
+        "day": 3,
+        "title": "Havelock Island",
+        "description": "Ferry to Havelock. Check-in at resort. Complimentary snorkelling at Elephant Beach."
+      },
+      {
+        "day": 4,
+        "title": "Radhanagar Beach",
+        "description": "Spend the day at Asia's finest beach. Complimentary couple photo shoot at sunset."
+      },
+      {
+        "day": 5,
+        "title": "Havelock Leisure",
+        "description": "Complimentary cake celebration. Leisure time & spa (optional). Evening bonfire."
+      },
+      {
+        "day": 6,
+        "title": "Departure",
+        "description": "Return ferry to Port Blair. Airport drop & departure."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is this package valid year-round?",
+        "a": "Valid from April to 30 September 2026."
+      },
+      {
+        "q": "Are flights included?",
+        "a": "No, flights are not included. We can assist with bookings."
+      },
+      {
+        "q": "Who do I contact for queries?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "hong-kong-neon-nights",
+    "name": "Hong Kong – Neon Nights & Skyline Dreams",
+    "type": "Group",
+    "region": "International",
+    "destination": "Hong Kong",
+    "country": "Hong Kong",
+    "duration": "5 Days / 4 Nights",
+    "price": 85000,
+    "discountPrice": 72000,
+    "rating": 4.7,
+    "reviews": 143,
+    "image": "/images/hongkong_package.jpg",
+    "featured": true,
+    "highlights": [
+      "Iconic Victoria Harbour skyline",
+      "Neon-lit city nights",
+      "Peak Tram & Victoria Peak",
+      "Dim Sum & street food trails"
+    ],
+    "inclusions": [
+      "4 nights accommodation",
+      "Breakfast daily",
+      "Airport transfers",
+      "City sightseeing",
+      "Help Desk assistance"
+    ],
+    "exclusions": [
+      "International airfare",
+      "Hong Kong visa",
+      "Lunch & dinner (unless specified)",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival",
+        "description": "Arrive Hong Kong, hotel check-in, evening harbour stroll."
+      },
+      {
+        "day": 2,
+        "title": "Victoria Peak & Harbour",
+        "description": "Peak Tram, Victoria Peak, Symphony of Lights show."
+      },
+      {
+        "day": 3,
+        "title": "Lantau Island",
+        "description": "Big Buddha, Po Lin Monastery, Ngong Ping Village."
+      },
+      {
+        "day": 4,
+        "title": "City & Shopping",
+        "description": "Temple Street Night Market, Mong Kok, Ladies Market."
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "description": "Leisure morning, airport transfer, departure."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I need a visa?",
+        "a": "Indian passport holders require a visa for Hong Kong. We provide assistance."
+      },
+      {
+        "q": "How do I book?",
+        "a": "Contact kalashbookmydream@gmail.com or call +91-8780257606."
+      }
+    ]
+  },
+  {
+    "slug": "baku-summer-special",
+    "name": "Baku Summer Special",
+    "type": "Luxury",
+    "region": "International",
+    "destination": "Baku",
+    "country": "Azerbaijan",
+    "duration": "5 Days / 4 Nights",
+    "price": 95000,
+    "discountPrice": 85000,
+    "rating": 4.8,
+    "reviews": 97,
+    "image": "/images/baku_package.jpg",
+    "featured": true,
+    "highlights": [
+      "Modern Baku skyline & Old City",
+      "City Park Hotel",
+      "Historic Icherisheher Old City",
+      "Scenic Caucasus mountain views"
+    ],
+    "inclusions": [
+      "4 nights at City Park Hotel",
+      "Breakfast daily",
+      "Airport transfers",
+      "Guided city & Old Town tour",
+      "Help Desk assistance"
+    ],
+    "exclusions": [
+      "International airfare",
+      "Azerbaijan visa",
+      "Lunch & dinner",
+      "Personal expenses",
+      "Optional excursions"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Baku",
+        "description": "Arrive Heydar Aliyev International Airport, transfer to City Park Hotel."
+      },
+      {
+        "day": 2,
+        "title": "Old City & Flame Towers",
+        "description": "Icherisheher UNESCO Old City, Maiden Tower, Flame Towers viewpoint."
+      },
+      {
+        "day": 3,
+        "title": "Mountain Escape",
+        "description": "Gabala or Lahij day trip through scenic Caucasus mountain villages."
+      },
+      {
+        "day": 4,
+        "title": "Modern Baku",
+        "description": "Heydar Aliyev Centre, Caspian Sea Promenade, National Museum, shopping."
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "description": "Breakfast, leisure, airport transfer."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the price per person?",
+        "a": "Starting from USD 285 per person. Book before 1 July for best rates."
+      },
+      {
+        "q": "How do I book?",
+        "a": "WhatsApp +91 8780257606 or email kalashbookmydream@gmail.com."
+      }
+    ]
+  },
+  {
+    "slug": "ladakh-bike-expedition",
+    "name": "Ladakh Bike Expedition – Hanle & Umling La",
+    "type": "Group",
+    "region": "Domestic",
+    "destination": "Ladakh",
+    "country": "India",
+    "duration": "8 Days / 7 Nights",
+    "price": 28000,
+    "discountPrice": 24000,
+    "rating": 4.9,
+    "reviews": 74,
+    "image": "/images/ladakh_package.jpg",
+    "featured": true,
+    "highlights": [
+      "Khardung La Pass",
+      "Nubra Valley & Hunder Sand Dunes",
+      "Pangong Lake",
+      "Hanle Night Sky & Stargazing",
+      "Umling La – World's Highest Motorable Road"
+    ],
+    "inclusions": [
+      "6 bikes for 12 riders (2 per bike)",
+      "Inner Line Permits",
+      "Oxygen cylinder for emergency use",
+      "Backup vehicle with experienced driver",
+      "Accommodation on double sharing basis",
+      "Daily breakfast & dinner (MAP)",
+      "Parking, toll taxes & fuel for backup vehicle"
+    ],
+    "exclusions": [
+      "Airfare / train to Leh",
+      "Personal expenses",
+      "Bike fuel charges for riders",
+      "Lunch",
+      "Travel insurance",
+      "Any activity not mentioned"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Leh",
+        "description": "Arrive Leh, acclimatization rest at 3★ Deluxe Hotel."
+      },
+      {
+        "day": 2,
+        "title": "Leh Local Sightseeing",
+        "description": "Shanti Stupa, Leh Palace, Leh Market, Magnetic Hill."
+      },
+      {
+        "day": 3,
+        "title": "Leh → Nubra Valley",
+        "description": "Ride over Khardung La Pass (18,380 ft), descend to Nubra Valley. Check-in Deluxe Camp/Cottage."
+      },
+      {
+        "day": 4,
+        "title": "Nubra Valley → Pangong Lake",
+        "description": "Hunder Sand Dunes & Bactrian camels, ride to iconic Pangong Tso. Camp stay."
+      },
+      {
+        "day": 5,
+        "title": "Pangong Lake → Hanle",
+        "description": "Morning at the lake, ride south to Hanle. Check-in Deluxe Homestay."
+      },
+      {
+        "day": 6,
+        "title": "Hanle → Umling La → Hanle",
+        "description": "Ride to Umling La (19,300 ft), one of the world's highest motorable roads. Stargazing at Hanle Dark Sky Reserve."
+      },
+      {
+        "day": 7,
+        "title": "Hanle → Leh",
+        "description": "Return journey to Leh. Group dinner & certificates."
+      },
+      {
+        "day": 8,
+        "title": "Departure",
+        "description": "Breakfast, airport/station drop, departure from Leh."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the group size?",
+        "a": "12 adults on 6 bikes (2 riders per bike)."
+      },
+      {
+        "q": "Are Inner Line Permits included?",
+        "a": "Yes, all required permits are included."
+      },
+      {
+        "q": "What is the price?",
+        "a": "Only ₹24,000/- per person. Limited seats available!"
+      }
+    ]
+  },
+  {
+    "slug": "har-har-mahadev-jai-shri-ram-pilgrimage",
+    "name": "Har Har Mahadev to Jai Shri Ram – Pilgrimage Tour",
+    "type": "Group",
+    "region": "Domestic",
+    "destination": "Uttarakhand & Uttar Pradesh",
+    "country": "India",
+    "duration": "9 Days / 8 Nights",
+    "price": 32000,
+    "discountPrice": 28000,
+    "rating": 4.8,
+    "reviews": 112,
+    "image": "/images/up.jpg",
+    "highlights": [
+      "Kedarnath / Badrinath Dham",
+      "Ayodhya – Ram Mandir",
+      "Haridwar Ganga Aarti",
+      "Rishikesh – Triveni Ghat"
+    ],
+    "inclusions": [
+      "Welcome drink upon arrival",
+      "Accommodation as per itinerary",
+      "Meals as specified per hotel",
+      "Exclusive AC vehicle for transfers & sightseeing",
+      "Toll, parking, road taxes & driver allowance",
+      "On-ground assistance",
+      "Help Desk support"
+    ],
+    "exclusions": [
+      "Airfare / train fare",
+      "Personal expenses",
+      "Puja samagri & donations",
+      "Entry fees not mentioned",
+      "Travel insurance"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Haridwar",
+        "description": "Welcome drink, check-in, evening Ganga Aarti at Har Ki Pauri."
+      },
+      {
+        "day": 2,
+        "title": "Rishikesh",
+        "description": "Triveni Ghat, Ram & Laxman Jhula, Neelkanth Mahadev temple."
+      },
+      {
+        "day": 3,
+        "title": "Haridwar → Kedarnath Base",
+        "description": "Drive to Sonprayag / Gaurikund. Overnight rest."
+      },
+      {
+        "day": 4,
+        "title": "Kedarnath Darshan",
+        "description": "Trek / heli to Kedarnath Jyotirlinga. Har Har Mahadev!"
+      },
+      {
+        "day": 5,
+        "title": "Return & Badrinath en route",
+        "description": "Descend, drive toward Badrinath."
+      },
+      {
+        "day": 6,
+        "title": "Badrinath Darshan",
+        "description": "Morning aarti & darshan at Badrinath Dham. Tapt Kund."
+      },
+      {
+        "day": 7,
+        "title": "Drive to Ayodhya",
+        "description": "Long drive toward Ayodhya. Overnight en route."
+      },
+      {
+        "day": 8,
+        "title": "Ayodhya – Ram Mandir",
+        "description": "Ram Janmabhoomi, Ram Mandir darshan, Saryu Aarti."
+      },
+      {
+        "day": 9,
+        "title": "Departure",
+        "description": "Breakfast & departure. Jai Shri Ram!"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is the helicopter included for Kedarnath?",
+        "a": "Helicopter charges are optional and on actual cost basis."
+      },
+      {
+        "q": "Who do I contact for queries?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "golden-triangle-tour",
+    "name": "Golden Triangle Tour – Delhi, Agra & Jaipur",
+    "type": "Family",
+    "region": "Domestic",
+    "destination": "Delhi – Agra – Jaipur",
+    "country": "India",
+    "duration": "5 Days / 4 Nights",
+    "price": 22000,
+    "discountPrice": 18000,
+    "rating": 4.7,
+    "reviews": 334,
+    "image": "/images/aagra_package.jpg",
+    "featured": true,
+    "highlights": [
+      "Taj Mahal – Agra",
+      "Amber Fort – Jaipur",
+      "Qutub Minar – Delhi",
+      "India Gate & Red Fort"
+    ],
+    "inclusions": [
+      "Welcome drink upon arrival",
+      "Accommodation as per itinerary",
+      "Meals as specified",
+      "Exclusive AC vehicle for all transfers & sightseeing (AC off in hills)",
+      "Toll, parking, road taxes & driver allowance",
+      "On-ground assistance"
+    ],
+    "exclusions": [
+      "Airfare / train fare",
+      "Monument entry fees",
+      "Lunch & dinner (unless specified)",
+      "Personal expenses",
+      "Camera fees at monuments"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Delhi",
+        "description": "Welcome drink, check-in. India Gate, Red Fort, Chandni Chowk."
+      },
+      {
+        "day": 2,
+        "title": "Delhi → Agra",
+        "description": "Drive to Agra. Taj Mahal sunset visit. Agra Fort."
+      },
+      {
+        "day": 3,
+        "title": "Agra → Jaipur",
+        "description": "Fatehpur Sikri en route. Drive to Pink City Jaipur."
+      },
+      {
+        "day": 4,
+        "title": "Jaipur Sightseeing",
+        "description": "Amber Fort, Hawa Mahal, Jantar Mantar, City Palace, local bazaars."
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "description": "Breakfast, transfer to airport/railway station, departure."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is this suitable for first-time India travellers?",
+        "a": "Absolutely – the Golden Triangle is the perfect introduction to India."
+      },
+      {
+        "q": "Who do I contact?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "monsoon-escape-lonavala",
+    "name": "Monsoon Escape – Lonavala Special",
+    "type": "Family",
+    "region": "Domestic",
+    "destination": "Lonavala",
+    "country": "India",
+    "duration": "2 Days / 1 Night",
+    "price": 8000,
+    "discountPrice": 5500,
+    "rating": 4.6,
+    "reviews": 209,
+    "image": "/images/lonavala.jpg",
+    "highlights": [
+      "Misty hills & waterfalls",
+      "Premium resort stays",
+      "Exclusive monsoon discounts",
+      "Perfect weekend getaway"
+    ],
+    "inclusions": [
+      "Accommodation at partner resorts",
+      "Breakfast",
+      "Best available monsoon rates",
+      "Help Desk assistance"
+    ],
+    "exclusions": [
+      "Travel to Lonavala",
+      "Lunch & dinner (unless resort plan)",
+      "Personal expenses",
+      "Activities & spa"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Resort Check-in",
+        "description": "Check into your chosen resort. Enjoy the misty hills, rain, and luxury amenities. Evening bonfire (where available)."
+      },
+      {
+        "day": 2,
+        "title": "Leisure & Departure",
+        "description": "Breakfast, waterfall viewpoint visit, checkout and return."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Which resorts are available?",
+        "a": "Della Resorts, Fariyas Resort, Della DATA Resort, Enrise by Sayaji, The Fern, Viola Beacon Resort, 7 Apple Resort, Regenta SGS Greenotel, Radisson Resort & Spa – all in Lonavala."
+      },
+      {
+        "q": "Who do I contact?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "pink-and-blue-city",
+    "name": "Pink & Blue City – Jaipur & Jodhpur",
+    "type": "Group",
+    "region": "Domestic",
+    "destination": "Jaipur & Jodhpur",
+    "country": "India",
+    "duration": "5 Days / 4 Nights",
+    "price": 13000,
+    "discountPrice": 11300,
+    "rating": 4.7,
+    "reviews": 167,
+    "image": "/images/jaipur_package.jpg",
+    "highlights": [
+      "Pink City – Jaipur",
+      "Blue City – Jodhpur",
+      "Mehrangarh Fort",
+      "Amber Fort & Hawa Mahal"
+    ],
+    "inclusions": [
+      "Accommodation in mentioned hotels (twin sharing, standard rooms)",
+      "Breakfast (CPAI)",
+      "Arrival & departure assistance by company chauffeur",
+      "AC transportation for sightseeing & excursions"
+    ],
+    "exclusions": [
+      "Airfare / train fare",
+      "Lunch & dinner",
+      "Monument entry fees",
+      "Personal expenses",
+      "Camera fees"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Jaipur",
+        "description": "Check-in & Jaipur orientation."
+      },
+      {
+        "day": 2,
+        "title": "Jaipur Sightseeing",
+        "description": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar, local bazaars."
+      },
+      {
+        "day": 3,
+        "title": "Jaipur → Jodhpur",
+        "description": "Drive to the Blue City. En route Stepwell visit."
+      },
+      {
+        "day": 4,
+        "title": "Jodhpur Sightseeing",
+        "description": "Mehrangarh Fort, Jaswant Thada, Ghanta Ghar clock tower, blue streets."
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "description": "Breakfast, departure assistance."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the price?",
+        "a": "Just ₹11,300/- per person."
+      },
+      {
+        "q": "Who do I contact?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "kerala-mist-backwaters-beaches",
+    "name": "Ultimate Kerala Mist – Backwaters & Beaches",
+    "type": "Family",
+    "region": "Domestic",
+    "destination": "Kerala",
+    "country": "India",
+    "duration": "7 Days / 6 Nights",
+    "price": 52000,
+    "discountPrice": 44000,
+    "rating": 4.8,
+    "reviews": 278,
+    "image": "/images/dest-kerala.png",
+    "featured": true,
+    "highlights": [
+      "Alleppey houseboat backwaters",
+      "Munnar tea gardens",
+      "Thekkady wildlife sanctuary",
+      "Kovalam / Varkala beaches"
+    ],
+    "inclusions": [
+      "Accommodation in above-mentioned hotels or similar (base category)",
+      "Breakfast in all hotels",
+      "AC Sedan / AC Innova / AC Traveller (600 km garage-to-garage)",
+      "Driver bata, night halt, parking & toll",
+      "Vehicle service 08 AM – 07 PM daily"
+    ],
+    "exclusions": [
+      "Airfare",
+      "Lunch & dinner",
+      "Entry fees",
+      "Houseboat upgrade charges",
+      "Personal expenses"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival – Cochin",
+        "description": "Airport pick-up, check-in. Fort Kochi heritage walk, Chinese fishing nets."
+      },
+      {
+        "day": 2,
+        "title": "Munnar",
+        "description": "Drive to Munnar. Tea gardens, Mattupetty Dam, Echo Point."
+      },
+      {
+        "day": 3,
+        "title": "Munnar Leisure",
+        "description": "Top Station, Eravikulam National Park, Spice plantation tour."
+      },
+      {
+        "day": 4,
+        "title": "Thekkady",
+        "description": "Periyar Wildlife Sanctuary boat ride, spice market, Kathakali show."
+      },
+      {
+        "day": 5,
+        "title": "Alleppey Houseboat",
+        "description": "Check-in private houseboat, glide through serene backwaters, onboard meals."
+      },
+      {
+        "day": 6,
+        "title": "Kovalam Beach",
+        "description": "Drive to Kovalam / Varkala. Beach leisure, sunset at cliff."
+      },
+      {
+        "day": 7,
+        "title": "Departure",
+        "description": "Transfer to Trivandrum airport. Departure."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is this valid year-round?",
+        "a": "Valid 1 April – 30 September 2026."
+      },
+      {
+        "q": "Who do I contact?",
+        "a": "Ms. Bhumi Shukla – 8780257606 | kalashbookmydream@gmail.com"
+      }
+    ]
+  },
+  {
+    "slug": "goa-sunshine-beach",
+    "name": "Goa Sunshine Beach Escape",
+    "type": "Beach",
+    "region": "Domestic",
+    "destination": "Goa",
+    "country": "India",
+    "duration": "4 Days / 3 Nights",
+    "price": 15000,
+    "discountPrice": 11999,
+    "rating": 4.8,
+    "reviews": 312,
+    "image": "/images/dest-goa.png",
+    "highlights": [
+      "Baga & Calangute beaches",
+      "Aguada Fort sunset",
+      "Dudhsagar Waterfalls trip",
+      "Cruise on Mandovi River"
+    ],
+    "inclusions": [
+      "3 Nights accommodation in 4-star resort",
+      "Daily breakfast & dinner",
+      "Airport/Railway station transfers",
+      "Full day North Goa sightseeing",
+      "Evening Mandovi River cruise"
+    ],
+    "exclusions": [
+      "Airfare/Train fare to Goa",
+      "Water sports charges",
+      "Lunch",
+      "Personal expenses",
+      "Entry fees to monuments"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Goa",
+        "description": "Airport pick-up, check-in to resort, relax by the beach. Evening Mandovi river cruise."
+      },
+      {
+        "day": 2,
+        "title": "North Goa Sightseeing",
+        "description": "Visit Aguada Fort, Baga Beach, Calangute Beach, and Anjuna Beach."
+      },
+      {
+        "day": 3,
+        "title": "Dudhsagar Waterfalls (Optional)",
+        "description": "Optional day trip to Dudhsagar Waterfalls & Spice Plantation, or relax at the resort."
+      },
+      {
+        "day": 4,
+        "title": "Departure",
+        "description": "Breakfast, check-out, transfer to airport."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the best time to visit Goa?",
+        "a": "Mid-November to mid-February is ideal for pleasant weather and parties."
+      },
+      {
+        "q": "Are water sports included?",
+        "a": "No, water sports are available at extra cost on the beaches."
+      }
+    ],
+    "featured": true
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "src": "/images/hero-maldives.png",
+    "category": "Honeymoon Tours",
+    "title": "Maldives",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "src": "/images/dest-bali.png",
+    "category": "International Tours",
+    "title": "Bali",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "src": "/images/dest-switzerland.png",
+    "category": "International Tours",
+    "title": "Switzerland",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "4",
+    "src": "/images/dest-dubai.png",
+    "category": "International Tours",
+    "title": "Dubai",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "5",
+    "src": "/images/dest-kerala.png",
+    "category": "Domestic Tours",
+    "title": "Kerala",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "6",
+    "src": "/images/dest-rajasthan.png",
+    "category": "Domestic Tours",
+    "title": "Rajasthan",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "7",
+    "src": "/images/dest-goa.png",
+    "category": "Domestic Tours",
+    "title": "Goa",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "8",
+    "src": "/images/dest-thailand.png",
+    "category": "International Tours",
+    "title": "Thailand",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "9",
+    "src": "/images/dest-paris.png",
+    "category": "International Tours",
+    "title": "Paris",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "10",
+    "src": "/images/gallery-honeymoon.png",
+    "category": "Honeymoon Tours",
+    "title": "Romantic Escape",
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+]
