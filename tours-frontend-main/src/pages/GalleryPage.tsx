@@ -19,12 +19,55 @@ type GalleryImage = {
   category: string
 }
 
+import img1 from '../assets/image1.jpg'
+import img2 from '../assets/image2.jpg'
+import img3 from '../assets/image3.jpg'
+import img4 from '../assets/image4.jpg'
+import img5 from '../assets/image5.jpg'
+
+const fallbackSlides: GallerySlide[] = [
+  {
+    id: '1',
+    title: 'Bali',
+    subtitle: 'TROPICAL PARADISE',
+    description: 'Discover the pristine beaches and cultural heritage of Bali. A perfect getaway for nature lovers.',
+    image: img1,
+    cardSubtitle: 'INDONESIA',
+    cardTitle: 'Bali Experience'
+  },
+  {
+    id: '2',
+    title: 'Switzerland',
+    subtitle: 'ALPINE WONDER',
+    description: 'Experience the majestic Swiss Alps in all their glory. Snow-capped peaks await you.',
+    image: img4,
+    cardSubtitle: 'EUROPE',
+    cardTitle: 'Swiss Alps'
+  },
+  {
+    id: '3',
+    title: 'Dubai',
+    subtitle: 'MODERN LUXURY',
+    description: 'Explore the futuristic skyline, luxury shopping, and golden deserts of Dubai.',
+    image: img3,
+    cardSubtitle: 'UAE',
+    cardTitle: 'Dubai City'
+  }
+];
+
+const fallbackImages: GalleryImage[] = [
+  { id: 'g1', src: img1, title: 'Bali Coast', category: 'Bali' },
+  { id: 'g2', src: img2, title: 'Tropical Resort', category: 'Bali' },
+  { id: 'g3', src: img3, title: 'Dubai Downtown', category: 'Dubai' },
+  { id: 'g4', src: img4, title: 'Swiss Alps', category: 'Switzerland' },
+  { id: 'g5', src: img5, title: 'Mountain Lake', category: 'Switzerland' },
+];
+
 export default function GalleryPage() {
   const [slides, setSlides] = useState<GallerySlide[]>([])
   const [allGalleryImages, setAllGalleryImages] = useState<GalleryImage[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [error, setError] = useState(false)
   
   // Filter state for the full grid
   const [activeCategory, setActiveCategory] = useState<string>('All')
@@ -41,15 +84,24 @@ export default function GalleryPage() {
         if (data && data.length > 0) {
           setSlides(data)
         } else {
-          setError(true)
+          setSlides(fallbackSlides)
         }
       })
-      .catch(() => setError(true))
+      .catch(() => setSlides(fallbackSlides))
 
     fetch(`${API_URL}/api/gallery`)
       .then(res => res.json())
-      .then(data => setAllGalleryImages(data || []))
-      .catch(err => console.error('Failed to load gallery images', err))
+      .then(data => {
+        if (data && data.length > 0) {
+          setAllGalleryImages(data)
+        } else {
+          setAllGalleryImages(fallbackImages)
+        }
+      })
+      .catch(err => {
+        console.error('Failed to load gallery images', err)
+        setAllGalleryImages(fallbackImages)
+      })
   }, [])
 
   const changeSlide = (newIndex: number) => {
@@ -69,18 +121,7 @@ export default function GalleryPage() {
     return () => clearInterval(timer)
   }, [currentSlide, isTransitioning, slides.length, activeDestination])
 
-  if (error) {
-    return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#050505', color: '#fff', gap: '1rem', textAlign: 'center', padding: '2rem' }}>
-        <ImageIcon size={56} style={{ opacity: 0.3 }} />
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>No Gallery Slides Found</h2>
-        <p style={{ color: 'rgba(255,255,255,0.5)', margin: 0 }}>Add hero slides in the Admin Panel to see them here.</p>
-        <a href="/admin/gallery-slides" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', padding: '0.75rem 1.75rem', background: '#D4AF37', color: '#000', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: '0.95rem' }}>
-          <ExternalLink size={16} /> Open Admin Panel
-        </a>
-      </div>
-    )
-  }
+
 
   if (slides.length === 0) {
     return (
