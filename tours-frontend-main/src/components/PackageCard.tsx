@@ -61,7 +61,7 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
           borderRadius: '999px',
           boxShadow: '0 4px 10px rgba(212, 175, 55, 0.3)'
         }}>
-          {inr(pkg.discountPrice)}
+          {pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
         </div>
 
         <h3 style={{
