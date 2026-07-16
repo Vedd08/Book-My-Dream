@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, X } from 'lucide-react'
-import { API_URL } from '../../config'
+import { Edit2, Trash2, Plus, Image as ImageIcon, Loader, X } from 'lucide-react'
+import { getImageUrl, API_URL } from '../../config'
 import { useAuth } from '../AuthContext'
 
 type BlogPost = {
@@ -174,7 +174,7 @@ export default function AdminBlogs() {
             {blogs.map(blog => (
               <tr key={blog.slug} style={{ borderBottom: '1px solid #eee' }}>
                 <td style={{ padding: '1rem' }}>
-                  <img src={blog.image} alt={blog.title} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                  <img src={getImageUrl(blog.image)} alt={blog.title} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
                 </td>
                 <td style={{ padding: '1rem', fontWeight: 500, maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {blog.title}
@@ -227,7 +227,7 @@ export default function AdminBlogs() {
                     <input type="file" accept="image/*" onChange={handleImageUpload} style={{ fontSize: '0.875rem' }} />
                   </div>
                   {formData.image && (
-                    <img src={formData.image} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                    <img src={formData.image instanceof File ? URL.createObjectURL(formData.image) : getImageUrl(formData.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
                   )}
                 </div>
                 <div>

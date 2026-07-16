@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Plus, Pencil, Trash2, X, Save, MapPin, RefreshCw } from 'lucide-react'
 import { useApi } from '../AuthContext'
+import { getImageUrl } from '../../config'
 
 type Destination = {
   slug: string
@@ -107,7 +108,7 @@ export default function AdminDestinations() {
           destinations.map(dest => (
             <div key={dest.slug} style={{ borderRadius: 14, background: '#fff', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
               <div style={{ position: 'relative', height: 140, overflow: 'hidden' }}>
-                <img src={dest.image} alt={dest.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={getImageUrl(dest.image)} alt={dest.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.6), transparent)' }} />
                 <span style={{ position: 'absolute', top: 8, left: 8, padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{dest.region}</span>
                 <p style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '.9rem', color: '#fff', fontWeight: 600 }}>{dest.name}</p>
@@ -195,7 +196,7 @@ export default function AdminDestinations() {
                       update('image', json.url);
                     } catch (err) { alert('Failed to upload image') }
                   }} style={{ fontSize: '.875rem' }} />
-                  {form.image && <img src={form.image} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                  {form.image && <img src={form.image instanceof File ? URL.createObjectURL(form.image) : getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
                 </label>
               </div>
               <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem' }}>

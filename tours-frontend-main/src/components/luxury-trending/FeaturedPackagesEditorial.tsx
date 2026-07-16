@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Package, inr } from '../../data';
+import { getImageUrl } from '../../config';
 
 interface FeaturedPackagesEditorialProps {
   packages: Package[];
@@ -58,7 +59,7 @@ const FeaturedPackagesEditorial: React.FC<FeaturedPackagesEditorialProps> = ({ p
             <div
               className="absolute inset-0 w-full h-full"
               style={{
-                backgroundImage: `url(${pkg.image})`,
+                backgroundImage: `url(${getImageUrl(pkg.image)})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}

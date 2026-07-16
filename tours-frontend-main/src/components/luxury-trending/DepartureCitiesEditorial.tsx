@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { getImageUrl } from '../../config';
 import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -78,7 +79,7 @@ const DepartureCitiesEditorial: React.FC = () => {
             hoveredIndex === idx ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
-            backgroundImage: `url(${city.image})`,
+            backgroundImage: `url(${getImageUrl(city.image)})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
