@@ -24,10 +24,45 @@ export type Package = {
 }
 
 export const packages: Package[] = []
+
+export type Destination = {
+  slug: string
+  name: string
+  country: string
+  state: string
+  region: 'Domestic' | 'International' | 'Honeymoon'
+  description: string
+  image: string
+  bestTime: string
+  attractions: string[]
+  tips: string[]
+}
 export const destinations: Destination[] = []
+
+export type Testimonial = {
+  name: string
+  location: string
+  rating: number
+  review: string
+  trip: string
+}
 export const testimonials: Testimonial[] = []
+
+export type Service = { title: string; description: string; icon: string; image: string }
 export const services: Service[] = []
+
+export type BlogPost = {
+  slug: string
+  title: string
+  excerpt: string
+  category: string
+  date: string
+  readTime: string
+  image: string
+  author: string
+}
 export const blogPosts: BlogPost[] = []
+
 export const galleryImages: { src: string; category: string; title: string }[] = []
 
 export const COMPANY = {

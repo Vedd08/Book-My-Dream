@@ -120,10 +120,10 @@ export default function AboutPage() {
             {/* Collage */}
             <div style={{ position: 'relative', height: '550px', width: '100%' }}>
               <div className="story-image-1" style={{ position: 'absolute', top: 0, left: 0, width: '65%', height: '70%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', zIndex: 2 }}>
-                <img src={storyImg1} alt="Travel Experience" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop" alt="Travel Experience" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div className="story-image-2" style={{ position: 'absolute', bottom: 0, right: 0, width: '60%', height: '60%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)', zIndex: 3, border: '8px solid #f0f4f8' }}>
-                <img src={storyImg2} alt="Wanderlust" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1000&auto=format&fit=crop" alt="Wanderlust" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               
               {/* Badge */}
