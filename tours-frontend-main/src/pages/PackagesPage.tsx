@@ -65,33 +65,6 @@ export default function PackagesPage() {
   const otherFeatured = featured.slice(1, 4)
   const allOther = packages // Show all packages in the All Packages section
 
-  const scrollCarousel = (dir: 'left' | 'right') => {
-    if (carouselRef.current) {
-      const amount = carouselRef.current.clientWidth * 0.8
-      const maxScroll = carouselRef.current.scrollWidth - carouselRef.current.clientWidth
-      
-      let newScroll = carouselRef.current.scrollLeft + (dir === 'left' ? -amount : amount)
-      
-      // Infinite loop effect
-      if (newScroll >= maxScroll + 10) {
-        newScroll = 0
-      } else if (newScroll <= -10) {
-        newScroll = maxScroll
-      }
-
-      carouselRef.current.scrollTo({ left: newScroll, behavior: 'smooth' })
-    }
-  }
-
-  // Auto-scroll animation
-  useEffect(() => {
-    if (loading || allOther.length <= 1) return;
-    const interval = setInterval(() => {
-      scrollCarousel('right');
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [loading, allOther.length]);
-
   return (
     <div className="page-bg" style={{ minHeight: '100vh', paddingBottom: '0' }}>
       <style>{`
@@ -192,33 +165,18 @@ export default function PackagesPage() {
 
       {!loading && allOther.length > 0 && (
         <section className="gsap-reveal" style={{ marginTop: '12rem', paddingBottom: '6rem', position: 'relative' }}>
-           <div className="wavy-container" style={{ display: 'grid', gridTemplateColumns: '1fr 2.5fr', gap: '3rem' }}>
-              <div>
-                <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: '0 0 1.5rem 0' }}>All Packages</h2>
+           <div className="wavy-container">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+                <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>All Packages</h2>
                 <Link to="/contact" className="btn-navy text-reveal">VIEW ALL TOURS</Link>
               </div>
-              <div style={{ position: 'relative' }}>
-                <button 
-                  onClick={() => scrollCarousel('left')} 
-                  style={{ position: 'absolute', top: '50%', left: '-1.5rem', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: 'rgba(25, 106, 118, 0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backdropFilter: 'blur(4px)' }}
-                >
-                  <ArrowLeft size={20}/>
-                </button>
-                
-                <button 
-                  onClick={() => scrollCarousel('right')} 
-                  style={{ position: 'absolute', top: '50%', right: '-1.5rem', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: 'rgba(25, 106, 118, 0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backdropFilter: 'blur(4px)' }}
-                >
-                  <ArrowRight size={20}/>
-                </button>
-
-                <div ref={carouselRef} className="no-scrollbar" style={{ display: 'flex', gap: '2rem', overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: '1rem', paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
-                  {allOther.map(pkg => (
-                    <div key={pkg.slug} style={{ minWidth: '320px', flex: '0 0 320px', scrollSnapAlign: 'start' }}>
-                       <PackageCard pkg={pkg} />
-                    </div>
-                  ))}
-                </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '3rem 2rem' }}>
+                {allOther.map(pkg => (
+                  <div key={pkg.slug}>
+                     <PackageCard pkg={pkg} />
+                  </div>
+                ))}
               </div>
            </div>
         </section>
