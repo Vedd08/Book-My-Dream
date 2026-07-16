@@ -65,6 +65,53 @@ export default function PackagesPage() {
   const otherFeatured = featured.slice(1, 4)
   const allOther = packages // Show all packages in the All Packages section
 
+  const scrollCarousel = (dir: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const amount = carouselRef.current.clientWidth * 0.8
+      const maxScroll = carouselRef.current.scrollWidth - carouselRef.current.clientWidth
+      
+      let newScroll = carouselRef.current.scrollLeft + (dir === 'left' ? -amount : amount)
+      
+      // Infinite loop effect
+      if (newScroll >= maxScroll + 10) {
+        newScroll = 0
+      } else if (newScroll <= -10) {
+        newScroll = maxScroll
+      }
+
+      carouselRef.current.scrollTo({ left: newScroll, behavior: 'smooth' })
+    }
+  }
+
+  // Auto-scroll animation
+  useEffect(() => {
+    if (loading || allOther.length <= 1) return;
+    
+    let interval: ReturnType<typeof setInterval>;
+    const startAutoScroll = () => {
+      interval = setInterval(() => {
+        scrollCarousel('right');
+      }, 3500);
+    };
+
+    startAutoScroll();
+
+    // Pause on hover
+    const carouselEl = carouselRef.current;
+    if (carouselEl) {
+      carouselEl.addEventListener('mouseenter', () => clearInterval(interval));
+      carouselEl.addEventListener('mouseleave', startAutoScroll);
+    }
+
+    return () => {
+      clearInterval(interval);
+      if (carouselEl) {
+        carouselEl.removeEventListener('mouseenter', () => clearInterval(interval));
+        carouselEl.removeEventListener('mouseleave', startAutoScroll);
+      }
+    };
+  }, [loading, allOther.length]);
+
   return (
     <div className="page-bg" style={{ minHeight: '100vh', paddingBottom: '0' }}>
       <style>{`
@@ -94,6 +141,31 @@ export default function PackagesPage() {
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .glass-btn {
+          position: absolute; 
+          top: 50%; 
+          transform: translateY(-50%); 
+          z-index: 10; 
+          width: 50px; 
+          height: 50px; 
+          border-radius: 50%; 
+          background: rgba(24, 106, 118, 0.85); 
+          color: white; 
+          border: 1px solid rgba(255,255,255,0.2); 
+          cursor: pointer; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          box-shadow: 0 8px 32px rgba(0,0,0,0.15); 
+          backdrop-filter: blur(8px);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-btn:hover {
+          background: rgba(24, 106, 118, 1);
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 12px 40px rgba(24, 106, 118, 0.4);
+        }
       `}</style>
 
       <section className="hero-section">
@@ -164,19 +236,43 @@ export default function PackagesPage() {
       )}
 
       {!loading && allOther.length > 0 && (
-        <section className="gsap-reveal" style={{ marginTop: '12rem', paddingBottom: '6rem', position: 'relative' }}>
+        <section className="gsap-reveal" style={{ marginTop: '12rem', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
            <div className="wavy-container">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                 <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>All Packages</h2>
                 <Link to="/contact" className="btn-navy text-reveal">VIEW ALL TOURS</Link>
               </div>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '3rem 2rem' }}>
-                {allOther.map(pkg => (
-                  <div key={pkg.slug}>
-                     <PackageCard pkg={pkg} />
-                  </div>
-                ))}
+              <div style={{ position: 'relative' }}>
+                <button className="glass-btn" style={{ left: '-25px' }} onClick={() => scrollCarousel('left')}>
+                  <ArrowLeft size={24}/>
+                </button>
+                
+                <button className="glass-btn" style={{ right: '-25px' }} onClick={() => scrollCarousel('right')}>
+                  <ArrowRight size={24}/>
+                </button>
+
+                <div 
+                  ref={carouselRef} 
+                  className="no-scrollbar" 
+                  style={{ display: 'flex', gap: '2rem', overflowX: 'auto', scrollSnapType: 'x mandatory', padding: '1rem 0 3rem 0', scrollBehavior: 'smooth' }}
+                >
+                  {allOther.map(pkg => (
+                    <div 
+                      key={pkg.slug} 
+                      style={{ 
+                        minWidth: '340px', 
+                        flex: '0 0 340px', 
+                        scrollSnapAlign: 'start',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                    >
+                       <PackageCard pkg={pkg} />
+                    </div>
+                  ))}
+                </div>
               </div>
            </div>
         </section>
