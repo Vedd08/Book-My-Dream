@@ -273,17 +273,27 @@ export default function HomePage() {
   )
 
   useEffect(() => {
-    fetch(`${API_URL}/api/packages/featured`).then(r => r.json()).then(data => {
-      const sorted = Array.isArray(data) && data.length > 0
-        ? data.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
-        : staticPackages.filter(p => p.featured)
-      setFeatured(sorted)
-    }).catch(() => { /* keep static fallback */ })
-    fetch(`${API_URL}/api/packages`).then(r => r.json()).then(data => {
-      const sorted = Array.isArray(data) && data.length > 0
-        ? data.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
+    fetch(`${API_URL}/api/packages`).then(r => r.json()).then(allData => {
+      const allSorted = Array.isArray(allData) && allData.length > 0
+        ? allData.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
         : staticPackages
-      setTrending(sorted.slice(0, 12))
+
+      setTrending(allSorted.slice(0, 12))
+
+      fetch(`${API_URL}/api/packages/featured`).then(r => r.json()).then(featuredData => {
+        let featuredSorted = Array.isArray(featuredData) && featuredData.length > 0
+          ? featuredData.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
+          : [];
+        
+        // If no featured packages exist in the database, fallback to the latest packages
+        if (featuredSorted.length === 0) {
+          featuredSorted = allSorted.slice(0, 5);
+        }
+        
+        setFeatured(featuredSorted)
+      }).catch(() => {
+        setFeatured(allSorted.slice(0, 5))
+      })
     }).catch(() => { /* keep static fallback */ })
     fetch(`${API_URL}/api/destinations`).then(r => r.json()).then(data => {
       const sorted = Array.isArray(data)
