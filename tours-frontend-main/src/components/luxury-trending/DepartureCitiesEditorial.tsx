@@ -7,22 +7,13 @@ import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface CityData {
-  name: string;
-  count: string;
-  price: string;
-  image: string;
+import { Destination } from '../../data';
+
+interface DepartureCitiesEditorialProps {
+  destinations: Destination[];
 }
 
-const cities: CityData[] = [
-  { name: 'MUMBAI', count: '670 Departures', price: '₹24,000', image: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=2000&auto=format&fit=crop' }, // Gateway of India
-  { name: 'DELHI', count: '267 Departures', price: '₹49,000', image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=2000&auto=format&fit=crop' }, // India Gate
-  { name: 'BANGALORE', count: '31 Departures', price: '₹84,000', image: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=2000&auto=format&fit=crop' }, // Bangalore Palace
-  { name: 'KOLKATA', count: '255 Departures', price: '₹49,000', image: 'https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=2000&auto=format&fit=crop' }, // Kolkata taxi
-  { name: 'PUNE', count: '16 Departures', price: '₹44,000', image: 'https://images.unsplash.com/photo-1595928642581-f50f4f3453a5?q=80&w=2000&auto=format&fit=crop' }, // Pune
-];
-
-const DepartureCitiesEditorial: React.FC = () => {
+const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ destinations = [] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -72,7 +63,7 @@ const DepartureCitiesEditorial: React.FC = () => {
       className="relative w-full min-h-screen py-32 overflow-hidden bg-[#F8F4EE] text-[#222] flex flex-col justify-center transition-colors duration-700"
     >
       {/* Background Images */}
-      {cities.map((city, idx) => (
+      {destinations.slice(0, 6).map((city, idx) => (
         <div
           key={`bg-${idx}`}
           className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none z-0 ${
@@ -113,7 +104,8 @@ const DepartureCitiesEditorial: React.FC = () => {
         {/* Right Section: Interactive List */}
         <div className="w-full md:w-2/3">
           <ul ref={listRef} className="flex flex-col w-full list-none m-0 p-0">
-            {cities.map((city, idx) => (
+            {destinations.length === 0 && <p className="text-gray-500 py-8">No destinations available at the moment.</p>}
+            {destinations.slice(0, 6).map((city, idx) => (
               <li 
                 key={`city-${idx}`}
                 className="city-list-item group relative border-b border-[#120f0b]/10 last:border-b-0 py-8 md:py-12 cursor-pointer transition-all duration-500"
@@ -135,10 +127,10 @@ const DepartureCitiesEditorial: React.FC = () => {
                   <div className={`mt-4 md:mt-0 flex flex-col items-start md:items-end overflow-hidden transition-all duration-500 ${
                     hoveredIndex === idx ? 'opacity-100 translate-y-0 max-h-40' : 'opacity-0 translate-y-4 max-h-0 md:max-h-40'
                   }`}>
-                    <p className="text-[#671231] font-semibold text-sm tracking-widest uppercase mb-1">{city.count}</p>
-                    <p className="text-[#120f0b] text-lg font-medium mb-4">from {city.price}</p>
+                    <p className="text-[#671231] font-semibold text-sm tracking-widest uppercase mb-1">{city.country || city.region}</p>
+                    <p className="text-[#120f0b] text-lg font-medium mb-4">Explore Tours</p>
                     <Link 
-                      to={`/packages?from=${city.name.toLowerCase()}`}
+                      to={`/packages?q=${city.slug}`}
                       className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#120f0b]/30 hover:border-[#671231] hover:bg-[#671231] hover:text-white transition-all duration-300"
                     >
                       <ArrowRight size={20} />

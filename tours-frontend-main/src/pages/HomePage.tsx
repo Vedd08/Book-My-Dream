@@ -1125,7 +1125,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           {heroImages.map((img, idx) => (
             <div key={idx} className={`hero-slide${idx === currentSlide ? ' active' : ''}`}>
-              <img src={img} alt={slideDestinations[idx].name} className="hero-slide-img" loading={idx === 0 ? 'eager' : 'lazy'} />
+              <img src={img} alt={slideDestinations[idx]?.name || 'Destination'} className="hero-slide-img" loading={idx === 0 ? 'eager' : 'lazy'} />
             </div>
           ))}
         </div>
@@ -1443,7 +1443,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════
           DEPARTURE CITIES
       ═══════════════════════════════════════════════ */}
-      <DepartureCitiesEditorial />
+      <DepartureCitiesEditorial destinations={popularDest} />
 
       {/* ═══════════════════════════════════════════════
           FEATURED PACKAGES

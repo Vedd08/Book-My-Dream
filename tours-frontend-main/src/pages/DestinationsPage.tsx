@@ -21,16 +21,8 @@ export default function DestinationsPage() {
       .catch(err => console.error(err));
   }, []);
 
-  // Fallback data in case the API is slow or returns few items
-  const displayDestinations = destinations.length >= 6 ? destinations : [
-    { name: 'Bali', slug: 'bali', image: baliImg, country: 'Indonesia' },
-    { name: 'Switzerland', slug: 'switzerland', image: switzerlandImg, country: 'Switzerland' },
-    { name: 'Maldives', slug: 'maldives', image: maldivesImg, country: 'Maldives' },
-    { name: 'Dubai', slug: 'dubai', image: dubaiImg, country: 'UAE' },
-    { name: 'Canada', slug: 'canada', image: bgImageFallback1, country: 'Canada' },
-    { name: 'Europe', slug: 'europe', image: bgImageFallback2, country: 'Europe' },
-    ...destinations
-  ].slice(0, 8) as Destination[]; // ensure we have enough items for a nice masonry
+  // Use only the admin-added destinations without dummy fallback
+  const displayDestinations = destinations;
 
   // We assign varying sizes to cards to create a dense masonry layout without empty spaces
   const getSpanClasses = (index: number) => {
