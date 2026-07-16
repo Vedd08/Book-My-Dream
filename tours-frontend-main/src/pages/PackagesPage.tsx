@@ -166,6 +166,14 @@ export default function PackagesPage() {
           transform: translateY(-50%) scale(1.1);
           box-shadow: 0 12px 40px rgba(24, 106, 118, 0.4);
         }
+        
+        .featured-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; }
+        .top-featured-card { left: -20px; width: 80%; }
+        
+        @media (max-width: 900px) {
+          .featured-grid { grid-template-columns: 1fr; gap: 4rem; }
+          .top-featured-card { left: 5%; width: 90%; bottom: -30px; }
+        }
       `}</style>
 
       <section className="hero-section">
@@ -198,10 +206,10 @@ export default function PackagesPage() {
             <Link to="/contact" className="btn-navy text-reveal">EXPLORE ALL OFFERS</Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem' }}>
-            <div style={{ position: 'relative' }}>
+          <div className="featured-grid">
+            <div style={{ position: 'relative', marginBottom: '2rem' }}>
               <img src={getImageUrl(topFeatured.image)} alt={topFeatured.name} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: '8px' }} />
-              <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', background: 'white', padding: '2rem', borderRadius: '8px', width: '80%', boxShadow: '0 20px 40px rgba(24, 106, 118, 0.1)' }}>
+              <div className="top-featured-card" style={{ position: 'absolute', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 20px 40px rgba(24, 106, 118, 0.1)' }}>
                 <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>{topFeatured.discountPrice ? inr(topFeatured.discountPrice) : inr(topFeatured.price)}</div>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#186a76', margin: '0 0 0.5rem 0' }}>{topFeatured.name}</h3>
                 <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
