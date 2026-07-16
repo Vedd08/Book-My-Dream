@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { API_URL } from '../config'
+import { API_URL, getImageUrl } from '../config'
 import baliImg from '../assets/image2.jpg'
 import maldivesImg from '../assets/image3.jpg'
 import switzerlandImg from '../assets/image5.jpg'
@@ -1662,7 +1662,7 @@ export default function HomePage() {
               const spans = [3, 5, 4, 5, 4, 3];
               return (
                 <div key={i} className="gallery-thumb" style={{ position: 'relative', height: '280px', gridColumn: `span ${spans[i]}` }}>
-                  <img src={img.src} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={getImageUrl(img.src)} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%)', pointerEvents: 'none' }}></div>
                   <span style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', color: '#fff', fontSize: '.95rem', fontWeight: 400, letterSpacing: '.02em' }}>{img.title}</span>
                 </div>

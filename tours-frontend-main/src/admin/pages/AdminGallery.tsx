@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Search, Trash2, Image as ImageIcon } from 'lucide-react'
 import { useApi } from '../AuthContext'
+import { getImageUrl } from '../../config'
 
 type GalleryImage = {
   id: string
@@ -119,7 +120,7 @@ export default function AdminGallery() {
           {filtered.map(img => (
             <div key={img.id} style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', border: '1px solid #f1f5f9', position: 'relative', display: 'flex', flexDirection: 'column' }}>
               <div style={{ height: 180, position: 'relative', overflow: 'hidden', background: '#f8fafc' }}>
-                <img src={img.src} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={getImageUrl(img.src)} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: '.75rem', padding: '4px 8px', borderRadius: 4, fontWeight: 500 }}>
                   {img.category}
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Compass, X, Image as ImageIcon, ExternalLink, Grid } from 'lucide-react'
-import { API_URL } from '../config'
+import { API_URL, getImageUrl } from '../config'
 
 type GallerySlide = {
   id: string
@@ -154,7 +154,7 @@ export default function GalleryPage() {
             const isActive = index === currentSlide;
             return (
               <div key={slide.id} className={`bg-slide ${isActive ? 'active' : ''}`}>
-                <img src={slide.image} alt={slide.title} className="bg-image" />
+                <img src={getImageUrl(slide.image)} alt={slide.title} className="bg-image" />
                 <div className="bg-overlay gradient-left" />
                 <div className="bg-overlay gradient-bottom" />
                 <div className="bg-overlay noise-texture" />
@@ -235,7 +235,7 @@ export default function GalleryPage() {
                   return (
                     <div key={slide.id} onClick={() => changeSlide(index)} className={`slide-card ${isActive ? 'active' : ''} ${isPast ? 'past' : ''}`} style={{ flexShrink: 0 }}>
                         <div className="card-image-wrapper">
-                          <img src={slide.image} alt={slide.title} className="card-image" />
+                          <img src={getImageUrl(slide.image)} alt={slide.title} className="card-image" />
                           <div className="card-overlay" />
                         </div>
                         <div className="card-content">
@@ -289,7 +289,7 @@ export default function GalleryPage() {
           <div className="masonry-grid">
             {filteredGridImages.map(img => (
               <div key={img.id} className="masonry-item lightbox-trigger" onClick={() => setLightboxImg(img)}>
-                <img src={img.src} alt={img.title} loading="lazy" />
+                <img src={getImageUrl(img.src)} alt={img.title} loading="lazy" />
                 <div className="masonry-overlay">
                   <div className="masonry-info">
                     <span className="masonry-category">{img.category}</span>
@@ -333,7 +333,7 @@ export default function GalleryPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'clamp(1rem, 2vw, 2rem)' }}>
                   {activeDestinationImages.map(img => (
                     <div key={img.id} className="lightbox-img-card" onClick={() => setLightboxImg(img)}>
-                      <img src={img.src} alt={img.title} loading="lazy" />
+                      <img src={getImageUrl(img.src)} alt={img.title} loading="lazy" />
                       <div className="img-info">
                         <h4>{img.title || 'Beautiful View'}</h4>
                       </div>
@@ -358,7 +358,7 @@ export default function GalleryPage() {
           <button onClick={() => setLightboxImg(null)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <X size={22} />
           </button>
-          <img src={lightboxImg.src} alt={lightboxImg.title} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 20px 60px rgba(0,0,0,0.8)' }} onClick={e => e.stopPropagation()} />
+          <img src={getImageUrl(lightboxImg.src)} alt={lightboxImg.title} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 20px 60px rgba(0,0,0,0.8)' }} onClick={e => e.stopPropagation()} />
           {lightboxImg.title && (
             <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', background: 'rgba(0,0,0,0.5)', padding: '0.5rem 1.25rem', borderRadius: 6, backdropFilter: 'blur(6px)', whiteSpace: 'nowrap' }}>
               {lightboxImg.title}
