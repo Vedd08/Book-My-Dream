@@ -15,7 +15,8 @@ export default function DestinationCard({ dest }: { dest: Destination }) {
 
     const xTo = gsap.quickTo(el, "rotationY", { duration: 0.5, ease: "power3.out" });
     const yTo = gsap.quickTo(el, "rotationX", { duration: 0.5, ease: "power3.out" });
-    const scaleTo = gsap.quickTo(el, "scale", { duration: 0.5, ease: "power3.out" });
+    const scaleXTo = gsap.quickTo(el, "scaleX", { duration: 0.5, ease: "power3.out" });
+    const scaleYTo = gsap.quickTo(el, "scaleY", { duration: 0.5, ease: "power3.out" });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
@@ -31,13 +32,15 @@ export default function DestinationCard({ dest }: { dest: Destination }) {
       
       xTo(rotateY);
       yTo(rotateX);
-      scaleTo(1.05);
+      scaleXTo(1.05);
+      scaleYTo(1.05);
     };
 
     const handleMouseLeave = () => {
       xTo(0);
       yTo(0);
-      scaleTo(1);
+      scaleXTo(1);
+      scaleYTo(1);
     };
 
     el.addEventListener("mousemove", handleMouseMove);

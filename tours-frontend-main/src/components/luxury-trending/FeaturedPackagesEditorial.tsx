@@ -30,7 +30,7 @@ const FeaturedPackagesEditorial: React.FC<FeaturedPackagesEditorialProps> = ({ p
 
   return (
     <section
-      className="relative bg-[#120f0b] text-[#f8f4ee] overflow-hidden h-screen"
+      className="relative bg-[#120f0b] text-[#f8f4ee] overflow-hidden min-h-[100svh]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
