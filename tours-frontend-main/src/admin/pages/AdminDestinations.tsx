@@ -87,7 +87,7 @@ export default function AdminDestinations() {
           <button onClick={load} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.625rem 1rem', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '.875rem', fontFamily: 'var(--font-sans)' }}>
             <RefreshCw size={16} /> Refresh
           </button>
-          <button onClick={openAdd} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.625rem 1.25rem', borderRadius: 10, border: 'none', background: '#a8e6cf', color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '.9rem', fontFamily: 'var(--font-sans)', boxShadow: '0 2px 8px rgba(168,230,207,.3)' }}>
+          <button onClick={openAdd} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.625rem 1.25rem', borderRadius: 10, border: 'none', background: '#186a76', color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '.9rem', fontFamily: 'var(--font-sans)', boxShadow: '0 2px 8px rgba(24,106,118,.3)' }}>
             <Plus size={18} /> Add Destination
           </button>
         </div>
@@ -109,14 +109,14 @@ export default function AdminDestinations() {
               <div style={{ position: 'relative', height: 140, overflow: 'hidden' }}>
                 <img src={dest.image} alt={dest.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.6), transparent)' }} />
-                <span style={{ position: 'absolute', top: 8, left: 8, padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#a8e6cf' }}>{dest.region}</span>
+                <span style={{ position: 'absolute', top: 8, left: 8, padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{dest.region}</span>
                 <p style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '.9rem', color: '#fff', fontWeight: 600 }}>{dest.name}</p>
               </div>
               <div style={{ padding: '1rem' }}>
                 <p style={{ fontSize: '.8125rem', color: '#475569', fontWeight: 500 }}>{dest.state ? dest.state + ', ' : ''}{dest.country}</p>
                 <p style={{ fontSize: '.75rem', color: '#64748b', marginTop: '.25rem' }}>Best time: {dest.bestTime}</p>
                 <div style={{ marginTop: '.75rem', display: 'flex', gap: '.5rem', justifyContent: 'flex-end' }}>
-                  <button onClick={() => openEdit(dest)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #bfdbfe', background: '#f0f7ff', cursor: 'pointer', color: '#a8e6cf', transition: 'all .15s' }}>
+                  <button onClick={() => openEdit(dest)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #bfdbfe', background: '#f0f7ff', cursor: 'pointer', color: '#186a76', transition: 'all .15s' }}>
                     <Pencil size={14} />
                   </button>
                   <button onClick={() => remove(dest.slug)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #fee2e2', background: '#fff5f5', cursor: 'pointer', color: '#ef4444', transition: 'all .15s' }}>
@@ -199,7 +199,7 @@ export default function AdminDestinations() {
                 </label>
               </div>
               <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem' }}>
-                <button type="submit" disabled={saving} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: '#a8e6cf', color: '#fff', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                <button type="submit" disabled={saving} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: '#186a76', color: '#fff', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
                   <Save size={18} />{saving ? 'Saving…' : (editing ? 'Update Destination' : 'Add Destination')}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>

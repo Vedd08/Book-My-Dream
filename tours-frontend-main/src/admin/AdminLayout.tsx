@@ -53,7 +53,7 @@ export default function AdminLayout() {
       {/* ── Sidebar ── */}
       <aside style={{
         width: sidebarW, flexShrink: 0, transition: 'width .25s cubic-bezier(0.4, 0, 0.2, 1)',
-        background: 'linear-gradient(180deg, #a8e6cf 0%, #0a355c 100%)', color: '#fff', display: 'flex', flexDirection: 'column',
+        background: 'linear-gradient(180deg, #0a101d 0%, #111827 100%)', color: '#fff', display: 'flex', flexDirection: 'column',
         position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 40,
         boxShadow: '4px 0 24px rgba(0,0,0,.15)',
       }}>
@@ -62,7 +62,7 @@ export default function AdminLayout() {
           {sidebarOpen && (
             <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
               <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.125rem', fontWeight: 700, lineHeight: 1, letterSpacing: '-0.02em' }}>Book My Dream</p>
-              <p style={{ fontSize: '.65rem', fontWeight: 700, letterSpacing: '.18em', textTransform: 'uppercase', color: '#ffb7b2', marginTop: 4 }}>Admin</p>
+              <p style={{ fontSize: '.65rem', fontWeight: 700, letterSpacing: '.18em', textTransform: 'uppercase', color: '#e49d21', marginTop: 4 }}>Admin</p>
             </div>
           )}
         </div>
@@ -71,7 +71,7 @@ export default function AdminLayout() {
         <button onClick={() => setSidebarOpen(v => !v)} style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           width: 28, height: 28, borderRadius: '50%', background: '#fff',
-          border: '1px solid #e2e8f0', color: '#a8e6cf', cursor: 'pointer',
+          border: '1px solid #e2e8f0', color: '#186a76', cursor: 'pointer',
           position: 'absolute', top: '24px', right: -14, zIndex: 50,
           boxShadow: '0 4px 12px rgba(0,0,0,0.15)', transition: 'transform 0.2s ease',
         }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
@@ -92,7 +92,7 @@ export default function AdminLayout() {
               {({ isActive }) => (
                 <>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Icon size={20} style={{ flexShrink: 0, color: isActive ? '#ffb7b2' : 'inherit' }} />
+                    <Icon size={20} style={{ flexShrink: 0, color: isActive ? '#e49d21' : 'inherit' }} />
                   </div>
                   {sidebarOpen && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
@@ -159,7 +159,7 @@ export default function AdminLayout() {
               <p style={{ fontSize: '.75rem', color: '#64748b', fontWeight: 500, marginBottom: 2 }}>Welcome back,</p>
               <p style={{ fontSize: '.9rem', fontWeight: 700, color: '#1a2332', lineHeight: 1 }}>{auth?.username}</p>
             </div>
-            <div style={{ width: 42, height: 42, borderRadius: 12, background: 'linear-gradient(135deg, #ffb7b2 0%, #e85a28 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '1.125rem', boxShadow: '0 4px 12px rgba(255,183,178, 0.3)' }}>
+            <div style={{ width: 42, height: 42, borderRadius: 12, background: 'linear-gradient(135deg, #e49d21 0%, #e85a28 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '1.125rem', boxShadow: '0 4px 12px rgba(228,157,33, 0.3)' }}>
               {auth?.username?.charAt(0).toUpperCase()}
             </div>
           </div>

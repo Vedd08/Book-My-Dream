@@ -25,7 +25,7 @@ export default function AdminLogin() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'linear-gradient(135deg, #a8e6cf 0%, #1a6ab5 50%, #a8e6cf 100%)',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
       padding: '1rem',
     }}>
       {/* Background pattern */}
@@ -52,8 +52,8 @@ export default function AdminLogin() {
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{
             display: 'inline-flex', width: 64, height: 64, alignItems: 'center', justifyContent: 'center',
-            borderRadius: 20, background: 'rgba(255,183,178,.9)', marginBottom: '1rem',
-            boxShadow: '0 8px 24px rgba(255,183,178,.4)',
+            borderRadius: 20, background: 'rgba(228,157,33,.9)', marginBottom: '1rem',
+            boxShadow: '0 8px 24px rgba(228,157,33,.4)',
           }}>
             <Plane size={32} color="#fff" />
           </div>
@@ -135,10 +135,10 @@ export default function AdminLogin() {
 
           <button type="submit" disabled={loading} style={{
             marginTop: '.5rem', padding: '.875rem', borderRadius: 10, border: 'none',
-            background: loading ? 'rgba(255,183,178,.5)' : 'var(--accent)',
+            background: loading ? 'rgba(228,157,33,.5)' : 'var(--accent)',
             color: '#fff', fontSize: '1rem', fontWeight: 700,
             cursor: loading ? 'not-allowed' : 'pointer', transition: 'all .2s',
-            boxShadow: '0 4px 16px rgba(255,183,178,.4)',
+            boxShadow: '0 4px 16px rgba(228,157,33,.4)',
             fontFamily: 'var(--font-sans)',
           }}>
             {loading ? 'Signing in…' : 'Sign In'}

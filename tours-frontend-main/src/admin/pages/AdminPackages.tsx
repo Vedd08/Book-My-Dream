@@ -96,7 +96,7 @@ export default function AdminPackages() {
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 700, color: '#1a2332' }}>Packages</h1>
           <p style={{ color: '#64748b', fontSize: '.875rem' }}>Manage all holiday packages</p>
         </div>
-        <button onClick={openAdd} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.625rem 1.25rem', borderRadius: 10, border: 'none', background: '#a8e6cf', color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '.9rem', fontFamily: 'var(--font-sans)', boxShadow: '0 2px 8px rgba(168,230,207,.3)' }}>
+        <button onClick={openAdd} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.625rem 1.25rem', borderRadius: 10, border: 'none', background: '#186a76', color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '.9rem', fontFamily: 'var(--font-sans)', boxShadow: '0 2px 8px rgba(24,106,118,.3)' }}>
           <Plus size={18} /> Add Package
         </button>
       </div>
@@ -113,8 +113,8 @@ export default function AdminPackages() {
               <img src={pkg.image} alt={pkg.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.5), transparent)' }} />
               <div style={{ position: 'absolute', top: 8, left: 8, display: 'flex', gap: 6 }}>
-                <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#a8e6cf' }}>{pkg.type}</span>
-                {pkg.featured && <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: '#ffb7b2', fontSize: '.7rem', fontWeight: 700, color: '#fff' }}>Featured</span>}
+                <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{pkg.type}</span>
+                {pkg.featured && <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: '#e49d21', fontSize: '.7rem', fontWeight: 700, color: '#fff' }}>Featured</span>}
                 {discount(pkg) > 0 && <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: '#16a34a', fontSize: '.7rem', fontWeight: 700, color: '#fff' }}>{discount(pkg)}% OFF</span>}
               </div>
               <p style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '.8rem', color: 'rgba(255,255,255,.9)', fontWeight: 500 }}>{pkg.destination}, {pkg.country}</p>
@@ -124,11 +124,11 @@ export default function AdminPackages() {
               <p style={{ fontSize: '.8125rem', color: '#64748b', marginTop: '.25rem' }}>{pkg.duration} · ⭐ {pkg.rating}</p>
               <div style={{ marginTop: '.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
-                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontWeight: 700, color: '#a8e6cf' }}>{inr(pkg.discountPrice)}</p>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontWeight: 700, color: '#186a76' }}>{inr(pkg.discountPrice)}</p>
                   {pkg.price !== pkg.discountPrice && <p style={{ fontSize: '.75rem', color: '#94a3b8', textDecoration: 'line-through' }}>{inr(pkg.price)}</p>}
                 </div>
                 <div style={{ display: 'flex', gap: '.5rem' }}>
-                  <button onClick={() => openEdit(pkg)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #bfdbfe', background: '#f0f7ff', cursor: 'pointer', color: '#a8e6cf', transition: 'all .15s' }}>
+                  <button onClick={() => openEdit(pkg)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #bfdbfe', background: '#f0f7ff', cursor: 'pointer', color: '#186a76', transition: 'all .15s' }}>
                     <Pencil size={14} />
                   </button>
                   <button onClick={() => remove(pkg.slug)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: 8, border: '1px solid #fee2e2', background: '#fff5f5', cursor: 'pointer', color: '#ef4444', transition: 'all .15s' }}>
@@ -237,7 +237,7 @@ export default function AdminPackages() {
                 <div>
                   <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     Itinerary
-                    <button type="button" onClick={() => update('itinerary', [...(form.itinerary || []), { day: (form.itinerary?.length || 0) + 1, title: '', description: '' }])} style={{ color: '#a8e6cf', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add Day</button>
+                    <button type="button" onClick={() => update('itinerary', [...(form.itinerary || []), { day: (form.itinerary?.length || 0) + 1, title: '', description: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add Day</button>
                   </span>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
                     {form.itinerary?.map((it, i) => (
@@ -257,7 +257,7 @@ export default function AdminPackages() {
                 <div>
                   <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     Frequently Asked Questions (FAQs)
-                    <button type="button" onClick={() => update('faqs', [...(form.faqs || []), { q: '', a: '' }])} style={{ color: '#a8e6cf', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add FAQ</button>
+                    <button type="button" onClick={() => update('faqs', [...(form.faqs || []), { q: '', a: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add FAQ</button>
                   </span>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
                     {form.faqs?.map((faq, i) => (
@@ -275,7 +275,7 @@ export default function AdminPackages() {
               </div>
 
               <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', zIndex: 10 }}>
-                <button type="submit" disabled={saving} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: '#a8e6cf', color: '#fff', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                <button type="submit" disabled={saving} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: '#186a76', color: '#fff', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
                   <Save size={18} />{saving ? 'Saving…' : (editing ? 'Update Package' : 'Add Package')}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>

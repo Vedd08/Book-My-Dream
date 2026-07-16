@@ -14,9 +14,9 @@ type Stats = {
 type Inquiry = { id: string; name: string; subject: string; status: string; createdAt: string }
 
 const statCards = (s: Stats) => [
-  { icon: Package,       label: 'Total Packages',    value: s.totalPackages,    color: '#a8e6cf', bg: 'rgba(168,230,207,.1)',  link: '/admin/packages' },
+  { icon: Package,       label: 'Total Packages',    value: s.totalPackages,    color: '#186a76', bg: 'rgba(24,106,118,.1)',  link: '/admin/packages' },
   { icon: MapPin,        label: 'Destinations',       value: s.totalDestinations, color: '#7c3aed', bg: 'rgba(124,58,237,.1)', link: '/admin/destinations' },
-  { icon: MessageSquare, label: 'Total Inquiries',    value: s.totalInquiries,   color: '#ffb7b2', bg: 'rgba(255,183,178,.1)', link: '/admin/inquiries' },
+  { icon: MessageSquare, label: 'Total Inquiries',    value: s.totalInquiries,   color: '#e49d21', bg: 'rgba(228,157,33,.1)', link: '/admin/inquiries' },
   { icon: Mail,          label: 'Subscribers',        value: s.totalSubscribers, color: '#16a34a', bg: 'rgba(22,163,74,.1)',  link: '/admin/subscribers' },
 ]
 
@@ -36,14 +36,14 @@ export default function AdminDashboard() {
     }).finally(() => setLoading(false))
   }, [api])
 
-  const statusColor: Record<string, string> = { new: '#ffb7b2', read: '#a8e6cf', resolved: '#16a34a' }
-  const statusBg:    Record<string, string> = { new: 'rgba(255,183,178,.1)', read: 'rgba(168,230,207,.1)', resolved: 'rgba(22,163,74,.1)' }
+  const statusColor: Record<string, string> = { new: '#e49d21', read: '#186a76', resolved: '#16a34a' }
+  const statusBg:    Record<string, string> = { new: 'rgba(228,157,33,.1)', read: 'rgba(24,106,118,.1)', resolved: 'rgba(22,163,74,.1)' }
   const StatusIcon: Record<string, React.ElementType> = { new: Clock, read: Star, resolved: CheckCircle2 }
 
   if (loading) return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ width: 48, height: 48, border: '4px solid #e2e8f0', borderTopColor: '#a8e6cf', borderRadius: '50%', margin: 'auto', animation: 'spin 1s linear infinite' }} />
+        <div style={{ width: 48, height: 48, border: '4px solid #e2e8f0', borderTopColor: '#186a76', borderRadius: '50%', margin: 'auto', animation: 'spin 1s linear infinite' }} />
         <p style={{ marginTop: '1rem', color: '#64748b', fontSize: '.875rem' }}>Loading dashboard…</p>
       </div>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -85,12 +85,12 @@ export default function AdminDashboard() {
 
       {/* New inquiries alert */}
       {stats && stats.newInquiries > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.875rem', padding: '1rem 1.25rem', borderRadius: 12, background: 'rgba(255,183,178,.08)', border: '1px solid rgba(255,183,178,.2)', marginBottom: '1.5rem' }}>
-          <Clock size={20} style={{ color: '#ffb7b2', flexShrink: 0 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.875rem', padding: '1rem 1.25rem', borderRadius: 12, background: 'rgba(228,157,33,.08)', border: '1px solid rgba(228,157,33,.2)', marginBottom: '1.5rem' }}>
+          <Clock size={20} style={{ color: '#e49d21', flexShrink: 0 }} />
           <p style={{ fontSize: '.9rem', color: '#1a2332' }}>
-            You have <strong style={{ color: '#ffb7b2' }}>{stats.newInquiries} new inquiry{stats.newInquiries > 1 ? 'ies' : ''}</strong> waiting for your response.
+            You have <strong style={{ color: '#e49d21' }}>{stats.newInquiries} new inquiry{stats.newInquiries > 1 ? 'ies' : ''}</strong> waiting for your response.
           </p>
-          <Link to="/admin/inquiries" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, fontSize: '.8125rem', fontWeight: 600, color: '#ffb7b2', textDecoration: 'none', flexShrink: 0 }}>
+          <Link to="/admin/inquiries" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, fontSize: '.8125rem', fontWeight: 600, color: '#e49d21', textDecoration: 'none', flexShrink: 0 }}>
             Review <ArrowRight size={14} />
           </Link>
         </div>
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
       <div style={{ borderRadius: 16, background: '#fff', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
         <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.125rem', fontWeight: 600, color: '#1a2332' }}>Recent Inquiries</h2>
-          <Link to="/admin/inquiries" style={{ fontSize: '.8125rem', fontWeight: 600, color: '#a8e6cf', textDecoration: 'none' }}>View all →</Link>
+          <Link to="/admin/inquiries" style={{ fontSize: '.8125rem', fontWeight: 600, color: '#186a76', textDecoration: 'none' }}>View all →</Link>
         </div>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -142,8 +142,8 @@ export default function AdminDashboard() {
       {/* Quick links */}
       <div style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: '1rem' }}>
         {[
-          { label: 'Add New Package', to: '/admin/packages?action=new', icon: Package, color: '#a8e6cf' },
-          { label: 'View All Inquiries', to: '/admin/inquiries', icon: MessageSquare, color: '#ffb7b2' },
+          { label: 'Add New Package', to: '/admin/packages?action=new', icon: Package, color: '#186a76' },
+          { label: 'View All Inquiries', to: '/admin/inquiries', icon: MessageSquare, color: '#e49d21' },
           { label: 'Manage Subscribers', to: '/admin/subscribers', icon: Mail, color: '#16a34a' },
           { label: 'View Live Site', to: '/', icon: TrendingUp, color: '#7c3aed', external: true },
         ].map(q => (

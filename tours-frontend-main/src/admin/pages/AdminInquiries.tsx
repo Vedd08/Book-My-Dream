@@ -16,8 +16,8 @@ type Inquiry = {
 }
 
 const STATUS_OPTIONS = ['new', 'read', 'resolved'] as const
-const statusColor: Record<string, string> = { new: '#ffb7b2', read: '#a8e6cf', resolved: '#16a34a' }
-const statusBg:    Record<string, string> = { new: 'rgba(255,183,178,.1)', read: 'rgba(168,230,207,.1)', resolved: 'rgba(22,163,74,.1)' }
+const statusColor: Record<string, string> = { new: '#e49d21', read: '#186a76', resolved: '#16a34a' }
+const statusBg:    Record<string, string> = { new: 'rgba(228,157,33,.1)', read: 'rgba(24,106,118,.1)', resolved: 'rgba(22,163,74,.1)' }
 const StatusIcon: Record<string, React.ElementType> = { new: Clock, read: Star, resolved: CheckCircle2 }
 
 export default function AdminInquiries() {
@@ -74,7 +74,7 @@ export default function AdminInquiries() {
             <button key={s} onClick={() => setFilterStatus(s)} style={{
               padding: '.5rem 1rem', borderRadius: 9999, fontSize: '.8125rem', fontWeight: 600,
               border: 'none', cursor: 'pointer', transition: 'all .15s', fontFamily: 'var(--font-sans)',
-              background: filterStatus === s ? '#a8e6cf' : '#fff',
+              background: filterStatus === s ? '#186a76' : '#fff',
               color: filterStatus === s ? '#fff' : '#475569',
               boxShadow: '0 1px 3px rgba(0,0,0,.08)',
             }}>
@@ -172,10 +172,10 @@ export default function AdminInquiries() {
                 <p style={{ color: '#475569', lineHeight: 1.65, background: '#f8fafc', borderRadius: 8, padding: '.75rem' }}>{selected.message || 'No message.'}</p>
               </div>
               <div style={{ display: 'flex', gap: '.5rem', paddingTop: '.5rem' }}>
-                <a href={`mailto:${selected.email}?subject=Re: ${selected.subject}`} style={{ flex: 1, padding: '.625rem', borderRadius: 8, textAlign: 'center', background: '#a8e6cf', color: '#fff', textDecoration: 'none', fontSize: '.875rem', fontWeight: 600 }}>
+                <a href={`mailto:${selected.email}?subject=Re: ${selected.subject}`} style={{ flex: 1, padding: '.625rem', borderRadius: 8, textAlign: 'center', background: '#186a76', color: '#fff', textDecoration: 'none', fontSize: '.875rem', fontWeight: 600 }}>
                   Reply by Email
                 </a>
-                <a href={`tel:${selected.phone}`} style={{ flex: 1, padding: '.625rem', borderRadius: 8, textAlign: 'center', background: '#f0f7ff', color: '#a8e6cf', textDecoration: 'none', fontSize: '.875rem', fontWeight: 600, border: '1px solid #bfdbfe' }}>
+                <a href={`tel:${selected.phone}`} style={{ flex: 1, padding: '.625rem', borderRadius: 8, textAlign: 'center', background: '#f0f7ff', color: '#186a76', textDecoration: 'none', fontSize: '.875rem', fontWeight: 600, border: '1px solid #bfdbfe' }}>
                   Call
                 </a>
               </div>

@@ -104,7 +104,7 @@ export default function AdminGallerySlides() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#1a2332' }}>Hero Slides Management</h1>
-        <button onClick={() => setIsAddOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', background: 'linear-gradient(135deg, #ffb7b2 0%, #e85a28 100%)', color: '#fff', padding: '.75rem 1.5rem', borderRadius: 8, fontWeight: 600, border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(255,183,178, 0.3)' }}>
+        <button onClick={() => setIsAddOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '.5rem', background: 'linear-gradient(135deg, #e49d21 0%, #e85a28 100%)', color: '#fff', padding: '.75rem 1.5rem', borderRadius: 8, fontWeight: 600, border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(228,157,33, 0.3)' }}>
           <Plus size={18} /> Add Slide
         </button>
       </div>
