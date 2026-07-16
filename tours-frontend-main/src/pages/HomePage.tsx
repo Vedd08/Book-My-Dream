@@ -1658,7 +1658,7 @@ export default function HomePage() {
           </div>
 
           <div className="masonry-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '1rem' }}>
-            {galleryPreview.map((img, i) => {
+            {(galleryImgs.length >= 6 ? galleryImgs.slice(0, 6) : galleryImgs.length > 0 ? [...galleryImgs, ...galleryPreview].slice(0, 6) : galleryPreview).map((img, i) => {
               const spans = [3, 5, 4, 5, 4, 3];
               return (
                 <div key={i} className="gallery-thumb" style={{ position: 'relative', height: '280px', gridColumn: `span ${spans[i]}` }}>
