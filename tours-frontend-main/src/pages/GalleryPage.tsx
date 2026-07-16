@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Compass, X, Image as ImageIcon, ExternalLink } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Compass, X, Image as ImageIcon, ExternalLink, Grid } from 'lucide-react'
 import { API_URL } from '../config'
 
 type GallerySlide = {
@@ -26,6 +26,9 @@ export default function GalleryPage() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [error, setError] = useState(false)
   
+  // Filter state for the full grid
+  const [activeCategory, setActiveCategory] = useState<string>('All')
+
   // Lightbox state
   const [activeDestination, setActiveDestination] = useState<string | null>(null)
   const [lightboxImg, setLightboxImg] = useState<GalleryImage | null>(null)
@@ -93,112 +96,180 @@ export default function GalleryPage() {
     ? allGalleryImages.filter(img => img.category.toLowerCase().includes(activeDestination.toLowerCase()))
     : []
 
+  const categories = ['All', ...new Set(allGalleryImages.map(img => img.category).filter(Boolean))]
+  const filteredGridImages = activeCategory === 'All' 
+    ? allGalleryImages 
+    : allGalleryImages.filter(img => img.category === activeCategory)
+
   return (
-    <main className="premium-gallery" style={{ position: 'relative', width: '100%', height: '100dvh', overflow: 'hidden', backgroundColor: '#050505', color: '#fff', fontFamily: 'var(--font-sans)' }}>
+    <main className="premium-gallery" style={{ position: 'relative', width: '100%', minHeight: '100dvh', backgroundColor: '#050505', color: '#fff', fontFamily: 'var(--font-sans)', overflowX: 'hidden' }}>
       
-      {/* 1. Cinematic Background Layer */}
-      <div className="bg-slider-container">
-        {slides.map((slide, index) => {
-          const isActive = index === currentSlide;
-          return (
-            <div key={slide.id} className={`bg-slide ${isActive ? 'active' : ''}`}>
-              <img src={slide.image} alt={slide.title} className="bg-image" />
-              <div className="bg-overlay gradient-left" />
-              <div className="bg-overlay gradient-bottom" />
-              <div className="bg-overlay noise-texture" />
-            </div>
-          )
-        })}
-      </div>
-
-      {/* 2. Main Content Interface */}
-      <div className="ui-layer" style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', flexDirection: 'column', pointerEvents: 'none' }}>
+      {/* --- HERO SLIDER SECTION (100vh) --- */}
+      <div className="hero-section" style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
         
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 clamp(1.25rem, 6vw, 8rem)', paddingTop: '5rem', pointerEvents: 'auto', overflow: 'hidden' }}>
-          <div className="content-wrapper" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="text-section" style={{ maxWidth: 'min(650px, 90vw)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              
-              <div className="reveal-overflow">
-                <div key={`sub-${currentSlide}`} className="reveal-text subtitle-row" style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: '0.1s' }}>
-                  <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--accent)', flexShrink: 0 }} />
-                  <span style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {slides[currentSlide].subtitle}
-                  </span>
-                </div>
+        {/* 1. Cinematic Background Layer */}
+        <div className="bg-slider-container">
+          {slides.map((slide, index) => {
+            const isActive = index === currentSlide;
+            return (
+              <div key={slide.id} className={`bg-slide ${isActive ? 'active' : ''}`}>
+                <img src={slide.image} alt={slide.title} className="bg-image" />
+                <div className="bg-overlay gradient-left" />
+                <div className="bg-overlay gradient-bottom" />
+                <div className="bg-overlay noise-texture" />
               </div>
-              
-              <div className="reveal-overflow">
-                <h1 key={`title-${currentSlide}`} className="reveal-text giant-title" style={{ animationDelay: '0.2s' }}>
-                  {slides[currentSlide].title}
-                </h1>
-              </div>
-              
-              <div className="reveal-overflow">
-                <p key={`desc-${currentSlide}`} className="reveal-text description" style={{ animationDelay: '0.3s' }}>
-                  {slides[currentSlide].description}
-                </p>
-              </div>
-              
-              <div className="reveal-overflow">
-                <div key={`btn-${currentSlide}`} className="reveal-text action-row" style={{ animationDelay: '0.4s' }}>
-                  <button className="premium-btn primary" onClick={() => setActiveDestination(slides[currentSlide].title)}>
-                    <span>EXPLORE DESTINATION</span>
-                  </button>
-                  <button className="premium-btn secondary icon-only" onClick={() => setActiveDestination(slides[currentSlide].title)}>
-                     <Compass size={20} strokeWidth={1.5} />
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
+            )
+          })}
         </div>
 
-        {/* Bottom Section: Navigation & Cards */}
-        <div className="bottom-section" style={{ padding: '0 clamp(1.25rem, 6vw, 8rem) clamp(1.5rem, 4vh, 3rem)', pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexShrink: 0 }}>
+        {/* 2. Main Content Interface */}
+        <div className="ui-layer" style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', flexDirection: 'column', pointerEvents: 'none' }}>
           
-          <div className="nav-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', maxWidth: '300px', paddingRight: '2rem', flexShrink: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-              <span style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 200, lineHeight: 1, fontFamily: 'var(--font-serif)' }}>0{currentSlide + 1}</span>
-              <span style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)' }}>/ 0{slides.length}</span>
-            </div>
-            <div className="progress-track" style={{ width: '100%', height: '1px', backgroundColor: 'rgba(255,255,255,0.15)', position: 'relative' }}>
-              <div className="progress-fill" style={{ position: 'absolute', top: '-0.5px', left: 0, height: '2px', backgroundColor: '#fff', width: `${((currentSlide + 1) / slides.length) * 100}%`, transition: 'width 0.8s cubic-bezier(0.85, 0, 0.15, 1)' }} />
-            </div>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.25rem' }}>
-              <button className="nav-arrow" onClick={prevSlide} disabled={isTransitioning}>
-                <ChevronLeft size={22} strokeWidth={1} />
-              </button>
-              <button className="nav-arrow" onClick={nextSlide} disabled={isTransitioning}>
-                <ChevronRight size={22} strokeWidth={1} />
-              </button>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 clamp(1.25rem, 6vw, 8rem)', paddingTop: '5rem', pointerEvents: 'auto', overflow: 'hidden' }}>
+            <div className="content-wrapper" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="text-section" style={{ maxWidth: 'min(650px, 90vw)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                
+                <div className="reveal-overflow">
+                  <div key={`sub-${currentSlide}`} className="reveal-text subtitle-row" style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: '0.1s' }}>
+                    <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--accent)', flexShrink: 0 }} />
+                    <span style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {slides[currentSlide].subtitle}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="reveal-overflow">
+                  <h1 key={`title-${currentSlide}`} className="reveal-text giant-title" style={{ animationDelay: '0.2s' }}>
+                    {slides[currentSlide].title}
+                  </h1>
+                </div>
+                
+                <div className="reveal-overflow">
+                  <p key={`desc-${currentSlide}`} className="reveal-text description" style={{ animationDelay: '0.3s' }}>
+                    {slides[currentSlide].description}
+                  </p>
+                </div>
+                
+                <div className="reveal-overflow">
+                  <div key={`btn-${currentSlide}`} className="reveal-text action-row" style={{ animationDelay: '0.4s' }}>
+                    <button className="premium-btn primary" onClick={() => setActiveDestination(slides[currentSlide].title)}>
+                      <span>EXPLORE DESTINATION</span>
+                    </button>
+                    <button className="premium-btn secondary icon-only" onClick={() => setActiveDestination(slides[currentSlide].title)}>
+                      <Compass size={20} strokeWidth={1.5} />
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
 
-          <div className="slider-container" style={{ position: 'relative', overflow: 'visible', flex: 1, minWidth: 0, '--current-slide': currentSlide, '--card-width': 'clamp(140px, 14vw, 220px)' } as React.CSSProperties}>
-            <div className="slider-track" style={{ display: 'flex', gap: '1.5rem', transition: 'transform 1.2s cubic-bezier(0.85, 0, 0.15, 1)', transform: 'translateX(calc(-1 * var(--current-slide) * (var(--card-width) + 1.5rem)))' }}>
-              {slides.map((slide, index) => {
-                 const isActive = index === currentSlide;
-                 const isPast = index < currentSlide;
-                 return (
-                   <div key={slide.id} onClick={() => changeSlide(index)} className={`slide-card ${isActive ? 'active' : ''} ${isPast ? 'past' : ''}`} style={{ flexShrink: 0 }}>
-                      <div className="card-image-wrapper">
-                        <img src={slide.image} alt={slide.title} className="card-image" />
-                        <div className="card-overlay" />
-                      </div>
-                      <div className="card-content">
-                        <span className="card-subtitle">{slide.cardSubtitle}</span>
-                        <h3 className="card-title">{slide.cardTitle}</h3>
-                      </div>
-                   </div>
-                 )
-              })}
+          {/* Bottom Section: Navigation & Cards */}
+          <div className="bottom-section" style={{ padding: '0 clamp(1.25rem, 6vw, 8rem) clamp(1.5rem, 4vh, 3rem)', pointerEvents: 'auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexShrink: 0 }}>
+            
+            <div className="nav-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', maxWidth: '300px', paddingRight: '2rem', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+                <span style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 200, lineHeight: 1, fontFamily: 'var(--font-serif)' }}>0{currentSlide + 1}</span>
+                <span style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.4)' }}>/ 0{slides.length}</span>
+              </div>
+              <div className="progress-track" style={{ width: '100%', height: '1px', backgroundColor: 'rgba(255,255,255,0.15)', position: 'relative' }}>
+                <div className="progress-fill" style={{ position: 'absolute', top: '-0.5px', left: 0, height: '2px', backgroundColor: '#fff', width: `${((currentSlide + 1) / slides.length) * 100}%`, transition: 'width 0.8s cubic-bezier(0.85, 0, 0.15, 1)' }} />
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '0.25rem' }}>
+                <button className="nav-arrow" onClick={prevSlide} disabled={isTransitioning}>
+                  <ChevronLeft size={22} strokeWidth={1} />
+                </button>
+                <button className="nav-arrow" onClick={nextSlide} disabled={isTransitioning}>
+                  <ChevronRight size={22} strokeWidth={1} />
+                </button>
+              </div>
+            </div>
+
+            <div className="slider-container" style={{ position: 'relative', overflow: 'visible', flex: 1, minWidth: 0, '--current-slide': currentSlide, '--card-width': 'clamp(140px, 14vw, 220px)' } as React.CSSProperties}>
+              <div className="slider-track" style={{ display: 'flex', gap: '1.5rem', transition: 'transform 1.2s cubic-bezier(0.85, 0, 0.15, 1)', transform: 'translateX(calc(-1 * var(--current-slide) * (var(--card-width) + 1.5rem)))' }}>
+                {slides.map((slide, index) => {
+                  const isActive = index === currentSlide;
+                  const isPast = index < currentSlide;
+                  return (
+                    <div key={slide.id} onClick={() => changeSlide(index)} className={`slide-card ${isActive ? 'active' : ''} ${isPast ? 'past' : ''}`} style={{ flexShrink: 0 }}>
+                        <div className="card-image-wrapper">
+                          <img src={slide.image} alt={slide.title} className="card-image" />
+                          <div className="card-overlay" />
+                        </div>
+                        <div className="card-content">
+                          <span className="card-subtitle">{slide.cardSubtitle}</span>
+                          <h3 className="card-title">{slide.cardTitle}</h3>
+                        </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 3. Destination Lightbox Overlay */}
+      </div> 
+      {/* END HERO SECTION */}
+
+      {/* --- COMPLETE GALLERY SECTION (Scrollable Grid) --- */}
+      <section className="complete-gallery-section" style={{ padding: '6rem clamp(1.25rem, 6vw, 8rem)', background: '#050505', position: 'relative', zIndex: 5 }}>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '4rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--accent)' }} />
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--accent)' }}>
+              Our Collection
+            </span>
+          </div>
+          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+            Complete <span style={{ color: 'rgba(255,255,255,0.4)', fontWeight: 300 }}>Gallery</span>
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', maxWidth: 600, fontSize: '1.1rem', marginTop: '0.5rem' }}>
+            Explore every beautiful moment captured across all our destinations and travel experiences.
+          </p>
+        </div>
+
+        {categories.length > 1 && (
+          <div className="category-filters" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+            {categories.map(cat => (
+              <button 
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {filteredGridImages.length > 0 ? (
+          <div className="masonry-grid">
+            {filteredGridImages.map(img => (
+              <div key={img.id} className="masonry-item lightbox-trigger" onClick={() => setLightboxImg(img)}>
+                <img src={img.src} alt={img.title} loading="lazy" />
+                <div className="masonry-overlay">
+                  <div className="masonry-info">
+                    <span className="masonry-category">{img.category}</span>
+                    <h4 className="masonry-title">{img.title || 'Travel Moment'}</h4>
+                  </div>
+                  <div className="masonry-icon">
+                    <Grid size={20} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '6rem 1rem', color: 'rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.02)', borderRadius: 12, border: '1px dashed rgba(255,255,255,0.1)' }}>
+            <ImageIcon size={48} style={{ opacity: 0.5, marginBottom: '1rem' }} />
+            <p>No photos found in this category.</p>
+          </div>
+        )}
+      </section>
+
+      {/* 3. Destination Lightbox Overlay (from Hero Slider) */}
       <div className={`destination-lightbox ${activeDestination ? 'open' : ''}`}>
         {activeDestination && (
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -218,26 +289,21 @@ export default function GalleryPage() {
             
             <div style={{ flex: 1, overflowY: 'auto', padding: 'clamp(1.25rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem)' }}>
               {activeDestinationImages.length > 0 ? (
-                <>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'clamp(1rem, 2vw, 2rem)' }}>
-                    {activeDestinationImages.map(img => (
-                      <div key={img.id} className="lightbox-img-card" onClick={() => setLightboxImg(img)}>
-                        <img src={img.src} alt={img.title} loading="lazy" />
-                        <div className="img-info">
-                          <h4>{img.title || 'Beautiful View'}</h4>
-                        </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 'clamp(1rem, 2vw, 2rem)' }}>
+                  {activeDestinationImages.map(img => (
+                    <div key={img.id} className="lightbox-img-card" onClick={() => setLightboxImg(img)}>
+                      <img src={img.src} alt={img.title} loading="lazy" />
+                      <div className="img-info">
+                        <h4>{img.title || 'Beautiful View'}</h4>
                       </div>
-                    ))}
-                  </div>
-                </>
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'rgba(255,255,255,0.5)', gap: '1rem', padding: '4rem 1rem', textAlign: 'center' }}>
                   <ImageIcon size={56} style={{ opacity: 0.3 }} />
                   <p style={{ fontSize: '1.15rem', margin: 0 }}>No images yet for this destination.</p>
                   <p style={{ fontSize: '0.88rem', margin: 0, maxWidth: 360 }}>Add photos in the Admin Panel under <strong>Gallery Grid</strong> with category <em>"{activeDestination}"</em>.</p>
-                  <a href="/admin/gallery" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem', padding: '0.65rem 1.5rem', background: '#D4AF37', color: '#000', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: '0.9rem' }}>
-                    <ExternalLink size={15} /> Open Admin Gallery
-                  </a>
                 </div>
               )}
             </div>
@@ -245,7 +311,7 @@ export default function GalleryPage() {
         )}
       </div>
 
-      {/* Full image viewer */}
+      {/* Full image viewer (used by both Destination Lightbox & Complete Grid) */}
       {lightboxImg && (
         <div onClick={() => setLightboxImg(null)} style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out', padding: '2rem' }}>
           <button onClick={() => setLightboxImg(null)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -290,7 +356,6 @@ export default function GalleryPage() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          /* Prevent text from being cut on small screens */
           word-break: break-word;
           overflow-wrap: break-word;
         }
@@ -325,6 +390,40 @@ export default function GalleryPage() {
         .slide-card.active .card-content { transform: translateY(0); opacity: 1; }
         .card-subtitle { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; display: block; }
         .card-title { font-size: clamp(0.95rem, 1.5vw, 1.2rem); font-weight: 700; margin: 0; color: #fff; letter-spacing: 0.04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* --- Complete Gallery Section Filters & Masonry --- */
+        .filter-btn { padding: 0.6rem 1.25rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 100px; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
+        .filter-btn:hover { background: rgba(255,255,255,0.1); }
+        .filter-btn.active { background: #fff; color: #000; font-weight: 600; border-color: #fff; }
+
+        .masonry-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 1.5rem;
+          grid-auto-flow: dense;
+        }
+        .masonry-item {
+          position: relative; border-radius: 12px; overflow: hidden; cursor: zoom-in;
+          background: #111; aspect-ratio: 4/3;
+        }
+        /* Make some items taller for a nice staggered look based on index */
+        .masonry-item:nth-child(3n+1) { aspect-ratio: 3/4; grid-row: span 2; }
+        .masonry-item:nth-child(4n) { aspect-ratio: 16/9; grid-column: span 2; }
+        
+        .masonry-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        .masonry-item:hover img { transform: scale(1.05); }
+        
+        .masonry-overlay {
+          position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 50%);
+          opacity: 0; transition: opacity 0.3s ease;
+          display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;
+        }
+        .masonry-item:hover .masonry-overlay { opacity: 1; }
+        .masonry-icon { position: absolute; top: 1.5rem; right: 1.5rem; width: 40px; height: 40px; background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transform: translateY(-10px); opacity: 0; transition: all 0.4s ease; }
+        .masonry-item:hover .masonry-icon { transform: translateY(0); opacity: 1; }
+        .masonry-category { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 0.25rem; display: block; transform: translateY(10px); opacity: 0; transition: all 0.4s ease 0.1s; }
+        .masonry-title { font-size: 1.25rem; color: #fff; margin: 0; font-weight: 600; transform: translateY(10px); opacity: 0; transition: all 0.4s ease 0.2s; }
+        .masonry-item:hover .masonry-category, .masonry-item:hover .masonry-title { transform: translateY(0); opacity: 1; }
 
         /* --- Destination Lightbox --- */
         .destination-lightbox {
@@ -365,11 +464,14 @@ export default function GalleryPage() {
           .bottom-section { flex-direction: column; align-items: flex-start !important; gap: 2rem; }
           .nav-container { padding-right: 0 !important; max-width: 100% !important; }
           .slider-container { width: calc(100vw - 2 * clamp(1.25rem, 6vw, 8rem)); }
+          .masonry-item:nth-child(4n) { grid-column: auto; }
         }
         @media (max-width: 640px) {
           .giant-title { font-size: clamp(2.5rem, 14vw, 4rem) !important; }
           .action-row { flex-wrap: wrap; }
           .nav-container { gap: 0.875rem !important; }
+          .masonry-grid { grid-template-columns: 1fr; }
+          .masonry-item:nth-child(3n+1) { aspect-ratio: 4/3; grid-row: auto; }
         }
       `}</style>
     </main>

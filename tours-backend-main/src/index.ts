@@ -2,6 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
+// Load env vars before importing routes that might use them
+dotenv.config()
+
+import mongoose from 'mongoose'
+import path from 'path'
+
 import authRouter from './routes/auth'
 import packagesRouter from './routes/packages'
 import destinationsRouter from './routes/destinations'
@@ -15,14 +21,20 @@ import adminGalleryRouter, { publicGalleryHandler } from './routes/adminGallery'
 import adminGallerySlidesRouter, { publicGallerySlidesHandler } from './routes/adminGallerySlides'
 import uploadRouter from './routes/upload'
 import { requireAuth } from './middleware/auth'
-import { getBlogs, getInquiries, getPackages, getDestinations } from './data'
 
-dotenv.config()
+import Package from './models/Package'
+import Destination from './models/Destination'
+import Inquiry from './models/Inquiry'
+import BlogPost from './models/BlogPost'
+import Subscriber from './models/Subscriber'
 
 const app = express()
 const PORT = process.env.PORT ?? 5000
 
-import path from 'path'
+// ── Database Connection ────────────────────────────────────────────────────
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/travel-agency')
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => console.error('❌ MongoDB connection error:', err))
 
 // ── Middleware ─────────────────────────────────────────────────────────────
 app.use(cors({ origin: true }))
@@ -54,39 +66,66 @@ app.use('/api/admin/gallery',      adminGalleryRouter)
 app.use('/api/admin/gallery-slides', adminGallerySlidesRouter)
 app.use('/api/admin/upload',       uploadRouter)
 
-// Newsletter subscribers store
-const subscribers: { email: string; createdAt: Date }[] = []
-
-app.post('/api/newsletter/subscribe', (req, res) => {
+// ── Newsletter ─────────────────────────────────────────────────────────────
+app.post('/api/newsletter/subscribe', async (req, res) => {
   const { email } = req.body
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Valid email is required' })
   }
-  if (subscribers.find(s => s.email === email)) {
-    return res.json({ success: true, message: 'Already subscribed' })
+  try {
+    const existing = await Subscriber.findOne({ email });
+    if (existing) {
+      return res.json({ success: true, message: 'Already subscribed' })
+    }
+    const sub = new Subscriber({ email });
+    await sub.save();
+    console.log('[Newsletter] New subscriber:', email)
+    res.status(201).json({ success: true, message: 'Subscribed successfully!' })
+  } catch (err) {
+    res.status(500).json({ error: 'Subscription failed' })
   }
-  subscribers.push({ email, createdAt: new Date() })
-  console.log('[Newsletter] New subscriber:', email)
-  res.status(201).json({ success: true, message: 'Subscribed successfully!' })
 })
 
 // Admin: get all subscribers
-app.get('/api/admin/subscribers', requireAuth, (_req, res) => {
-  res.json([...subscribers].reverse())
+app.get('/api/admin/subscribers', requireAuth, async (_req, res) => {
+  try {
+    const subs = await Subscriber.find().sort({ createdAt: -1 });
+    res.json(subs)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch subscribers' })
+  }
 })
 
 // Admin: dashboard stats
-app.get('/api/admin/stats', requireAuth, (_req, res) => {
-  const inquiries = getInquiries()
-  const newInquiries = inquiries.filter(i => i.status === 'new').length
-  res.json({
-    totalPackages: getPackages().length,
-    totalDestinations: getDestinations().length,
-    totalInquiries: inquiries.length,
-    newInquiries,
-    totalSubscribers: subscribers.length,
-    totalBlogs: getBlogs().length,
-  })
+app.get('/api/admin/stats', requireAuth, async (_req, res) => {
+  try {
+    const [
+      totalPackages,
+      totalDestinations,
+      totalInquiries,
+      newInquiries,
+      totalSubscribers,
+      totalBlogs
+    ] = await Promise.all([
+      Package.countDocuments(),
+      Destination.countDocuments(),
+      Inquiry.countDocuments(),
+      Inquiry.countDocuments({ status: 'new' }),
+      Subscriber.countDocuments(),
+      BlogPost.countDocuments()
+    ]);
+
+    res.json({
+      totalPackages,
+      totalDestinations,
+      totalInquiries,
+      newInquiries,
+      totalSubscribers,
+      totalBlogs
+    })
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch stats' })
+  }
 })
 
 // ── Health check ───────────────────────────────────────────────────────────

@@ -1,47 +1,58 @@
 import express from 'express'
 import { requireAuth } from '../middleware/auth'
-import { getGallerySlides, saveGallerySlides, GallerySlide } from '../data'
+import GallerySlide from '../models/GallerySlide'
 
 const router = express.Router()
 
 // PUBLIC: Get all gallery slides
-export const publicGallerySlidesHandler = (req: express.Request, res: express.Response) => {
-  const slides = getGallerySlides()
-  res.json(slides)
+export const publicGallerySlidesHandler = async (req: express.Request, res: express.Response) => {
+  try {
+    const slides = await GallerySlide.find();
+    res.json(slides)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch gallery slides' });
+  }
 }
 
 // Admin: Get all gallery slides
-router.get('/', requireAuth, (req, res) => {
-  res.json(getGallerySlides())
+router.get('/', requireAuth, async (req, res) => {
+  try {
+    const slides = await GallerySlide.find();
+    res.json(slides)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch gallery slides' });
+  }
 })
 
 // Admin: Add new slide
-router.post('/', requireAuth, (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
   const { title, subtitle, description, image, cardSubtitle, cardTitle } = req.body
   if (!title || !image) {
     return res.status(400).json({ error: 'Title and image are required' })
   }
 
-  const slides = getGallerySlides()
-  const newSlide: GallerySlide = {
-    id: Date.now().toString(),
-    title, subtitle: subtitle || '', description: description || '',
-    image, cardSubtitle: cardSubtitle || '', cardTitle: cardTitle || ''
+  try {
+    const newSlide = new GallerySlide({
+      title, subtitle: subtitle || '', description: description || '',
+      image, cardSubtitle: cardSubtitle || '', cardTitle: cardTitle || ''
+    });
+    
+    await newSlide.save();
+    res.status(201).json(newSlide)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create gallery slide' });
   }
-  slides.push(newSlide)
-  saveGallerySlides(slides)
-  res.status(201).json(newSlide)
 })
 
 // Admin: Delete slide
-router.delete('/:id', requireAuth, (req, res) => {
-  const slides = getGallerySlides()
-  const idx = slides.findIndex(s => s.id === req.params.id)
-  if (idx === -1) return res.status(404).json({ error: 'Slide not found' })
-
-  slides.splice(idx, 1)
-  saveGallerySlides(slides)
-  res.json({ success: true })
+router.delete('/:id', requireAuth, async (req, res) => {
+  try {
+    const removed = await GallerySlide.findByIdAndDelete(req.params.id);
+    if (!removed) return res.status(404).json({ error: 'Slide not found' })
+    res.json({ success: true })
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete gallery slide' });
+  }
 })
 
 export default router

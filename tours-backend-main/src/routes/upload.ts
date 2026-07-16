@@ -1,28 +1,26 @@
 import { Router } from 'express'
 import multer from 'multer'
-import path from 'path'
 import { requireAuth } from '../middleware/auth'
+import { v2 as cloudinary } from 'cloudinary'
+import { CloudinaryStorage } from 'multer-storage-cloudinary'
 
 const router = Router()
 
-import fs from 'fs'
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-// Configure multer to save files in the backend's public/uploads directory
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(process.cwd(), 'public', 'uploads')
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true })
-    }
-    cb(null, uploadPath)
-  },
-  filename: (req, file, cb) => {
-    // Make filename unique
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    const ext = path.extname(file.originalname)
-    cb(null, 'upload-' + uniqueSuffix + ext)
-  }
-})
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'travel-agency',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov'],
+    resource_type: 'auto'
+  } as any
+});
 
 const upload = multer({ storage })
 
@@ -31,8 +29,8 @@ router.post('/', requireAuth, upload.single('image'), (req, res) => {
     return res.status(400).json({ error: 'No file uploaded' })
   }
 
-  // The URL path that the client can use to fetch the image
-  const imageUrl = `/uploads/${req.file.filename}`
+  // The URL path that the client can use to fetch the image/video
+  const imageUrl = req.file.path;
   res.json({ url: imageUrl })
 })
 
