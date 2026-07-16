@@ -248,30 +248,21 @@ export default function PackagesPage() {
            <div className="wavy-container">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                 <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>All Packages</h2>
-                <Link to="/contact" className="btn-navy text-reveal">VIEW ALL TOURS</Link>
               </div>
               
               <div style={{ position: 'relative' }}>
-                <button className="glass-btn" style={{ left: '-25px' }} onClick={() => scrollCarousel('left')}>
-                  <ArrowLeft size={24}/>
-                </button>
-                
-                <button className="glass-btn" style={{ right: '-25px' }} onClick={() => scrollCarousel('right')}>
-                  <ArrowRight size={24}/>
-                </button>
-
                 <div 
-                  ref={carouselRef} 
-                  className="no-scrollbar" 
-                  style={{ display: 'flex', gap: '2rem', overflowX: 'auto', scrollSnapType: 'x mandatory', padding: '1rem 0 3rem 0', scrollBehavior: 'smooth' }}
+                  style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+                    gap: '2rem',
+                    padding: '1rem 0'
+                  }}
                 >
                   {allOther.map(pkg => (
                     <div 
                       key={pkg.slug} 
                       style={{ 
-                        minWidth: '340px', 
-                        flex: '0 0 340px', 
-                        scrollSnapAlign: 'start',
                         transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                       }}
                       onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}

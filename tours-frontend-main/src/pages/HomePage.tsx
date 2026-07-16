@@ -1433,7 +1433,7 @@ export default function HomePage() {
           </div>
 
           <div className="pop-dest-btn-wrapper" style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
-            <Link to="/destinations" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '.9375rem', fontWeight: 600, color: '#fff', textDecoration: 'none', background: 'rgba(255,255,255,0.1)', padding: '0.6rem 1.25rem', borderRadius: '9999px', border: '1px solid rgba(255,255,255,0.2)' }}>
+            <Link to="/destinations" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '.9375rem', fontWeight: 600, color: '#186a76', textDecoration: 'none', background: 'rgba(24, 106, 118, 0.1)', padding: '0.6rem 1.25rem', borderRadius: '9999px', border: '1px solid rgba(24, 106, 118, 0.2)' }}>
               See all destinations <ArrowRight size={16} />
             </Link>
           </div>
