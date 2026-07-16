@@ -292,7 +292,7 @@ export default function SiteFooter() {
             <h4>Connect With Us</h4>
             <div className="sf-contact">
               <span className="sf-contact-item"><Mail size={14} /> {COMPANY.email}</span>
-              <span className="sf-contact-item"><Phone size={14} /> {COMPANY.phone}</span>
+              <span className="sf-contact-item"><Phone size={14} /> {COMPANY.phone.join(' / ')}</span>
             </div>
             <div className="sf-socials">
               <a href="#" className="sf-social-btn" aria-label="Facebook"><Facebook /></a>
