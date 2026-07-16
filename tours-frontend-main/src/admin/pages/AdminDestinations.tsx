@@ -196,7 +196,7 @@ export default function AdminDestinations() {
                       update('image', json.url);
                     } catch (err) { alert('Failed to upload image') }
                   }} style={{ fontSize: '.875rem' }} />
-                  {form.image && <img src={form.image instanceof File ? URL.createObjectURL(form.image) : getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                  {form.image && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
                 </label>
               </div>
               <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem' }}>

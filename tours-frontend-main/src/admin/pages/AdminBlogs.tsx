@@ -227,7 +227,7 @@ export default function AdminBlogs() {
                     <input type="file" accept="image/*" onChange={handleImageUpload} style={{ fontSize: '0.875rem' }} />
                   </div>
                   {formData.image && (
-                    <img src={formData.image instanceof File ? URL.createObjectURL(formData.image) : getImageUrl(formData.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                    <img src={getImageUrl(formData.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
                   )}
                 </div>
                 <div>

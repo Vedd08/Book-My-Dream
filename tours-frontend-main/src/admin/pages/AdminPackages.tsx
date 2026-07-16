@@ -185,7 +185,7 @@ export default function AdminPackages() {
                       update('image', json.url);
                     } catch (err) { alert('Failed to upload image') }
                   }} style={{ fontSize: '.875rem' }} />
-                  {form.image && <img src={form.image instanceof File ? URL.createObjectURL(form.image) : getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                  {form.image && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
                 </label>
                 <label>
                   <span style={labelStyle}>Type</span>
