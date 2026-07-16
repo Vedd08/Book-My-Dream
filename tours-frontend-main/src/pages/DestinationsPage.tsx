@@ -6,10 +6,10 @@ import { Star, MapPin, ArrowUpRight, Compass, Heart, Mountain, Users, Gem, Arrow
 
 import bgImageFallback1 from '../assets/destination1.png';
 import bgImageFallback2 from '../assets/destination2.png';
-import baliImg from '../assets/bali.jpg';
-import switzerlandImg from '../assets/switzerland.jpg';
-import maldivesImg from '../assets/maldives.jpg';
-import dubaiImg from '../assets/dubai.jpg';
+const baliImg = "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2000&auto=format&fit=crop";
+const switzerlandImg = "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2000&auto=format&fit=crop";
+const maldivesImg = "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2000&auto=format&fit=crop";
+const dubaiImg = "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2000&auto=format&fit=crop";
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<Destination[]>([]);

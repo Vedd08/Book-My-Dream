@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import { API_URL } from '../config'
-import baliImg from '../assets/image2.jpg'
-import maldivesImg from '../assets/image3.jpg'
-import switzerlandImg from '../assets/image5.jpg'
-import dubaiImg from '../assets/image4.jpg'
-import kerelaImg from '../assets/image1.jpg'
-import offer1Img from '../assets/offer1.jpg'
+const baliImg = "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2000&auto=format&fit=crop";
+const maldivesImg = "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2000&auto=format&fit=crop";
+const switzerlandImg = "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2000&auto=format&fit=crop";
+const dubaiImg = "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2000&auto=format&fit=crop";
+const kerelaImg = "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2000&auto=format&fit=crop";
+const offer1Img = "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=2000&auto=format&fit=crop";
 import frame1 from '../assets/Frame.png'
 import frame2 from '../assets/Frame2.png'
 import hotAirBalloonImg from '../assets/hot_air_balloon.png'

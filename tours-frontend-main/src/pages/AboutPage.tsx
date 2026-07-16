@@ -4,11 +4,9 @@ import { CheckCircle2, Award, Users, Clock, Globe, Shield, Heart, Map, ArrowRigh
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import heroImg from '../assets/switzerland.jpg'
-import storyImg1 from '../assets/kerela.jpg'
-import storyImg2 from '../assets/dubai.jpg'
-import maldivesImg from '../assets/maldives.jpg'
-import baliImg from '../assets/bali.jpg'
+const heroImg = "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2000&auto=format&fit=crop";
+const maldivesImg = "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2000&auto=format&fit=crop";
+const baliImg = "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2000&auto=format&fit=crop";
 
 gsap.registerPlugin(ScrollTrigger)
 

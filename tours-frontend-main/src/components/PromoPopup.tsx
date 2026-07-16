@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, User, Phone, Users, Map, CheckCircle2, Mail, Sparkles, ChevronRight, ShieldCheck } from 'lucide-react';
 import logoImg from '../assets/new_logo.png';
-import bgImg from '../assets/new1.jpg';
+const bgImg = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1200&auto=format&fit=crop";
 import { API_URL } from '../config';
 
 export default function PromoPopup() {

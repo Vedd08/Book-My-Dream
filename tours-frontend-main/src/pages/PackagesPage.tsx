@@ -7,7 +7,7 @@ import { inr } from '../data'
 import PackageCard from '../components/PackageCard'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import switzerlandImg from '../assets/switzerland.jpg'
+const switzerlandImg = "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=2000&auto=format&fit=crop";
 
 gsap.registerPlugin(ScrollTrigger)
 
