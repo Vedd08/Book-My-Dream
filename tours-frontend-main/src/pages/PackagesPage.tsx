@@ -68,9 +68,29 @@ export default function PackagesPage() {
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
       const amount = carouselRef.current.clientWidth * 0.8
-      carouselRef.current.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' })
+      const maxScroll = carouselRef.current.scrollWidth - carouselRef.current.clientWidth
+      
+      let newScroll = carouselRef.current.scrollLeft + (dir === 'left' ? -amount : amount)
+      
+      // Infinite loop effect
+      if (newScroll >= maxScroll + 10) {
+        newScroll = 0
+      } else if (newScroll <= -10) {
+        newScroll = maxScroll
+      }
+
+      carouselRef.current.scrollTo({ left: newScroll, behavior: 'smooth' })
     }
   }
+
+  // Auto-scroll animation
+  useEffect(() => {
+    if (loading || allOther.length <= 1) return;
+    const interval = setInterval(() => {
+      scrollCarousel('right');
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [loading, allOther.length]);
 
   return (
     <div className="page-bg" style={{ minHeight: '100vh', paddingBottom: '0' }}>
@@ -178,11 +198,21 @@ export default function PackagesPage() {
                 <Link to="/contact" className="btn-navy text-reveal">VIEW ALL TOURS</Link>
               </div>
               <div style={{ position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '-3rem', right: 0, display: 'flex', gap: '0.5rem' }}>
-                  <button onClick={() => scrollCarousel('left')} style={{ width: 32, height: 32, borderRadius: '50%', background: '#186a76', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ArrowLeft size={16}/></button>
-                  <button onClick={() => scrollCarousel('right')} style={{ width: 32, height: 32, borderRadius: '50%', background: '#186a76', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ArrowRight size={16}/></button>
-                </div>
-                <div ref={carouselRef} className="no-scrollbar" style={{ display: 'flex', gap: '2rem', overflowX: 'auto', scrollSnapType: 'x mandatory' }}>
+                <button 
+                  onClick={() => scrollCarousel('left')} 
+                  style={{ position: 'absolute', top: '50%', left: '-1.5rem', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: 'rgba(25, 106, 118, 0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backdropFilter: 'blur(4px)' }}
+                >
+                  <ArrowLeft size={20}/>
+                </button>
+                
+                <button 
+                  onClick={() => scrollCarousel('right')} 
+                  style={{ position: 'absolute', top: '50%', right: '-1.5rem', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: 'rgba(25, 106, 118, 0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backdropFilter: 'blur(4px)' }}
+                >
+                  <ArrowRight size={20}/>
+                </button>
+
+                <div ref={carouselRef} className="no-scrollbar" style={{ display: 'flex', gap: '2rem', overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: '1rem', paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
                   {allOther.map(pkg => (
                     <div key={pkg.slug} style={{ minWidth: '320px', flex: '0 0 320px', scrollSnapAlign: 'start' }}>
                        <PackageCard pkg={pkg} />
