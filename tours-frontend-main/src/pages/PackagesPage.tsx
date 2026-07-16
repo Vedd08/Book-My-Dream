@@ -63,7 +63,7 @@ export default function PackagesPage() {
   const featured = packages.filter(p => p.featured)
   const topFeatured = featured[0]
   const otherFeatured = featured.slice(1, 4)
-  const allOther = packages.filter(p => !featured.includes(p))
+  const allOther = packages // Show all packages in the All Packages section
 
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
