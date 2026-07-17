@@ -16,7 +16,7 @@ export default function AdminLogin() {
     try {
       await login(form.username, form.password)
     } catch {
-      setError('Invalid username or password. Try admin / admin123')
+      setError('Invalid username or password.')
     } finally {
       setLoading(false)
     }
@@ -88,7 +88,7 @@ export default function AdminLogin() {
               <input
                 type="text" required autoComplete="username"
                 value={form.username} onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
-                placeholder="admin"
+                placeholder="Username"
                 style={{
                   width: '100%', padding: '.75rem .75rem .75rem 2.5rem',
                   borderRadius: 10, border: '1px solid rgba(255,255,255,.2)',
@@ -128,10 +128,7 @@ export default function AdminLogin() {
             </div>
           </div>
 
-          {/* Hint */}
-          <p style={{ fontSize: '.75rem', color: 'rgba(255,255,255,.5)', textAlign: 'center' }}>
-            Default: <code style={{ background: 'rgba(255,255,255,.1)', padding: '1px 6px', borderRadius: 4 }}>admin</code> / <code style={{ background: 'rgba(255,255,255,.1)', padding: '1px 6px', borderRadius: 4 }}>admin123</code>
-          </p>
+          {/* Hint Removed */}
 
           <button type="submit" disabled={loading} style={{
             marginTop: '.5rem', padding: '.875rem', borderRadius: 10, border: 'none',

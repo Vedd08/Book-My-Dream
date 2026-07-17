@@ -142,7 +142,6 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 
 app.listen(PORT, () => {
   console.log(`✅ Express server running at http://localhost:${PORT}`)
-  console.log(`🔐 Admin credentials → username: admin  /  password: admin123`)
 })
 
 export default app
