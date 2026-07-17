@@ -209,7 +209,6 @@ button { cursor: pointer; font-family: var(--font-sans); }
 /* ---- Responsive hide ---- */
 @media (max-width: 1023px) { .lg-only { display: none !important; } }
 @media (min-width: 1024px) { .mobile-only { display: none !important; } }
-@media (max-width: 640px) { .mobile-hidden-text { display: none !important; } }
 
 /* ---- Premium UI/UX Details ---- */
 .premium-card {
