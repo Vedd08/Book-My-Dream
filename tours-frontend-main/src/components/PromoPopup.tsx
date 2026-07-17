@@ -162,27 +162,32 @@ export default function PromoPopup() {
 
         /* ── Mobile: compact + keep everything reachable within its own scroll area ── */
         @media (max-width: 639px) {
-          .promo-overlay { padding: 0.6rem; }
-          .promo-card { min-height: 0; max-height: 95vh; border-radius: 18px; overflow: hidden; }
+          .promo-overlay { padding: 0.4rem; }
+          .promo-card { min-height: 0; max-height: 98vh; border-radius: 14px; overflow: hidden; }
           .promo-right-panel {
-            padding: 1.5rem 1.25rem;
+            padding: 1.25rem 1rem;
             /* flex-start, not center: centering an overflowing flex column
                pushes its top content above y=0, which is unreachable since
                scrollTop can never go negative. */
             justify-content: flex-start;
           }
-          .promo-close-btn { width: 32px; height: 32px; }
-          .promo-badge svg { width: 16px; height: 16px; }
-          .promo-badge span { font-size: 0.7rem; }
-          .promo-heading { font-size: 1.4rem; margin-bottom: 0.3rem; }
-          .promo-subtext { font-size: 0.82rem; margin-bottom: 1.1rem; line-height: 1.45; }
-          .promo-form { gap: 0.85rem; }
-          .promo-form-grid { gap: 0.85rem; }
-          .premium-input-wrapper .icon-box { padding: 0.65rem; }
-          .premium-input { padding: 0.65rem 0.65rem 0.65rem 0; font-size: 0.88rem; }
-          .promo-office-toggle { padding: 0.75rem; gap: 0.65rem; }
-          .promo-submit-btn { padding: 0.8rem; font-size: 0.88rem; }
-          .promo-footer-features { gap: 0.6rem 1rem; margin-top: 1rem; padding-top: 0.9rem; flex-wrap: wrap; }
+          .promo-close-btn { width: 28px; height: 28px; }
+          .promo-badge svg { width: 14px; height: 14px; }
+          .promo-badge span { font-size: 0.65rem; }
+          .promo-heading { font-size: 1.25rem; margin-bottom: 0.15rem; }
+          .promo-subtext { font-size: 0.75rem; margin-bottom: 0.75rem; line-height: 1.35; }
+          .promo-form { gap: 0.6rem; }
+          .promo-form-grid { gap: 0.6rem; }
+          .premium-input-wrapper { border-radius: 8px; border-width: 1px; }
+          .premium-input-wrapper .icon-box { padding: 0.5rem; }
+          .premium-input-wrapper .icon-box svg { width: 14px; height: 14px; }
+          .premium-input { padding: 0.4rem 0.4rem 0.4rem 0; font-size: 0.8rem; }
+          .promo-office-toggle { padding: 0.6rem; gap: 0.5rem; border-radius: 8px; margin-top: 0; }
+          .promo-submit-btn { padding: 0.65rem; font-size: 0.85rem; border-radius: 8px; margin-top: 0; }
+          .promo-footer-features { gap: 0.4rem 0.75rem; margin-top: 0.75rem; padding-top: 0.75rem; flex-wrap: wrap; }
+          
+          /* Override inline styles for form labels to save vertical space */
+          .promo-form label { font-size: 0.7rem !important; margin-bottom: 0.2rem !important; }
         }
       `}</style>
 
