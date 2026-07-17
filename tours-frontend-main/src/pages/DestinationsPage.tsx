@@ -115,6 +115,7 @@ export default function DestinationsPage() {
                 <img
                   src={getImageUrl(d.image)}
                   alt={d.name}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   style={{
                     backgroundColor: '#1a1a2e', // fallback color if no image

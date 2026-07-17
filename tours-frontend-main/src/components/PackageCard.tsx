@@ -25,10 +25,12 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
         <img
           src={getImageUrl(pkg.image)}
           alt={pkg.name}
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            backgroundColor: '#f1f5f9',
             transition: 'transform 0.5s ease',
             transform: hovered ? 'scale(1.05)' : 'scale(1)',
           }}
