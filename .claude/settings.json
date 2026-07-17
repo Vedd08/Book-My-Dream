@@ -18,7 +18,9 @@
       "Bash(npx playwright *)",
       "Bash(node check.js)",
       "Bash(node check2.js)",
-      "Bash(node check3.js)"
+      "Bash(node check3.js)",
+      "Bash(node check4.js)",
+      "Bash(node check5.js)"
     ]
   }
 }
