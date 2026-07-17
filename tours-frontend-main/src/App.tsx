@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import PackagesPage from './pages/PackagesPage'
 import PackageDetailPage from './pages/PackageDetailPage'
 import DestinationsPage from './pages/DestinationsPage'
+import DestinationDetailPage from './pages/DestinationDetailPage'
 import ContactPage from './pages/ContactPage'
 import AboutPage from './pages/AboutPage'
 import GalleryPage from './pages/GalleryPage'
@@ -95,6 +96,7 @@ export default function App() {
             <Route path="/packages" element={<PackagesPage />} />
             <Route path="/packages/:slug" element={<PackageDetailPage />} />
             <Route path="/destinations" element={<DestinationsPage />} />
+            <Route path="/destinations/:slug" element={<DestinationDetailPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/about" element={<AboutPage />} />

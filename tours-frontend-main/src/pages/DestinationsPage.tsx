@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { API_URL } from '../config';
+import { API_URL, getImageUrl } from '../config';
 import type { Destination } from '../data';
 import { Star, MapPin, ArrowUpRight, Compass, Heart, Mountain, Users, Gem, ArrowRight, ShieldCheck, Clock, Plane } from 'lucide-react';
 
@@ -108,14 +108,14 @@ export default function DestinationsPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 w-full grid-flow-dense" style={{ gridAutoRows: '250px' }}>
             {displayDestinations.map((d, index) => (
               <Link 
-                to={`/packages?q=${d.slug}`} 
+                to={`/destinations/${d.slug}`}
                 key={d.slug + index} 
                 className={`group relative rounded-3xl overflow-hidden block ${getSpanClasses(index)} bg-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500`}
               >
                 {/* Background Image */}
-                <img 
-                  src={d.image || bgImageFallback1} 
-                  alt={d.name} 
+                <img
+                  src={getImageUrl(d.image) || bgImageFallback1}
+                  alt={d.name}
                   onError={(e) => { e.currentTarget.src = bgImageFallback1 }}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

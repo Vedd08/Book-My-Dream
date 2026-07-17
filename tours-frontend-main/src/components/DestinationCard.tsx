@@ -55,7 +55,7 @@ export default function DestinationCard({ dest }: { dest: Destination }) {
   return (
     <Link
       ref={cardRef}
-      to={`/packages?q=${encodeURIComponent(dest.slug.replace('-', ' '))}`}
+      to={`/destinations/${dest.slug}`}
       className="dest-card"
       style={{
         position: 'relative',

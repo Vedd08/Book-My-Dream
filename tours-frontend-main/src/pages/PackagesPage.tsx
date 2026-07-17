@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { API_URL, getImageUrl } from '../config'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Search, Mail, Phone, ArrowLeft, ArrowRight, Plane, Map, Coffee, Mountain, Users } from 'lucide-react'
 import type { Package } from '../data'
 import { inr } from '../data'
@@ -23,6 +23,8 @@ export default function PackagesPage() {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading,  setLoading]  = useState(true)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const [searchParams] = useSearchParams()
+  const q = (searchParams.get('q') || '').trim()
 
   useEffect(() => {
     fetch(`${API_URL}/api/packages`)
@@ -60,10 +62,17 @@ export default function PackagesPage() {
     return () => clearTimeout(timer)
   }, [loading, packages.length])
 
-  const featured = packages.filter(p => p.featured)
+  const filteredPackages = q
+    ? packages.filter(p => `${p.name} ${p.destination} ${p.country} ${p.region} ${p.type}`
+        .toLowerCase().includes(q.toLowerCase()))
+    : packages
+
+  // A search/filter narrows straight to results — the generic "Featured
+  // Journeys" hero doesn't apply once the user is looking for something specific.
+  const featured = q ? [] : filteredPackages.filter(p => p.featured)
   const topFeatured = featured[0]
   const otherFeatured = featured.slice(1, 4)
-  const allOther = packages // Show all packages in the All Packages section
+  const allOther = filteredPackages
 
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -243,36 +252,49 @@ export default function PackagesPage() {
         </section>
       )}
 
-      {!loading && allOther.length > 0 && (
-        <section className="gsap-reveal" style={{ marginTop: '12rem', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
+      {!loading && (allOther.length > 0 || q) && (
+        <section className="gsap-reveal" style={{ marginTop: q ? '6rem' : '12rem', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
            <div className="wavy-container">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-                <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>All Packages</h2>
-              </div>
-              
-              <div style={{ position: 'relative' }}>
-                <div 
-                  style={{ 
-                    display: 'grid', 
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
-                    gap: '2rem',
-                    padding: '1rem 0'
-                  }}
-                >
-                  {allOther.map(pkg => (
-                    <div 
-                      key={pkg.slug} 
-                      style={{ 
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                      onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
-                      onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-                    >
-                       <PackageCard pkg={pkg} />
-                    </div>
-                  ))}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '3rem' }}>
+                <div>
+                  <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>
+                    {q ? `Results for "${q}"` : 'All Packages'}
+                  </h2>
+                  {q && <p style={{ color: '#666', marginTop: '0.5rem' }}>{allOther.length} package{allOther.length === 1 ? '' : 's'} found</p>}
                 </div>
+                {q && <Link to="/packages" className="btn-navy" style={{ textDecoration: 'none' }}>Clear Search</Link>}
               </div>
+
+              {allOther.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '4rem 0', color: '#666' }}>
+                  <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>No packages match "{q}" yet.</p>
+                  <Link to="/packages" className="btn-navy" style={{ textDecoration: 'none' }}>View All Packages</Link>
+                </div>
+              ) : (
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                      gap: '2rem',
+                      padding: '1rem 0'
+                    }}
+                  >
+                    {allOther.map(pkg => (
+                      <div
+                        key={pkg.slug}
+                        style={{
+                          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
+                        onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                      >
+                         <PackageCard pkg={pkg} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
            </div>
         </section>
       )}
