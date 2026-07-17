@@ -136,9 +136,9 @@ export default function PromoPopup() {
         <button
           onClick={handleClose}
           style={{
-            position: 'absolute', top: -15, right: -15,
+            position: 'absolute', top: window.innerWidth < 768 ? 12 : -15, right: window.innerWidth < 768 ? 12 : -15,
             background: '#ffffff',
-            border: 'none',
+            border: window.innerWidth < 768 ? '1px solid #f0f0f0' : 'none',
             borderRadius: '50%',
             width: 40, height: 40,
             display: 'flex', alignItems: 'center', justifyContent: 'center',

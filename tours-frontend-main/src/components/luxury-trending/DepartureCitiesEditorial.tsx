@@ -82,7 +82,7 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:gap-8 items-start">
         
         {/* Left Section: Header */}
-        <div className="w-full md:w-1/3 relative md:sticky top-32 mb-16 md:mb-0">
+        <div className="w-full lg:w-1/3 relative lg:sticky top-32 mb-12 lg:mb-0">
           <p className="city-header-text uppercase tracking-[0.3em] text-xs font-semibold text-[#671231] mb-4">
             From Your Doorstep
           </p>
@@ -102,20 +102,20 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
         </div>
 
         {/* Right Section: Interactive List */}
-        <div className="w-full md:w-2/3">
+        <div className="w-full lg:w-2/3">
           <ul ref={listRef} className="flex flex-col w-full list-none m-0 p-0">
             {destinations.length === 0 && <p className="text-gray-500 py-8">No destinations available at the moment.</p>}
             {destinations.slice(0, 6).map((city, idx) => (
               <li 
                 key={`city-${idx}`}
-                className="city-list-item group relative border-b border-[#120f0b]/10 last:border-b-0 py-8 md:py-12 cursor-pointer transition-all duration-500"
+                className="city-list-item group relative border-b border-[#120f0b]/10 last:border-b-0 py-6 md:py-12 cursor-pointer transition-all duration-500"
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className={`flex flex-col md:flex-row md:items-end justify-between transition-opacity duration-500 ${
+                <div className={`flex flex-col lg:flex-row lg:items-end justify-between transition-opacity duration-500 ${
                   hoveredIndex !== null && hoveredIndex !== idx ? 'opacity-60' : 'opacity-100'
                 }`}>
-                  <h3 className="font-serif text-5xl md:text-8xl tracking-tight m-0 text-transparent transition-all duration-500"
+                  <h3 className="font-serif text-5xl md:text-6xl lg:text-8xl tracking-tight m-0 text-transparent transition-all duration-500"
                       style={{ 
                         WebkitTextStroke: hoveredIndex === idx ? '0px transparent' : '1.5px rgba(18,15,11,0.6)',
                         color: hoveredIndex === idx ? '#120f0b' : 'transparent',
@@ -124,8 +124,8 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
                     {city.name}
                   </h3>
 
-                  <div className={`mt-4 md:mt-0 flex flex-col items-start md:items-end overflow-hidden transition-all duration-500 ${
-                    hoveredIndex === idx ? 'opacity-100 translate-y-0 max-h-40' : 'opacity-0 translate-y-4 max-h-0 md:max-h-40'
+                  <div className={`mt-4 lg:mt-0 flex flex-col items-start lg:items-end overflow-hidden transition-all duration-500 ${
+                    hoveredIndex === idx ? 'opacity-100 translate-y-0 max-h-40' : 'opacity-0 translate-y-4 max-h-0 lg:max-h-40'
                   }`}>
                     <p className="text-[#671231] font-semibold text-sm tracking-widest uppercase mb-1">{city.country || city.region}</p>
                     <p className="text-[#120f0b] text-lg font-medium mb-4">Explore Tours</p>

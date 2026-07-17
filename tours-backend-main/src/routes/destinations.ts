@@ -7,7 +7,7 @@ const router = Router()
 router.get('/', async (req, res) => {
   try {
     const { region } = req.query as Record<string, string>
-    const query = region ? { region } : {};
+    const query = region ? { region: region as 'Domestic' | 'International' | 'Honeymoon' } : {};
     const result = await Destination.find(query);
     res.json(result)
   } catch (err) {

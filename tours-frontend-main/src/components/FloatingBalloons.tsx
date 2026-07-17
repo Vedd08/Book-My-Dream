@@ -64,6 +64,7 @@ export default function FloatingBalloons() {
             animation: `floatBlob ${6 + (i % 3)}s infinite alternate ease-in-out`,
             animationDelay: `${b.delay}s`,
             filter: 'grayscale(30%) sepia(20%)', // slightly blend them into background
+            willChange: 'transform',
           }}
         />
       ))}

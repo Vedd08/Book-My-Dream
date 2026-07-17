@@ -1148,7 +1148,7 @@ export default function HomePage() {
         <img src={realBalloonImg} alt="Hot Air Balloon" className="hero-balloon" />
 
         {/* ── Main Content ── */}
-        <div className="container" ref={heroTextRef} style={{ position: 'relative', zIndex: 5, textAlign: 'center', color: '#fff', paddingTop: '2rem', paddingBottom: '9rem' }}>
+        <div className="container" ref={heroTextRef} style={{ position: 'relative', zIndex: 5, textAlign: 'center', color: '#fff', paddingTop: '6rem', paddingBottom: '9rem' }}>
 
           {/* Per-slide crossfade destination badge */}
           <div className="hero-dest-label hero-text-item">
