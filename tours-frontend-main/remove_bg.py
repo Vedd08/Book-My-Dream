@@ -1,9 +1,10 @@
 from PIL import Image
+import sys
 
-def remove_white_background(image_path, output_path, tolerance=10):
+def remove_white_background(image_path, output_path, tolerance=20):
     img = Image.open(image_path)
     img = img.convert("RGBA")
-    datas = img.getdata()
+    datas = img.get_flattened_data()
 
     newData = []
     for item in datas:
@@ -18,4 +19,9 @@ def remove_white_background(image_path, output_path, tolerance=10):
     img.save(output_path, "PNG")
     print(f"Saved {output_path}")
 
-remove_white_background('public/images/holiday-packages-3d.png', 'public/images/holiday-packages-3d.png', tolerance=20)
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+        remove_white_background(path, path)
+    else:
+        print("Please provide a file path.")
