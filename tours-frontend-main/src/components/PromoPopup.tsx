@@ -120,9 +120,15 @@ export default function PromoPopup() {
         .promo-form-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
         .promo-form-full { grid-column: 1 / -1; }
         .promo-close-btn { top: 12px; right: 12px; border: 1px solid #f0f0f0; }
+        .promo-left-panel { display: none; }
+        .promo-right-panel { padding: 2rem; }
         @media (min-width: 640px) {
           .promo-form-grid { grid-template-columns: 1fr 1fr; }
           .promo-close-btn { top: -15px; right: -15px; border: none; }
+        }
+        @media (min-width: 768px) {
+          .promo-left-panel { display: block; }
+          .promo-right-panel { padding: 3rem 3rem 2rem; }
         }
       `}</style>
 
@@ -162,10 +168,9 @@ export default function PromoPopup() {
         </button>
 
         {/* Left Panel (Image) */}
-        <div style={{
+        <div className="promo-left-panel" style={{
           flex: '0 0 45%',
           position: 'relative',
-          display: window.innerWidth < 768 ? 'none' : 'block', // hide on small mobile
           borderRadius: '24px 0 0 24px',
           overflow: 'hidden'
         }}>
@@ -209,9 +214,8 @@ export default function PromoPopup() {
         </div>
 
         {/* Right Panel (Form) */}
-        <div style={{
+        <div className="promo-right-panel" style={{
           flex: 1,
-          padding: window.innerWidth < 768 ? '2rem' : '3rem 3rem 2rem',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',

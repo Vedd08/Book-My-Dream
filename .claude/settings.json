@@ -6,7 +6,8 @@
       "Bash(node verify-gallery.js)",
       "Bash(node verify-featured-dest.js)",
       "Bash(node fd-fullsection.js)",
-      "Bash(node verify-grid-fix.js)"
+      "Bash(node verify-grid-fix.js)",
+      "Bash(npx tsc *)"
     ]
   }
 }

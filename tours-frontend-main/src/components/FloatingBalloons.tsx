@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import hotAirBalloonImg from '../assets/hot_air_balloon.png';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function FloatingBalloons() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,40 +20,58 @@ export default function FloatingBalloons() {
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const elements = containerRef.current.querySelectorAll('.sprinkle-balloon');
-    
-    // Add subtle parallax on scroll to all balloons
-    gsap.utils.toArray(elements).forEach((el: any, i) => {
-      gsap.to(el, {
-        y: -100 - (i * 20), // Each moves at a slightly different speed
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.documentElement,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        }
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      // Scroll parallax is pure decoration and its cost (scrub read/write on
+      // every scroll frame) isn't worth paying on mobile. Desktop only.
+      mm.add('(min-width: 1024px)', () => {
+        const wraps = containerRef.current!.querySelectorAll('.sprinkle-balloon-wrap');
+
+        // One ScrollTrigger driving a timeline instead of one per balloon.
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        });
+
+        wraps.forEach((el, i) => {
+          tl.to(el, { y: -100 - i * 20, ease: 'none' }, 0);
+        });
+
+        return () => {
+          tl.scrollTrigger?.kill();
+          tl.kill();
+        };
       });
-    });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div 
-      ref={containerRef} 
-      style={{ 
-        position: 'absolute', 
-        inset: 0, 
-        overflow: 'hidden', 
-        pointerEvents: 'none', 
-        zIndex: 0 
+    <div
+      ref={containerRef}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        zIndex: 0
       }}
     >
       {balloons.map((b, i) => (
-        <img
+        // GSAP parallax lives on this wrapper's transform; the CSS float
+        // keyframes live on the img's transform below. Keeping them on
+        // separate elements stops the two systems from overwriting each
+        // other's transform on the same node every frame.
+        <div
           key={i}
-          className="sprinkle-balloon"
-          src={hotAirBalloonImg}
-          alt=""
+          className="sprinkle-balloon-wrap"
           style={{
             position: 'absolute',
             top: b.top,
@@ -58,15 +79,25 @@ export default function FloatingBalloons() {
             right: b.right,
             width: b.size,
             height: b.size,
-            opacity: b.opacity,
-            objectFit: 'cover',
-            borderRadius: '50%',
-            animation: `floatBlob ${6 + (i % 3)}s infinite alternate ease-in-out`,
-            animationDelay: `${b.delay}s`,
-            filter: 'grayscale(30%) sepia(20%)', // slightly blend them into background
             willChange: 'transform',
           }}
-        />
+        >
+          <img
+            src={hotAirBalloonImg}
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: b.opacity,
+              objectFit: 'cover',
+              borderRadius: '50%',
+              animation: `floatBlob ${6 + (i % 3)}s infinite alternate ease-in-out`,
+              animationDelay: `${b.delay}s`,
+              filter: 'grayscale(30%) sepia(20%)', // slightly blend them into background
+              willChange: 'transform',
+            }}
+          />
+        </div>
       ))}
     </div>
   );

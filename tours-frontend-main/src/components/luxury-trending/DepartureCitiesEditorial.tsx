@@ -22,34 +22,48 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
     if (!containerRef.current || !listRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo('.city-header-text',
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 80%',
-          }
-        }
-      );
+      // Smaller travel distance on mobile: a 50-80px offset on a huge
+      // display-type heading is enough, mid-animation, to visually bleed
+      // into the block above it. Desktop keeps the larger, more dramatic move.
+      const mm = gsap.matchMedia();
 
-      const items = gsap.utils.toArray('.city-list-item');
-      gsap.fromTo(items,
-        { y: 80, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.1,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: listRef.current,
-            start: 'top 85%',
-          }
+      mm.add(
+        { isMobile: '(max-width: 1023px)' },
+        (context) => {
+          const { isMobile } = context.conditions as { isMobile: boolean };
+          const headerOffset = isMobile ? 20 : 50;
+          const listOffset = isMobile ? 28 : 80;
+
+          gsap.fromTo('.city-header-text',
+            { y: headerOffset, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              stagger: 0.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: 'top 80%',
+              }
+            }
+          );
+
+          const items = gsap.utils.toArray('.city-list-item');
+          gsap.fromTo(items,
+            { y: listOffset, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.2,
+              stagger: 0.1,
+              ease: 'power4.out',
+              scrollTrigger: {
+                trigger: listRef.current,
+                start: 'top 85%',
+              }
+            }
+          );
         }
       );
     }, containerRef);
@@ -79,10 +93,10 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
       {/* Light overlay to ensure dark text legibility while keeping images bright */}
       <div className={`absolute inset-0 bg-cream/35 z-0 pointer-events-none transition-opacity duration-700 ${hoveredIndex !== null ? 'opacity-100' : 'opacity-0'}`} />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:gap-8 items-start">
-        
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 lg:gap-12 items-start">
+
         {/* Left Section: Header */}
-        <div className="w-full lg:w-1/3 relative lg:sticky lg:top-32 mb-20 lg:mb-0 pb-8 lg:pb-0">
+        <div className="w-full lg:w-1/3 lg:sticky lg:top-32">
           <p className="city-header-text uppercase tracking-[0.3em] text-xs font-semibold text-[#671231] mb-4">
             From Your Doorstep
           </p>
@@ -92,7 +106,7 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
           <p className="city-header-text text-[#806b73] text-sm md:text-base max-w-sm mb-8 leading-relaxed">
             From flights and stays to sightseeing and meals — every tour begins conveniently from your doorstep.
           </p>
-          <Link 
+          <Link
             to="/packages"
             className="city-header-text group inline-flex items-center gap-3 text-sm uppercase tracking-widest font-medium text-[#120f0b] hover:text-[#671231] transition-colors"
           >
@@ -102,7 +116,7 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
         </div>
 
         {/* Right Section: Interactive List */}
-        <div className="w-full lg:w-2/3 mt-12 lg:mt-0">
+        <div className="w-full lg:w-2/3">
           <ul ref={listRef} className="flex flex-col w-full list-none m-0 p-0">
             {destinations.length === 0 && <p className="text-gray-500 py-8">No destinations available at the moment.</p>}
             {destinations.slice(0, 6).map((city, idx) => (
