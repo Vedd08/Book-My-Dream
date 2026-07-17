@@ -16,6 +16,25 @@ export default function PromoPopup() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Lock background scroll while the modal is open so the popup behaves
+  // like a contained dialog instead of letting the page scroll behind it.
+  // Both html and body need it — some browsers tie viewport scroll to
+  // documentElement rather than body.
+  useEffect(() => {
+    if (!isOpen) return;
+    const html = document.documentElement;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    html.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    (window as any).lenis?.stop();
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      (window as any).lenis?.start();
+    };
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -51,13 +70,12 @@ export default function PromoPopup() {
   if (!isOpen) return null;
 
   return (
-    <div style={{
+    <div className="promo-overlay" style={{
       position: 'fixed', inset: 0,
       background: 'rgba(10, 16, 18, 0.75)',
       backdropFilter: 'blur(8px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       zIndex: 99999,
-      padding: '1rem',
       animation: 'fadeInOverlay 0.5s ease-out forwards'
     }}>
       <style>{`
@@ -117,11 +135,22 @@ export default function PromoPopup() {
         .premium-input::placeholder { color: #9ca3af; }
         select.premium-input { cursor: pointer; appearance: none; }
 
+        .promo-overlay { padding: 1rem; }
+        .promo-card { min-height: 500px; max-height: 90vh; }
         .promo-form-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
         .promo-form-full { grid-column: 1 / -1; }
-        .promo-close-btn { top: 12px; right: 12px; border: 1px solid #f0f0f0; }
+        .promo-close-btn { top: 12px; right: 12px; width: 40px; height: 40px; border: 1px solid #f0f0f0; }
         .promo-left-panel { display: none; }
-        .promo-right-panel { padding: 2rem; }
+        .promo-right-panel { padding: 2rem; justify-content: center; }
+        .promo-badge { margin-bottom: 0.5rem; }
+        .promo-badge span { font-size: 0.8rem; }
+        .promo-heading { font-size: 2rem; margin-bottom: 0.5rem; }
+        .promo-subtext { font-size: 0.9rem; margin-bottom: 2rem; }
+        .promo-form { gap: 1.2rem; }
+        .promo-office-toggle { padding: 1rem; gap: 1rem; margin-top: 0.5rem; }
+        .promo-submit-btn { padding: 1rem; font-size: 0.95rem; margin-top: 0.5rem; }
+        .promo-footer-features { gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.2rem; }
+
         @media (min-width: 640px) {
           .promo-form-grid { grid-template-columns: 1fr 1fr; }
           .promo-close-btn { top: -15px; right: -15px; border: none; }
@@ -130,15 +159,38 @@ export default function PromoPopup() {
           .promo-left-panel { display: block; }
           .promo-right-panel { padding: 3rem 3rem 2rem; }
         }
+
+        /* ── Mobile: compact + keep everything reachable within its own scroll area ── */
+        @media (max-width: 639px) {
+          .promo-overlay { padding: 0.6rem; }
+          .promo-card { min-height: 0; max-height: 95vh; border-radius: 18px; overflow: hidden; }
+          .promo-right-panel {
+            padding: 1.5rem 1.25rem;
+            /* flex-start, not center: centering an overflowing flex column
+               pushes its top content above y=0, which is unreachable since
+               scrollTop can never go negative. */
+            justify-content: flex-start;
+          }
+          .promo-close-btn { width: 32px; height: 32px; }
+          .promo-badge svg { width: 16px; height: 16px; }
+          .promo-badge span { font-size: 0.7rem; }
+          .promo-heading { font-size: 1.4rem; margin-bottom: 0.3rem; }
+          .promo-subtext { font-size: 0.82rem; margin-bottom: 1.1rem; line-height: 1.45; }
+          .promo-form { gap: 0.85rem; }
+          .promo-form-grid { gap: 0.85rem; }
+          .premium-input-wrapper .icon-box { padding: 0.65rem; }
+          .premium-input { padding: 0.65rem 0.65rem 0.65rem 0; font-size: 0.88rem; }
+          .promo-office-toggle { padding: 0.75rem; gap: 0.65rem; }
+          .promo-submit-btn { padding: 0.8rem; font-size: 0.88rem; }
+          .promo-footer-features { gap: 0.6rem 1rem; margin-top: 1rem; padding-top: 0.9rem; flex-wrap: wrap; }
+        }
       `}</style>
 
-      <div style={{
+      <div className="promo-card" style={{
         background: '#ffffff',
         borderRadius: 24,
         width: '100%',
         maxWidth: 900,
-        minHeight: 500,
-        maxHeight: '90vh',
         display: 'flex',
         position: 'relative',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
@@ -154,7 +206,6 @@ export default function PromoPopup() {
             position: 'absolute',
             background: '#ffffff',
             borderRadius: '50%',
-            width: 40, height: 40,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer',
             zIndex: 10,
@@ -218,20 +269,19 @@ export default function PromoPopup() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           minWidth: 0,
           overflowY: 'auto'
         }}>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <div className="promo-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Sparkles size={20} color="#f5d742" fill="#f5d742" />
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f5d742', textTransform: 'uppercase', letterSpacing: '0.1em' }}>VIP Access</span>
+            <span style={{ fontWeight: 700, color: '#f5d742', textTransform: 'uppercase', letterSpacing: '0.1em' }}>VIP Access</span>
           </div>
 
-          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2rem', fontWeight: 900, color: '#111827', marginBottom: '0.5rem', lineHeight: 1.2 }}>
+          <h2 className="promo-heading" style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, color: '#111827', lineHeight: 1.2 }}>
             Plan Your Perfect Trip
           </h2>
-          <p style={{ color: '#4b5563', fontSize: '0.9rem', marginBottom: '2rem', lineHeight: 1.5 }}>
+          <p className="promo-subtext" style={{ color: '#4b5563', lineHeight: 1.5 }}>
             Get a <strong style={{ color: '#186a76' }}>FREE</strong> personalized itinerary with the best pricing from our expert travel agents.
           </p>
 
@@ -244,7 +294,7 @@ export default function PromoPopup() {
               <p style={{ color: '#4b5563', textAlign: 'center' }}>Thank you for reaching out.<br/>Our luxury travel expert will contact you shortly.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+            <form onSubmit={handleSubmit} className="promo-form" style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
               <div className="promo-form-grid">
                 
                 {/* Full Name */}
@@ -300,7 +350,7 @@ export default function PromoPopup() {
               </div>
 
               {/* Office Visit Toggle */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              <div className="promo-office-toggle" style={{ display: 'flex', alignItems: 'center', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                 <input type="checkbox" name="visit_office" id="visit_office" style={{ width: 20, height: 20, accentColor: '#186a76', cursor: 'pointer' }} />
                 <div>
                   <label htmlFor="visit_office" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1f2937', cursor: 'pointer' }}>I prefer an in-office consultation</label>
@@ -308,16 +358,14 @@ export default function PromoPopup() {
                 </div>
               </div>
 
-              <button type="submit" 
+              <button type="submit"
+                className="promo-submit-btn"
                 style={{
                   width: '100%',
-                  marginTop: '0.5rem',
-                  padding: '1rem',
                   background: isHovered ? '#12545e' : '#186a76',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '12px',
-                  fontSize: '0.95rem',
                   fontWeight: 800,
                   cursor: 'pointer',
                   display: 'flex',
@@ -337,7 +385,7 @@ export default function PromoPopup() {
           )}
 
           {/* Footer Features */}
-          <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', borderTop: '1px solid #f3f4f6', paddingTop: '1.2rem' }}>
+          <div className="promo-footer-features" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', borderTop: '1px solid #f3f4f6' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#6b7280', fontSize: '0.75rem', fontWeight: 600 }}>
               <ShieldCheck size={14} color="#10b981" /> 100% Secure
             </div>

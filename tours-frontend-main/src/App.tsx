@@ -50,9 +50,14 @@ function SmoothScroll() {
 
     gsap.ticker.lagSmoothing(0)
 
+    // Exposed so modals/overlays can pause it — Lenis drives scroll via its
+    // own RAF loop, so `overflow:hidden` on body alone doesn't stop it.
+    ;(window as any).lenis = lenis
+
     return () => {
       gsap.ticker.remove((time) => lenis.raf(time * 1000));
       lenis.destroy();
+      delete (window as any).lenis
     }
   }, [])
   return null
