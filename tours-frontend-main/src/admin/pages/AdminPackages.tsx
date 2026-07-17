@@ -34,6 +34,9 @@ export default function AdminPackages() {
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
 
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [imageError, setImageError] = useState('')
+
   const load = useCallback(() => {
     setLoading(true)
     api('/api/admin/packages').then(r => r.json()).then(d => setPackages(Array.isArray(d) ? d : [])).finally(() => setLoading(false))
@@ -42,7 +45,7 @@ export default function AdminPackages() {
 
   const update = (k: string, v: any) => setForm(f => ({ ...f, [k]: v }))
 
-  const openAdd = () => { setForm(emptyForm()); setEditing(null); setShowForm(true); setMsg('') }
+  const openAdd = () => { setForm(emptyForm()); setEditing(null); setShowForm(true); setMsg(''); setImageError(''); setUploadingImage(false); }
   const openEdit = (pkg: Pkg) => {
     setForm({ 
       ...pkg, 
@@ -50,11 +53,12 @@ export default function AdminPackages() {
       highlights: pkg.highlights ?? [], inclusions: pkg.inclusions ?? [], exclusions: pkg.exclusions ?? [],
       itinerary: pkg.itinerary ?? [], faqs: pkg.faqs ?? []
     })
-    setEditing(pkg.slug); setShowForm(true); setMsg('')
+    setEditing(pkg.slug); setShowForm(true); setMsg(''); setImageError(''); setUploadingImage(false);
   }
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (uploadingImage) return; // Prevent save if image is still uploading
     setSaving(true); setMsg('')
     const body = {
       ...form,
@@ -178,14 +182,24 @@ export default function AdminPackages() {
                   <input type="file" accept="image/*" onChange={async (e) => {
                     const file = e.target.files?.[0]; if (!file) return;
                     const data = new FormData(); data.append('image', file);
+                    setUploadingImage(true); setImageError('');
                     try {
                       const res = await api('/api/admin/upload', { method: 'POST', headers: {} as any, body: data });
-                      if (!res.ok) throw new Error('Upload failed');
+                      if (!res.ok) {
+                        const errData = await res.json().catch(()=>({}));
+                        throw new Error(errData.error || 'Upload failed');
+                      }
                       const json = await res.json();
                       update('image', json.url);
-                    } catch (err) { alert('Failed to upload image') }
+                    } catch (err: any) {
+                      setImageError('Error uploading image: ' + err.message + '. (Are Cloudinary keys set in Render?)');
+                    } finally {
+                      setUploadingImage(false);
+                    }
                   }} style={{ fontSize: '.875rem' }} />
-                  {form.image && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                  {uploadingImage && <div style={{ fontSize: '.8rem', color: '#2563eb', marginTop: 4 }}>Uploading image, please wait...</div>}
+                  {imageError && <div style={{ fontSize: '.8rem', color: '#ef4444', marginTop: 4 }}>{imageError}</div>}
+                  {form.image && !uploadingImage && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
                 </label>
                 <label>
                   <span style={labelStyle}>Type</span>
@@ -275,9 +289,9 @@ export default function AdminPackages() {
                 </div>
               </div>
 
-              <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', zIndex: 10 }}>
-                <button type="submit" disabled={saving} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: '#186a76', color: '#fff', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
-                  <Save size={18} />{saving ? 'Saving…' : (editing ? 'Update Package' : 'Add Package')}
+              <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', marginTop: 'auto' }}>
+                <button type="submit" disabled={saving || uploadingImage} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: (saving || uploadingImage) ? '#94a3b8' : '#186a76', color: '#fff', fontWeight: 700, cursor: (saving || uploadingImage) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                  <Save size={18} />{(saving || uploadingImage) ? 'Saving…' : (editing ? 'Update Package' : 'Add Package')}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
                   Cancel
