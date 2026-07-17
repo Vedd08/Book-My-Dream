@@ -108,7 +108,7 @@ export default function AdminDestinations() {
           destinations.map(dest => (
             <div key={dest.slug} style={{ borderRadius: 14, background: '#fff', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
               <div style={{ position: 'relative', height: 140, overflow: 'hidden' }}>
-                <img src={getImageUrl(dest.image) || 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80'} alt={dest.name} onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80' }} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={getImageUrl(dest.image)} alt={dest.name} onError={(e) => { e.currentTarget.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#e2e8f0' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.6), transparent)' }} />
                 <span style={{ position: 'absolute', top: 8, left: 8, padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{dest.region}</span>
                 <p style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '.9rem', color: '#fff', fontWeight: 600 }}>{dest.name}</p>

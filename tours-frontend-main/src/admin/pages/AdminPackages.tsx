@@ -111,7 +111,7 @@ export default function AdminPackages() {
         ) : packages.map(pkg => (
           <div key={pkg.slug} style={{ borderRadius: 14, background: '#fff', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,.06)' }}>
             <div style={{ position: 'relative', height: 160, overflow: 'hidden' }}>
-              <img src={getImageUrl(pkg.image)} alt={pkg.name} onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80' }} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={getImageUrl(pkg.image)} alt={pkg.name} onError={(e) => { e.currentTarget.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#e2e8f0' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.5), transparent)' }} />
               <div style={{ position: 'absolute', top: 8, left: 8, display: 'flex', gap: 6 }}>
                 <span style={{ padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{pkg.type}</span>
