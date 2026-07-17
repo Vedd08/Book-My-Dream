@@ -29,7 +29,10 @@
       "Bash(taskkill //F //PID 3448)",
       "Bash(timeout 20 bash -c 'until curl -sf http://localhost:3002 >/dev/null 2>&1 || curl -sf http://localhost:3003 >/dev/null 2>&1 || curl -sf http://localhost:3000 >/dev/null 2>&1; do sleep 1; done')",
       "Bash(node check8.js)",
-      "Bash(taskkill //F //PID 7588)"
+      "Bash(taskkill //F //PID 7588)",
+      "Bash(timeout 20 bash -c 'until curl -sf http://localhost:3002 >/dev/null 2>&1 || curl -sf http://localhost:3003 >/dev/null 2>&1 ; do sleep 1; done')",
+      "Bash(node footer-check.js)",
+      "Bash(taskkill //F //PID 22172)"
     ]
   }
 }

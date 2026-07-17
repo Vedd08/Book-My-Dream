@@ -150,13 +150,22 @@ export default function SiteFooter() {
         }
         .sf-nl-btn:hover { background: #e8c84a; transform: scale(1.03); }
 
-        /* ── Links grid ── */
+        /* ── Links grid ──
+           Explicit breakpoints (not auto-fit) so a column never orphans
+           onto its own row with a big empty gap beside it at tablet widths. */
         .sf-links {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-          gap: 2.5rem;
+          grid-template-columns: 1fr;
+          gap: 2.25rem;
           margin-bottom: 3rem;
         }
+        @media (min-width: 640px) {
+          .sf-links { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
+        }
+        @media (min-width: 1024px) {
+          .sf-links { grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+        }
+
         .sf-col h4 {
           font-family: 'Playfair Display', serif;
           font-weight: 800;
@@ -184,8 +193,8 @@ export default function SiteFooter() {
           gap: 0.5rem;
           color: rgba(255,255,255,0.78);
           font-size: 0.85rem;
-          word-break: break-all;
-          overflow-wrap: anywhere;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         .sf-contact-item svg { flex-shrink: 0; margin-top: 2px; }
 
@@ -234,6 +243,26 @@ export default function SiteFooter() {
         .sf-copy a { color: #D4AF37; font-weight: 700; text-decoration: none; }
         .sf-copy a:hover { text-decoration: underline; }
         .sf-copy-sub { font-size: 0.80rem; opacity: 0.78; }
+
+        /* ── Mobile polish (kept last so it wins the cascade) ── */
+        @media (max-width: 639px) {
+          .sf-inner { padding: 3rem 1.5rem 2rem; }
+
+          .sf-top { flex-direction: column; align-items: center; text-align: center; gap: 2.25rem; padding-bottom: 2.25rem; margin-bottom: 2.25rem; }
+          .sf-brand { min-width: 0; }
+          .sf-brand-link { justify-content: center; }
+          .sf-brand p { margin: 0 auto; }
+          .sf-newsletter {
+            width: 100%; max-width: 380px; min-width: 0;
+            padding-top: 2.25rem; border-top: 1px solid rgba(255,255,255,0.18);
+          }
+          .sf-newsletter p { margin-left: auto; margin-right: auto; }
+
+          .sf-links { text-align: center; }
+          .sf-contact { align-items: center; }
+          .sf-contact-item { justify-content: center; word-break: normal; overflow-wrap: normal; }
+          .sf-socials { justify-content: center; }
+        }
       `}</style>
 
       {/* All footer content sits directly on the skyline background */}
