@@ -34,14 +34,17 @@ router.post('/', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'name, slug and destination are required' })
   }
   
+  // Ensure slug is URL-friendly
+  const safeSlug = body.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
   try {
-    const existing = await Package.findOne({ slug: body.slug });
+    const existing = await Package.findOne({ slug: safeSlug });
     if (existing) {
       return res.status(409).json({ error: 'Slug already exists' })
     }
     
     const pkg = new Package({
-      slug: body.slug,
+      slug: safeSlug,
       name: body.name,
       type: body.type ?? 'Group',
       region: body.region ?? 'Domestic',
@@ -71,9 +74,14 @@ router.post('/', async (req: Request, res: Response) => {
 // PUT /api/admin/packages/:slug  — update
 router.put('/:slug', async (req: Request, res: Response) => {
   try {
+    const updateData = { ...req.body };
+    if (updateData.slug) {
+      updateData.slug = updateData.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
     const pkg = await Package.findOneAndUpdate(
       { slug: req.params.slug },
-      { $set: req.body },
+      { $set: updateData },
       { new: true }
     );
     if (!pkg) return res.status(404).json({ error: 'Not found' })

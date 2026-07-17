@@ -40,7 +40,7 @@ export default function AdminLayout() {
       }
     }
     fetchStats()
-    const interval = setInterval(fetchStats, 5000) // Poll every 5 seconds for faster updates
+    const interval = setInterval(fetchStats, 60000) // Poll every 60 seconds (reduced from 5s to prevent log spam)
     return () => clearInterval(interval)
   }, [api])
 
