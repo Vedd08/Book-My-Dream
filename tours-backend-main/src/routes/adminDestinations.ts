@@ -11,6 +11,7 @@ router.get('/', async (_req: Request, res: Response) => {
     const destinations = await Destination.find();
     res.json(destinations);
   } catch (err) {
+    console.error('[adminDestinations] GET / failed:', err);
     res.status(500).json({ error: 'Failed to fetch destinations' });
   }
 })
@@ -35,7 +36,7 @@ router.post('/', async (req: Request, res: Response) => {
       state: body.state ?? '',
       region: body.region ?? 'Domestic',
       description: body.description ?? '',
-      image: body.image ?? '/images/placeholder.jpg',
+      image: body.image || '/images/placeholder.jpg',
       bestTime: body.bestTime ?? 'Anytime',
       attractions: body.attractions ?? [],
       tips: body.tips ?? []
@@ -44,6 +45,7 @@ router.post('/', async (req: Request, res: Response) => {
     await newDest.save();
     res.status(201).json(newDest)
   } catch (err) {
+    console.error('[adminDestinations] POST / failed:', err);
     res.status(500).json({ error: 'Failed to create destination' });
   }
 })
@@ -59,6 +61,7 @@ router.put('/:slug', async (req: Request, res: Response) => {
     if (!dest) return res.status(404).json({ error: 'Destination not found' })
     res.json(dest)
   } catch (err) {
+    console.error('[adminDestinations] PUT /:slug failed:', err);
     res.status(500).json({ error: 'Failed to update destination' });
   }
 })
