@@ -112,12 +112,13 @@ export default function DestinationsPage() {
                 key={d.slug + index} 
                 className={`group relative rounded-3xl overflow-hidden block ${getSpanClasses(index)} bg-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500`}
               >
-                {/* Background Image */}
                 <img
-                  src={getImageUrl(d.image) || bgImageFallback1}
+                  src={getImageUrl(d.image)}
                   alt={d.name}
-                  onError={(e) => { e.currentTarget.src = bgImageFallback1 }}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundColor: '#1a1a2e', // fallback color if no image
+                  }}
                 />
                 
                 {/* Gradient Overlays */}
