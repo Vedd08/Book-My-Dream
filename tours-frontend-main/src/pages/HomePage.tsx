@@ -1207,8 +1207,8 @@ export default function HomePage() {
           {/* ── Quick Links ── */}
           <div className="hero-quick-links hero-text-item" style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginTop: '2.5rem' }}>
             <Link to="/packages" className="hero-quick-link" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }}>
-              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', boxShadow: '0 8px 25px rgba(0,0,0,0.2)', transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-                🚐
+              <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.8)', border: '2px solid rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 25px rgba(0,0,0,0.2)', transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', overflow: 'hidden' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                <img src="/images/holiday-packages-3d.png" alt="Holiday Packages" style={{ width: '110%', height: '110%', objectFit: 'cover' }} />
               </div>
               <span style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.6)', lineHeight: 1.1, textAlign: 'center' }}>Holiday<br/>Packages</span>
             </Link>
