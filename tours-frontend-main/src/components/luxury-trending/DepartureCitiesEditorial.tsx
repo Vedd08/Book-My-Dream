@@ -82,7 +82,7 @@ const DepartureCitiesEditorial: React.FC<DepartureCitiesEditorialProps> = ({ des
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:gap-8 items-start">
         
         {/* Left Section: Header */}
-        <div className="w-full lg:w-1/3 relative lg:sticky top-32 mb-12 lg:mb-0">
+        <div className="w-full lg:w-1/3 relative lg:sticky lg:top-32 mb-12 lg:mb-0">
           <p className="city-header-text uppercase tracking-[0.3em] text-xs font-semibold text-[#671231] mb-4">
             From Your Doorstep
           </p>

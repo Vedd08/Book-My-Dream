@@ -116,6 +116,14 @@ export default function PromoPopup() {
         }
         .premium-input::placeholder { color: #9ca3af; }
         select.premium-input { cursor: pointer; appearance: none; }
+
+        .promo-form-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+        .promo-form-full { grid-column: 1 / -1; }
+        .promo-close-btn { top: 12px; right: 12px; border: 1px solid #f0f0f0; }
+        @media (min-width: 640px) {
+          .promo-form-grid { grid-template-columns: 1fr 1fr; }
+          .promo-close-btn { top: -15px; right: -15px; border: none; }
+        }
       `}</style>
 
       <div style={{
@@ -135,10 +143,10 @@ export default function PromoPopup() {
         {/* Floating Close Button */}
         <button
           onClick={handleClose}
+          className="promo-close-btn"
           style={{
-            position: 'absolute', top: window.innerWidth < 768 ? 12 : -15, right: window.innerWidth < 768 ? 12 : -15,
+            position: 'absolute',
             background: '#ffffff',
-            border: window.innerWidth < 768 ? '1px solid #f0f0f0' : 'none',
             borderRadius: '50%',
             width: 40, height: 40,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -233,7 +241,7 @@ export default function PromoPopup() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 500 ? '1fr' : '1fr 1fr', gap: '1.2rem' }}>
+              <div className="promo-form-grid">
                 
                 {/* Full Name */}
                 <div>
@@ -254,7 +262,7 @@ export default function PromoPopup() {
                 </div>
 
                 {/* Email Address */}
-                <div style={{ gridColumn: window.innerWidth < 500 ? 'span 1' : 'span 2' }}>
+                <div className="promo-form-full">
                   <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#374151', marginBottom: '0.4rem' }}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
                   <div className="premium-input-wrapper">
                     <div className="icon-box"><Mail size={18} /></div>

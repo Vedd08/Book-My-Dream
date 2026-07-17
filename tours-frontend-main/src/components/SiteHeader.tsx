@@ -60,7 +60,7 @@ export default function SiteHeader() {
             alt="Book My Dream Travels Logo" 
             style={{ height: '50px', width: 'auto', borderRadius: '8px', flexShrink: 0 }} 
           />
-          <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1, overflow: 'hidden', minWidth: 0 }}>
+          <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1, overflow: 'hidden', minWidth: 0, width: '100%' }}>
             <span style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(0.9rem, 4vw, 1.125rem)', fontWeight: 700, color: logoColor, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', marginBottom: '0.15rem' }}>Book My Dream</span>
             <span className="mobile-hidden-text" style={{ fontSize: '.65rem', fontWeight: 700, letterSpacing: '.2em', color: accentColor, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>Ek Safar Hamare Sath</span>
           </span>
