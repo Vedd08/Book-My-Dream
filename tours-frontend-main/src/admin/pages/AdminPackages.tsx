@@ -150,154 +150,157 @@ export default function AdminPackages() {
       {showForm && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex' }}>
           <div style={{ flex: 1, background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)' }} onClick={() => setShowForm(false)} />
-          <div style={{ width: '100%', maxWidth: 640, background: '#fff', overflowY: 'auto', boxShadow: '-8px 0 40px rgba(0,0,0,.15)', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
+          <div style={{ width: '100%', maxWidth: 640, background: '#fff', display: 'flex', flexDirection: 'column', maxHeight: '100vh' }}>
+            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
               <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600 }}>{editing ? 'Edit Package' : 'Add New Package'}</h2>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: 4 }}><X size={20} /></button>
             </div>
-            <form onSubmit={save} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <label style={{ gridColumn: 'span 2' }}>
-                  <span style={labelStyle}>Package Name</span>
-                  <input required value={form.name} onChange={e => update('name', e.target.value)} style={inputStyle} />
-                </label>
-                <label style={{ gridColumn: 'span 2' }}>
-                  <span style={labelStyle}>Slug (URL)</span>
-                  <input required disabled={!!editing} value={form.slug} onChange={e => update('slug', e.target.value)} style={{ ...inputStyle, background: editing ? '#f8fafc' : '#fff' }} />
-                </label>
-                <label style={{ gridColumn: 'span 1' }}>
-                  <span style={labelStyle}>Destination</span>
-                  <input required value={form.destination} onChange={e => update('destination', e.target.value)} style={inputStyle} />
-                </label>
-                <label style={{ gridColumn: 'span 1' }}>
-                  <span style={labelStyle}>Country</span>
-                  <input required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} />
-                </label>
-                <label style={{ gridColumn: 'span 2' }}>
-                  <span style={labelStyle}>Duration</span>
-                  <input required value={form.duration} onChange={e => update('duration', e.target.value)} style={inputStyle} />
-                </label>
-                <label style={{ gridColumn: 'span 2' }}>
-                  <span style={labelStyle}>Image</span>
-                  <input type="file" accept="image/*" onChange={async (e) => {
-                    const file = e.target.files?.[0]; if (!file) return;
-                    const data = new FormData(); data.append('image', file);
-                    setUploadingImage(true); setImageError('');
-                    try {
-                      const res = await api('/api/admin/upload', { method: 'POST', headers: {} as any, body: data });
-                      if (!res.ok) {
-                        const errData = await res.json().catch(()=>({}));
-                        throw new Error(errData.error || 'Upload failed');
-                      }
-                      const json = await res.json();
-                      update('image', json.url);
-                    } catch (err: any) {
-                      setImageError('Error uploading image: ' + err.message + '. (Are Cloudinary keys set in Render?)');
-                    } finally {
-                      setUploadingImage(false);
-                    }
-                  }} style={{ fontSize: '.875rem' }} />
-                  {uploadingImage && <div style={{ fontSize: '.8rem', color: '#2563eb', marginTop: 4 }}>Uploading image, please wait...</div>}
-                  {imageError && <div style={{ fontSize: '.8rem', color: '#ef4444', marginTop: 4 }}>{imageError}</div>}
-                  {form.image && !uploadingImage && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
-                </label>
-                <label>
-                  <span style={labelStyle}>Type</span>
-                  <select value={form.type} onChange={e => update('type', e.target.value)} style={inputStyle}>
-                    {TYPES.map(t => <option key={t}>{t}</option>)}
-                  </select>
-                </label>
-                <label>
-                  <span style={labelStyle}>Region</span>
-                  <select value={form.region} onChange={e => update('region', e.target.value)} style={inputStyle}>
-                    {REGIONS.map(r => <option key={r}>{r}</option>)}
-                  </select>
-                </label>
-                {[
-                  { key: 'price', label: 'Original Price (₹)' },
-                  { key: 'discountPrice', label: 'Sale Price (₹)' },
-                  { key: 'rating', label: 'Rating (0–5)' },
-                  { key: 'reviews', label: 'Reviews Count' },
-                ].map(({ key, label }) => (
-                  <label key={key}>
-                    <span style={labelStyle}>{label}</span>
-                    <input type="number" step="0.1" value={String((form as any)[key])} onChange={e => update(key, e.target.value)} style={inputStyle} />
+            
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              <form id="package-form" onSubmit={save} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <label style={{ gridColumn: 'span 2' }}>
+                    <span style={labelStyle}>Package Name</span>
+                    <input required value={form.name} onChange={e => update('name', e.target.value)} style={inputStyle} />
                   </label>
-                ))}
-                <label style={{ gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '.75rem', cursor: 'pointer' }}>
-                  <input type="checkbox" checked={!!form.featured} onChange={e => update('featured', e.target.checked)} style={{ width: 18, height: 18 }} />
-                  <span style={{ fontWeight: 500, fontSize: '.875rem' }}>Mark as Featured Package</span>
-                </label>
-              </div>
-
-              {/* Advanced Arrays Section */}
-              <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#1a2332' }}>Additional Details</h3>
-                
-                <label>
-                  <span style={labelStyle}>Tour Highlights (One per line)</span>
-                  <textarea value={form.highlights?.join('\n')} onChange={e => update('highlights', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Guided tour of the Taj Mahal&#10;Sunset cruise on the backwaters" />
-                </label>
-                
-                <label>
-                  <span style={labelStyle}>Inclusions (One per line)</span>
-                  <textarea value={form.inclusions?.join('\n')} onChange={e => update('inclusions', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Airport Transfers&#10;Breakfast & Dinner" />
-                </label>
-                
-                <label>
-                  <span style={labelStyle}>Exclusions (One per line)</span>
-                  <textarea value={form.exclusions?.join('\n')} onChange={e => update('exclusions', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Flight Tickets&#10;Personal Expenses" />
-                </label>
-
-                <div>
-                  <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    Itinerary
-                    <button type="button" onClick={() => update('itinerary', [...(form.itinerary || []), { day: (form.itinerary?.length || 0) + 1, title: '', description: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add Day</button>
-                  </span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
-                    {form.itinerary?.map((it, i) => (
-                      <div key={i} style={{ border: '1px solid #e2e8f0', padding: '.75rem', borderRadius: 8, background: '#f8fafc' }}>
-                        <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.5rem' }}>
-                          <input placeholder="Day" type="number" value={it.day} onChange={e => { const n = [...form.itinerary]; n[i].day = Number(e.target.value); update('itinerary', n) }} style={{ width: 60, ...inputStyle }} />
-                          <input placeholder="Title (e.g. Arrival in Delhi)" value={it.title} onChange={e => { const n = [...form.itinerary]; n[i].title = e.target.value; update('itinerary', n) }} style={{ flex: 1, ...inputStyle }} />
-                          <button type="button" onClick={() => { const n = [...form.itinerary]; n.splice(i, 1); update('itinerary', n) }} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
-                        </div>
-                        <textarea placeholder="Description of the day's activities..." value={it.description} onChange={e => { const n = [...form.itinerary]; n[i].description = e.target.value; update('itinerary', n) }} style={{ ...inputStyle, minHeight: 60 }} />
-                      </div>
-                    ))}
-                    {(!form.itinerary || form.itinerary.length === 0) && <p style={{ fontSize: '.875rem', color: '#94a3b8' }}>No itinerary days added.</p>}
-                  </div>
+                  <label style={{ gridColumn: 'span 2' }}>
+                    <span style={labelStyle}>Slug (URL)</span>
+                    <input required disabled={!!editing} value={form.slug} onChange={e => update('slug', e.target.value)} style={{ ...inputStyle, background: editing ? '#f8fafc' : '#fff' }} />
+                  </label>
+                  <label style={{ gridColumn: 'span 1' }}>
+                    <span style={labelStyle}>Destination</span>
+                    <input required value={form.destination} onChange={e => update('destination', e.target.value)} style={inputStyle} />
+                  </label>
+                  <label style={{ gridColumn: 'span 1' }}>
+                    <span style={labelStyle}>Country</span>
+                    <input required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} />
+                  </label>
+                  <label style={{ gridColumn: 'span 2' }}>
+                    <span style={labelStyle}>Duration</span>
+                    <input required value={form.duration} onChange={e => update('duration', e.target.value)} style={inputStyle} />
+                  </label>
+                  <label style={{ gridColumn: 'span 2' }}>
+                    <span style={labelStyle}>Image</span>
+                    <input type="file" accept="image/*" onChange={async (e) => {
+                      const file = e.target.files?.[0]; if (!file) return;
+                      const data = new FormData(); data.append('image', file);
+                      setUploadingImage(true); setImageError('');
+                      try {
+                        const res = await api('/api/admin/upload', { method: 'POST', headers: {} as any, body: data });
+                        if (!res.ok) {
+                          const errData = await res.json().catch(()=>({}));
+                          throw new Error(errData.error || 'Upload failed');
+                        }
+                        const json = await res.json();
+                        update('image', json.url);
+                      } catch (err: any) {
+                        setImageError('Error uploading image: ' + err.message + '. (Are Cloudinary keys set in Render?)');
+                      } finally {
+                        setUploadingImage(false);
+                      }
+                    }} style={{ fontSize: '.875rem' }} />
+                    {uploadingImage && <div style={{ fontSize: '.8rem', color: '#2563eb', marginTop: 4 }}>Uploading image, please wait...</div>}
+                    {imageError && <div style={{ fontSize: '.8rem', color: '#ef4444', marginTop: 4 }}>{imageError}</div>}
+                    {form.image && !uploadingImage && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                  </label>
+                  <label>
+                    <span style={labelStyle}>Type</span>
+                    <select value={form.type} onChange={e => update('type', e.target.value)} style={inputStyle}>
+                      {TYPES.map(t => <option key={t}>{t}</option>)}
+                    </select>
+                  </label>
+                  <label>
+                    <span style={labelStyle}>Region</span>
+                    <select value={form.region} onChange={e => update('region', e.target.value)} style={inputStyle}>
+                      {REGIONS.map(r => <option key={r}>{r}</option>)}
+                    </select>
+                  </label>
+                  {[
+                    { key: 'price', label: 'Original Price (₹)' },
+                    { key: 'discountPrice', label: 'Sale Price (₹)' },
+                    { key: 'rating', label: 'Rating (0–5)' },
+                    { key: 'reviews', label: 'Reviews Count' },
+                  ].map(({ key, label }) => (
+                    <label key={key}>
+                      <span style={labelStyle}>{label}</span>
+                      <input type="number" step="0.1" value={String((form as any)[key])} onChange={e => update(key, e.target.value)} style={inputStyle} />
+                    </label>
+                  ))}
+                  <label style={{ gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '.75rem', cursor: 'pointer' }}>
+                    <input type="checkbox" checked={!!form.featured} onChange={e => update('featured', e.target.checked)} style={{ width: 18, height: 18 }} />
+                    <span style={{ fontWeight: 500, fontSize: '.875rem' }}>Mark as Featured Package</span>
+                  </label>
                 </div>
 
-                <div>
-                  <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    Frequently Asked Questions (FAQs)
-                    <button type="button" onClick={() => update('faqs', [...(form.faqs || []), { q: '', a: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add FAQ</button>
-                  </span>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
-                    {form.faqs?.map((faq, i) => (
-                      <div key={i} style={{ border: '1px solid #e2e8f0', padding: '.75rem', borderRadius: 8, background: '#f8fafc' }}>
-                        <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.5rem' }}>
-                          <input placeholder="Question" value={faq.q} onChange={e => { const n = [...form.faqs]; n[i].q = e.target.value; update('faqs', n) }} style={{ flex: 1, ...inputStyle }} />
-                          <button type="button" onClick={() => { const n = [...form.faqs]; n.splice(i, 1); update('faqs', n) }} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
+                {/* Advanced Arrays Section */}
+                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#1a2332' }}>Additional Details</h3>
+                  
+                  <label>
+                    <span style={labelStyle}>Tour Highlights (One per line)</span>
+                    <textarea value={form.highlights?.join('\n')} onChange={e => update('highlights', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Guided tour of the Taj Mahal&#10;Sunset cruise on the backwaters" />
+                  </label>
+                  
+                  <label>
+                    <span style={labelStyle}>Inclusions (One per line)</span>
+                    <textarea value={form.inclusions?.join('\n')} onChange={e => update('inclusions', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Airport Transfers&#10;Breakfast & Dinner" />
+                  </label>
+                  
+                  <label>
+                    <span style={labelStyle}>Exclusions (One per line)</span>
+                    <textarea value={form.exclusions?.join('\n')} onChange={e => update('exclusions', e.target.value.split('\n').filter(Boolean))} style={{ ...inputStyle, minHeight: 80 }} placeholder="e.g. Flight Tickets&#10;Personal Expenses" />
+                  </label>
+
+                  <div>
+                    <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      Itinerary
+                      <button type="button" onClick={() => update('itinerary', [...(form.itinerary || []), { day: (form.itinerary?.length || 0) + 1, title: '', description: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add Day</button>
+                    </span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
+                      {form.itinerary?.map((it, i) => (
+                        <div key={i} style={{ border: '1px solid #e2e8f0', padding: '.75rem', borderRadius: 8, background: '#f8fafc' }}>
+                          <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.5rem' }}>
+                            <input placeholder="Day" type="number" value={it.day} onChange={e => { const n = [...form.itinerary]; n[i].day = Number(e.target.value); update('itinerary', n) }} style={{ width: 60, ...inputStyle }} />
+                            <input placeholder="Title (e.g. Arrival in Delhi)" value={it.title} onChange={e => { const n = [...form.itinerary]; n[i].title = e.target.value; update('itinerary', n) }} style={{ flex: 1, ...inputStyle }} />
+                            <button type="button" onClick={() => { const n = [...form.itinerary]; n.splice(i, 1); update('itinerary', n) }} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
+                          </div>
+                          <textarea placeholder="Description of the day's activities..." value={it.description} onChange={e => { const n = [...form.itinerary]; n[i].description = e.target.value; update('itinerary', n) }} style={{ ...inputStyle, minHeight: 60 }} />
                         </div>
-                        <textarea placeholder="Answer" value={faq.a} onChange={e => { const n = [...form.faqs]; n[i].a = e.target.value; update('faqs', n) }} style={{ ...inputStyle, minHeight: 60 }} />
-                      </div>
-                    ))}
-                    {(!form.faqs || form.faqs.length === 0) && <p style={{ fontSize: '.875rem', color: '#94a3b8' }}>No FAQs added.</p>}
+                      ))}
+                      {(!form.itinerary || form.itinerary.length === 0) && <p style={{ fontSize: '.875rem', color: '#94a3b8' }}>No itinerary days added.</p>}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span style={{ ...labelStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      Frequently Asked Questions (FAQs)
+                      <button type="button" onClick={() => update('faqs', [...(form.faqs || []), { q: '', a: '' }])} style={{ color: '#186a76', background: 'none', border: 'none', fontSize: '.75rem', cursor: 'pointer', fontWeight: 600 }}>+ Add FAQ</button>
+                    </span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem', marginTop: '.5rem' }}>
+                      {form.faqs?.map((faq, i) => (
+                        <div key={i} style={{ border: '1px solid #e2e8f0', padding: '.75rem', borderRadius: 8, background: '#f8fafc' }}>
+                          <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.5rem' }}>
+                            <input placeholder="Question" value={faq.q} onChange={e => { const n = [...form.faqs]; n[i].q = e.target.value; update('faqs', n) }} style={{ flex: 1, ...inputStyle }} />
+                            <button type="button" onClick={() => { const n = [...form.faqs]; n.splice(i, 1); update('faqs', n) }} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}><X size={16} /></button>
+                          </div>
+                          <textarea placeholder="Answer" value={faq.a} onChange={e => { const n = [...form.faqs]; n[i].a = e.target.value; update('faqs', n) }} style={{ ...inputStyle, minHeight: 60 }} />
+                        </div>
+                      ))}
+                      {(!form.faqs || form.faqs.length === 0) && <p style={{ fontSize: '.875rem', color: '#94a3b8' }}>No FAQs added.</p>}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
+            </div>
 
-              <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', marginTop: 'auto' }}>
-                <button type="submit" disabled={saving || uploadingImage} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: (saving || uploadingImage) ? '#94a3b8' : '#186a76', color: '#fff', fontWeight: 700, cursor: (saving || uploadingImage) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
-                  <Save size={18} />{(saving || uploadingImage) ? 'Saving…' : (editing ? 'Update Package' : 'Add Package')}
-                </button>
-                <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
-                  Cancel
-                </button>
-              </div>
-            </form>
+            <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', background: '#fff', flexShrink: 0 }}>
+              <button type="submit" form="package-form" disabled={saving || uploadingImage} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: (saving || uploadingImage) ? '#94a3b8' : '#186a76', color: '#fff', fontWeight: 700, cursor: (saving || uploadingImage) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                <Save size={18} />{(saving || uploadingImage) ? 'Saving…' : (editing ? 'Update Package' : 'Add Package')}
+              </button>
+              <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

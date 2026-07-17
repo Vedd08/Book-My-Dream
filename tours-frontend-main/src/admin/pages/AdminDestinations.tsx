@@ -137,13 +137,15 @@ export default function AdminDestinations() {
       {showForm && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex' }}>
           <div style={{ flex: 1, background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)' }} onClick={() => setShowForm(false)} />
-          <div style={{ width: '100%', maxWidth: 520, background: '#fff', overflowY: 'auto', boxShadow: '-8px 0 40px rgba(0,0,0,.15)', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
+          <div style={{ width: '100%', maxWidth: 520, background: '#fff', display: 'flex', flexDirection: 'column', maxHeight: '100vh' }}>
+            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
               <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600 }}>{editing ? 'Edit Destination' : 'Add New Destination'}</h2>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: 4 }}><X size={20} /></button>
             </div>
-            <form onSubmit={save} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', flex: 1 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              <form id="destination-form" onSubmit={save} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <label style={{ gridColumn: 'span 2' }}>
                   <span style={labelStyle}>Destination Name</span>
                   <input required value={form.name} onChange={e => update('name', e.target.value)} style={inputStyle} />
@@ -213,15 +215,17 @@ export default function AdminDestinations() {
                   {form.image && !uploadingImage && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
                 </label>
               </div>
-              <div style={{ position: 'sticky', bottom: 0, background: '#fff', paddingTop: '1rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem' }}>
-                <button type="submit" disabled={saving || uploadingImage} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: (saving || uploadingImage) ? '#94a3b8' : '#186a76', color: '#fff', fontWeight: 700, cursor: (saving || uploadingImage) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
-                  <Save size={18} />{(saving || uploadingImage) ? 'Saving…' : (editing ? 'Update Destination' : 'Add Destination')}
-                </button>
-                <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
-                  Cancel
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
+            
+            <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid #f1f5f9', display: 'flex', gap: '.75rem', background: '#fff', flexShrink: 0 }}>
+              <button type="submit" form="destination-form" disabled={saving || uploadingImage} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem', padding: '.75rem', borderRadius: 10, border: 'none', background: (saving || uploadingImage) ? '#94a3b8' : '#186a76', color: '#fff', fontWeight: 700, cursor: (saving || uploadingImage) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                <Save size={18} />{(saving || uploadingImage) ? 'Saving…' : (editing ? 'Update Destination' : 'Add Destination')}
+              </button>
+              <button type="button" onClick={() => setShowForm(false)} style={{ padding: '.75rem 1.25rem', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: '.9rem' }}>
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
