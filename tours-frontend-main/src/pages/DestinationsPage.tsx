@@ -121,7 +121,7 @@ export default function DestinationsPage() {
                     backgroundColor: '#1a1a2e', // fallback color if no image
                   }}
                 />
-                
+               
                 {/* Gradient Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
                 <div className="absolute inset-0 bg-[#186a76]/30 opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-500" />

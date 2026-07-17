@@ -1090,6 +1090,7 @@ export default function HomePage() {
         }
 
         /* Hero responsive */
+        .hero-section { align-items: center; }
         @media (max-width: 900px) {
           .hero-social-vert { display: none; }
           .hero-thumb { width: 64px; }
@@ -1097,29 +1098,33 @@ export default function HomePage() {
         }
         @media (max-width: 767px) {
           .hero-social-vert { display: none; }
-          .hero-thumb-strip { gap: 0.4rem; }
-          .hero-thumb { width: 52px; }
-          .hero-thumb img { height: 34px; }
-          .hero-thumb-label { font-size: 0.42rem; }
-          .hero-nav-btn { width: 36px; height: 36px; }
-          .hero-nav-left { left: 0.5rem; }
-          .hero-nav-right { right: 0.5rem; }
+          /* Duplicate of hero-social-vert's socialLinks, floating bottom-center.
+             Hidden on mobile for the same reason: it crowds the fixed WhatsApp
+             button in the same corner, right on load before any scroll moves it. */
+          .hero-thumb-strip { display: none; }
+          /* top:50% of the viewport cuts through the stacked hero text on any
+             phone-sized screen — there's no height where it's reliably clear.
+             Slides auto-advance every 5s regardless, so this is safe to drop. */
+          .hero-nav-btn { display: none; }
           .hero-badge { font-size: 0.67rem; padding: 0.26rem 0.7rem; }
           .hero-balloon { top: 5%; right: 1%; opacity: 0.7; }
         }
         @media (max-width: 480px) {
-          .hero-thumb { width: 44px; }
-          .hero-thumb img { height: 28px; }
-          .hero-thumb-label { display: none; }
           .hero-search-btn { padding: 0.55rem 1rem; font-size: 0.82rem; }
           .hero-dest-name { font-size: 0.65rem; }
+        }
+        /* Short viewports (e.g. iPhone SE): centering overflowing hero content
+           pushes the top of it above y=0, behind the fixed header. Anchor to
+           the top instead so it's always fully below the header. */
+        @media (max-height: 720px) {
+          .hero-section { align-items: flex-start; }
         }
       `}</style>
 
       {/* ═══════════════════════════════════════════════
           HERO
       ═══════════════════════════════════════════════ */}
-      <section style={{ position: 'relative', height: '100svh', minHeight: 620, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <section className="hero-section" style={{ position: 'relative', height: '100svh', minHeight: 620, display: 'flex', justifyContent: 'center', overflow: 'hidden' }}>
 
         {/* ── Slides with Ken Burns ── */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
