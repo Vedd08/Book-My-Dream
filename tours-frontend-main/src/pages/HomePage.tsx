@@ -255,6 +255,7 @@ export default function HomePage() {
   const [featured, setFeatured] = useState<Package[]>(staticPackages.filter(p => p.featured))
   const [trending, setTrending] = useState<Package[]>(staticPackages.slice(0, 12))
   const [popularDest, setPopularDest] = useState<Destination[]>([])
+  const [departureCities, setDepartureCities] = useState<Destination[]>([])
   const [galleryImgs, setGalleryImgs] = useState<{ src: string, title: string, category: string }[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -295,6 +296,7 @@ export default function HomePage() {
         ? data.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
         : []
       setPopularDest(sorted.slice(0, 8))
+      setDepartureCities(sorted.filter((d: any) => d.isDepartureCity))
     }).catch(() => { /* no destinations fallback */ })
     fetch(`${API_URL}/api/gallery`).then(r => r.json()).then(data => {
       if (Array.isArray(data)) setGalleryImgs(data)
@@ -1459,7 +1461,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════
           DEPARTURE CITIES
       ═══════════════════════════════════════════════ */}
-      <DepartureCitiesEditorial destinations={popularDest} />
+      <DepartureCitiesEditorial destinations={departureCities.length > 0 ? departureCities : popularDest} />
 
       {/* ═══════════════════════════════════════════════
           FEATURED PACKAGES

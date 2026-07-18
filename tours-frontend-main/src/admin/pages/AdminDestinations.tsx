@@ -12,12 +12,13 @@ type Destination = {
   bestTime: string
   image: string
   description: string
+  isDepartureCity?: boolean
 }
 
 const REGIONS = ['Domestic', 'International', 'Honeymoon']
 const emptyForm = (): Destination => ({
   slug: '', name: '', country: 'India', state: '', region: 'Domestic',
-  bestTime: 'Anytime', image: '', description: ''
+  bestTime: 'Anytime', image: '', description: '', isDepartureCity: false
 })
 
 export default function AdminDestinations() {
@@ -115,6 +116,7 @@ export default function AdminDestinations() {
                 <img src={getImageUrl(dest.image)} alt={dest.name} onError={(e) => { e.currentTarget.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#e2e8f0' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.6), transparent)' }} />
                 <span style={{ position: 'absolute', top: 8, left: 8, padding: '.2rem .6rem', borderRadius: 9999, background: 'rgba(255,255,255,.9)', fontSize: '.7rem', fontWeight: 700, color: '#186a76' }}>{dest.region}</span>
+                {dest.isDepartureCity && <span style={{ position: 'absolute', top: 8, right: 8, padding: '.2rem .6rem', borderRadius: 9999, background: '#186a76', fontSize: '.7rem', fontWeight: 700, color: '#fff' }}>Departure City</span>}
                 <p style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '.9rem', color: '#fff', fontWeight: 600 }}>{dest.name}</p>
               </div>
               <div style={{ padding: '1rem' }}>
@@ -213,6 +215,10 @@ export default function AdminDestinations() {
                   {uploadingImage && <div style={{ fontSize: '.8rem', color: '#2563eb', marginTop: 4 }}>Uploading image, please wait...</div>}
                   {imageError && <div style={{ fontSize: '.8rem', color: '#ef4444', marginTop: 4 }}>{imageError}</div>}
                   {form.image && !uploadingImage && <img src={getImageUrl(form.image)} alt="Preview" style={{ marginTop: '0.5rem', width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />}
+                </label>
+                <label style={{ gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '.75rem', cursor: 'pointer', marginTop: '.5rem' }}>
+                  <input type="checkbox" checked={!!form.isDepartureCity} onChange={e => update('isDepartureCity', e.target.checked)} style={{ width: 18, height: 18 }} />
+                  <span style={{ fontWeight: 500, fontSize: '.875rem' }}>Mark as Departure City</span>
                 </label>
               </div>
               </form>

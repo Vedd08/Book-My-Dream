@@ -11,6 +11,7 @@ export interface IDestination extends Document {
   bestTime: string;
   attractions: string[];
   tips: string[];
+  isDepartureCity?: boolean;
 }
 
 const DestinationSchema: Schema = new Schema({
@@ -23,7 +24,8 @@ const DestinationSchema: Schema = new Schema({
   image: { type: String, required: true },
   bestTime: { type: String, required: true },
   attractions: [{ type: String }],
-  tips: [{ type: String }]
+  tips: [{ type: String }],
+  isDepartureCity: { type: Boolean, default: false }
 }, { timestamps: true });
 
 export default mongoose.model<IDestination>('Destination', DestinationSchema);

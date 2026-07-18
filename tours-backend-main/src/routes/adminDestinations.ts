@@ -39,7 +39,8 @@ router.post('/', async (req: Request, res: Response) => {
       image: body.image || '/images/placeholder.jpg',
       bestTime: body.bestTime ?? 'Anytime',
       attractions: body.attractions ?? [],
-      tips: body.tips ?? []
+      tips: body.tips ?? [],
+      isDepartureCity: body.isDepartureCity ?? false
     });
 
     await newDest.save();
