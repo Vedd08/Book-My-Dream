@@ -9,7 +9,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import switzerlandImg from '../assets/switzerland.jpg'
 import customItineraryImg from '../assets/custom_itinerary.png'
-import globeIllustration from '../assets/globe_illustration.png'
+import globeVideo from '../assets/globe_animated.mp4'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -185,24 +185,6 @@ export default function PackagesPage() {
           .featured-grid { grid-template-columns: 1fr; gap: 4rem; }
           .top-featured-card { left: 5%; width: 90%; bottom: -30px; }
         }
-
-        @keyframes slowSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes floatEffect {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(2deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
-        }
-        .animated-globe {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          border-radius: 16px;
-          animation: floatEffect 6s ease-in-out infinite;
-          filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
-        }
       `}</style>
 
       <section className="hero-section">
@@ -338,8 +320,15 @@ export default function PackagesPage() {
           </div>
           
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1/1', background: 'rgba(255,255,255,0.05)', borderRadius: '50%', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px', boxShadow: '0 20px 40px rgba(0,0,0,0.1) inset' }}>
-               <img src={globeIllustration} alt="Custom Trip Planning" className="animated-globe" />
+            <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1/1', background: 'rgba(255,255,255,0.05)', borderRadius: '50%', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '12px', boxShadow: '0 20px 40px rgba(0,0,0,0.1) inset' }}>
+               <video 
+                 src={globeVideo} 
+                 autoPlay 
+                 loop 
+                 muted 
+                 playsInline 
+                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} 
+               />
             </div>
           </div>
         </div>
