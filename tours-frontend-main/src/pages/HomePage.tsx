@@ -285,14 +285,9 @@ export default function HomePage() {
           ? featuredData.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
           : [];
         
-        // If no featured packages exist in the database, fallback to the latest packages
-        if (featuredSorted.length === 0) {
-          featuredSorted = allSorted.slice(0, 5);
-        }
-        
         setFeatured(featuredSorted)
       }).catch(() => {
-        setFeatured(allSorted.slice(0, 5))
+        setFeatured([])
       })
     }).catch(() => { /* keep static fallback */ })
     fetch(`${API_URL}/api/destinations`).then(r => r.json()).then(data => {
@@ -1153,7 +1148,7 @@ export default function HomePage() {
         <img src={realBalloonImg} alt="Hot Air Balloon" className="hero-balloon" />
 
         {/* ── Main Content ── */}
-        <div className="container" ref={heroTextRef} style={{ position: 'relative', zIndex: 5, textAlign: 'center', color: '#fff', paddingTop: '6rem', paddingBottom: '9rem' }}>
+        <div className="container" ref={heroTextRef} style={{ position: 'relative', zIndex: 5, textAlign: 'center', color: '#fff', paddingTop: 'clamp(4rem, 8vh, 6rem)', paddingBottom: 'clamp(2rem, 8vh, 9rem)' }}>
 
           {/* Per-slide crossfade destination badge */}
           <div className="hero-dest-label hero-text-item">
@@ -1236,14 +1231,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ── Social Links Strip ── */}
-        <div className="hero-thumb-strip" style={{ padding: '0.75rem 1.5rem', gap: '1.25rem' }}>
-          {socialLinks.map(({ icon: SocialIcon, url, label }, i) => (
-            <a key={i} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="hero-social-icon">
-              <SocialIcon size={18} />
-            </a>
-          ))}
-        </div>
 
         {/* ── Prev / Next arrows ── */}
         {([{ fn: prevSlide, side: 'left', Icon: ChevronLeft }, { fn: nextSlide, side: 'right', Icon: ChevronRight }] as const).map(({ fn, side, Icon }) => (
