@@ -330,7 +330,7 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
               textTransform: 'uppercase', letterSpacing: '0.2em',
             }}>
               <Sparkles size={11} />
-              Featured Destinations
+              Trending Destinations
             </span>
           </div>
           <h2 style={{
