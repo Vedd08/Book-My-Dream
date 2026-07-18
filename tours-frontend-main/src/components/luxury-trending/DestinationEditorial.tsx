@@ -443,19 +443,21 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
               </p>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-                <div>
-                  <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 2px' }}>Starting from</p>
-                  <p style={{
-                    fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 800,
-                    background: 'linear-gradient(135deg, #D4AF37, #f0d060)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                    margin: 0, lineHeight: 1,
-                  }}>
-                    Rs.{activeItem.price.toLocaleString()}
-                  </p>
-                </div>
+                {activeItem.price > 0 && (
+                  <div>
+                    <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 2px' }}>Starting from</p>
+                    <p style={{
+                      fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 800,
+                      background: 'linear-gradient(135deg, #D4AF37, #f0d060)',
+                      WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                      margin: 0, lineHeight: 1,
+                    }}>
+                      Rs.{activeItem.price.toLocaleString()}
+                    </p>
+                  </div>
+                )}
 
-                <Link to={`/packages/${activeItem.slug}`} style={{
+                <Link to={`/destinations/${activeItem.slug}`} style={{
                   display: 'inline-flex', alignItems: 'center', gap: 10,
                   padding: '0.75rem 1.75rem', borderRadius: 999,
                   background: 'linear-gradient(135deg, #D4AF37 0%, #C9A86A 100%)',
@@ -467,7 +469,7 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,175,55,0.6)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(212,175,55,0.45)'; }}
                 >
-                  Explore Package <ArrowRight size={16} />
+                  Explore Destination <ArrowRight size={16} />
                 </Link>
 
                 <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
