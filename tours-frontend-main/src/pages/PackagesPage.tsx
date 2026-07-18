@@ -8,6 +8,7 @@ import PackageCard from '../components/PackageCard'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import switzerlandImg from '../assets/switzerland.jpg'
+import customItineraryImg from '../assets/custom_itinerary.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -319,7 +320,7 @@ export default function PackagesPage() {
           
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '100%', maxWidth: '400px', aspectRatio: '1/1', background: 'rgba(255,255,255,0.1)', borderRadius: '24px', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '12px' }}>
-               <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop" alt="Custom Trip Planning" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }} />
+               <img src={customItineraryImg} alt="Custom Trip Planning" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }} />
             </div>
           </div>
         </div>
