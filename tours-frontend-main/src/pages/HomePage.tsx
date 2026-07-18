@@ -1461,7 +1461,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════
           DEPARTURE CITIES
       ═══════════════════════════════════════════════ */}
-      <DepartureCitiesEditorial destinations={departureCities.length > 0 ? departureCities : popularDest} />
+      <DepartureCitiesEditorial destinations={departureCities} />
 
       {/* ═══════════════════════════════════════════════
           FEATURED PACKAGES
