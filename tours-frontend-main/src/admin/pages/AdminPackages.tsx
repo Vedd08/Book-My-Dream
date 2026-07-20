@@ -15,6 +15,24 @@ type Pkg = {
   faqs: { q: string; a: string }[];
 }
 
+const ALL_CURRENCIES = [
+  { code: 'USD', name: 'US Dollar' }, { code: 'EUR', name: 'Euro' }, { code: 'GBP', name: 'British Pound' },
+  { code: 'INR', name: 'Indian Rupee' }, { code: 'AUD', name: 'Australian Dollar' }, { code: 'CAD', name: 'Canadian Dollar' },
+  { code: 'SGD', name: 'Singapore Dollar' }, { code: 'CHF', name: 'Swiss Franc' }, { code: 'MYR', name: 'Malaysian Ringgit' },
+  { code: 'JPY', name: 'Japanese Yen' }, { code: 'CNY', name: 'Chinese Yuan' }, { code: 'AED', name: 'UAE Dirham' },
+  { code: 'NZD', name: 'New Zealand Dollar' }, { code: 'THB', name: 'Thai Baht' }, { code: 'ZAR', name: 'South African Rand' },
+  { code: 'HKD', name: 'Hong Kong Dollar' }, { code: 'IDR', name: 'Indonesian Rupiah' }, { code: 'PHP', name: 'Philippine Peso' },
+  { code: 'VND', name: 'Vietnamese Dong' }, { code: 'LKR', name: 'Sri Lankan Rupee' }, { code: 'NPR', name: 'Nepalese Rupee' },
+  { code: 'BDT', name: 'Bangladeshi Taka' }, { code: 'SAR', name: 'Saudi Riyal' }, { code: 'QAR', name: 'Qatari Riyal' },
+  { code: 'OMR', name: 'Omani Rial' }, { code: 'BHD', name: 'Bahraini Dinar' }, { code: 'KWD', name: 'Kuwaiti Dinar' },
+  { code: 'MUR', name: 'Mauritian Rupee' }, { code: 'MVR', name: 'Maldivian Rufiyaa' }, { code: 'SEK', name: 'Swedish Krona' },
+  { code: 'NOK', name: 'Norwegian Krone' }, { code: 'DKK', name: 'Danish Krone' }, { code: 'BRL', name: 'Brazilian Real' },
+  { code: 'MXN', name: 'Mexican Peso' }, { code: 'ARS', name: 'Argentine Peso' }, { code: 'RUB', name: 'Russian Ruble' },
+  { code: 'TRY', name: 'Turkish Lira' }, { code: 'EGP', name: 'Egyptian Pound' }, { code: 'ILS', name: 'Israeli New Shekel' },
+  { code: 'PLN', name: 'Polish Zloty' }, { code: 'CZK', name: 'Czech Koruna' }, { code: 'HUF', name: 'Hungarian Forint' },
+  { code: 'KRW', name: 'South Korean Won' }, { code: 'TWD', name: 'New Taiwan Dollar' }
+];
+
 const TYPES = ['Honeymoon', 'Family', 'Luxury', 'Group', 'Adventure', 'Solo']
 const REGIONS = ['Domestic', 'International']
 const emptyForm = (): Omit<Pkg, 'rating' | 'reviews' | 'foreignPrice' | 'foreignDiscountPrice'> & { rating: string; reviews: string; foreignPrice: string; foreignDiscountPrice: string } => ({
@@ -237,9 +255,10 @@ export default function AdminPackages() {
                     <>
                       <label>
                         <span style={labelStyle}>Foreign Currency</span>
-                        <select value={form.foreignCurrency || 'USD'} onChange={e => update('foreignCurrency', e.target.value)} style={inputStyle}>
-                          {['USD', 'EUR', 'AED', 'GBP', 'AUD', 'SGD', 'CAD', 'CHF'].map(c => <option key={c} value={c}>{c}</option>)}
-                        </select>
+                        <input list="currency-options" value={form.foreignCurrency || ''} onChange={e => update('foreignCurrency', e.target.value)} style={inputStyle} placeholder="Search or select..." />
+                        <datalist id="currency-options">
+                          {ALL_CURRENCIES.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
+                        </datalist>
                       </label>
                       <label>
                         <span style={labelStyle}>Foreign Price</span>
