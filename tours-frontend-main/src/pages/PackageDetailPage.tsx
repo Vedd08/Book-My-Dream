@@ -234,16 +234,23 @@ export default function PackageDetailPage() {
                 <div style={{ background: 'var(--primary)', padding: '1.35rem 1.5rem', color: '#fff' }}>
                   <p style={{ fontSize: '.65rem', opacity: .75, margin: '0 0 .3rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>Starting from</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '.25rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem' }}>
-                      <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
-                      {discount > 0 && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{inr(pkg.price)}</span>}
-                    </div>
-                    {pkg.foreignPrice ? (
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.25rem', color: 'rgba(255,255,255,0.9)' }}>
-                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>
-                        {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.75rem', textDecoration: 'line-through', opacity: .6 }}>{formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>}
+                    {pkg.region === 'International' && pkg.foreignPrice ? (
+                      <>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', color: '#fff' }}>
+                          <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>
+                          {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>}
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.25rem', color: 'rgba(255,255,255,0.9)' }}>
+                          <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
+                          {discount > 0 && <span style={{ fontSize: '.75rem', textDecoration: 'line-through', opacity: .6 }}>{inr(pkg.price)}</span>}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem' }}>
+                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
+                        {discount > 0 && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{inr(pkg.price)}</span>}
                       </div>
-                    ) : null}
+                    )}
                   </div>
                   <p style={{ fontSize: '.68rem', opacity: .7, margin: '.3rem 0 0' }}>per person · twin sharing</p>
                   {discount > 0 && (

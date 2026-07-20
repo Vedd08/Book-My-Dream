@@ -63,8 +63,16 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
           borderRadius: '999px',
           boxShadow: '0 4px 10px rgba(212, 175, 55, 0.3)'
         }}>
-          {pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
-          {pkg.foreignPrice ? ` / ${formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}` : ''}
+          {pkg.region === 'International' && pkg.foreignPrice ? (
+            <>
+              {formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
+              {' / '}{pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
+            </>
+          ) : (
+            <>
+              {pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
+            </>
+          )}
         </div>
 
         <h3 style={{

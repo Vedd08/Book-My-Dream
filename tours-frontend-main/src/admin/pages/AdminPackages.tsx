@@ -63,6 +63,30 @@ export default function AdminPackages() {
   }, [])
   useEffect(() => { load() }, [load])
 
+  useEffect(() => {
+    if (form.region === 'International' && form.foreignCurrency && (Number(form.price) > 0 || Number(form.discountPrice) > 0)) {
+      const controller = new AbortController();
+      fetch('https://api.exchangerate-api.com/v4/latest/INR', { signal: controller.signal })
+        .then(res => res.json())
+        .then(data => {
+          const rate = data.rates[form.foreignCurrency!];
+          if (rate) {
+            setForm(f => {
+              const newFP = String((Number(f.price) * rate).toFixed(2));
+              const newFDP = String((Number(f.discountPrice) * rate).toFixed(2));
+              if (f.foreignPrice !== newFP || f.foreignDiscountPrice !== newFDP) {
+                return { ...f, foreignPrice: newFP, foreignDiscountPrice: newFDP };
+              }
+              return f;
+            });
+          }
+        }).catch(err => {
+          if (err.name !== 'AbortError') console.error('Rate fetch error', err);
+        });
+      return () => controller.abort();
+    }
+  }, [form.price, form.discountPrice, form.foreignCurrency, form.region]);
+
   const update = (k: string, v: any) => setForm(f => ({ ...f, [k]: v }))
 
   const openAdd = () => { setForm(emptyForm()); setEditing(null); setShowForm(true); setMsg(''); setImageError(''); setUploadingImage(false); }
@@ -261,12 +285,12 @@ export default function AdminPackages() {
                         </datalist>
                       </label>
                       <label>
-                        <span style={labelStyle}>Foreign Price</span>
-                        <input type="number" step="0.1" value={String(form.foreignPrice)} onChange={e => update('foreignPrice', e.target.value)} style={inputStyle} />
+                        <span style={labelStyle}>Foreign Price (Auto)</span>
+                        <input type="number" step="0.1" value={String(form.foreignPrice)} readOnly style={{ ...inputStyle, background: '#f8fafc' }} />
                       </label>
                       <label>
-                        <span style={labelStyle}>Foreign Sale Price</span>
-                        <input type="number" step="0.1" value={String(form.foreignDiscountPrice)} onChange={e => update('foreignDiscountPrice', e.target.value)} style={inputStyle} />
+                        <span style={labelStyle}>Foreign Sale Price (Auto)</span>
+                        <input type="number" step="0.1" value={String(form.foreignDiscountPrice)} readOnly style={{ ...inputStyle, background: '#f8fafc' }} />
                       </label>
                     </>
                   )}
