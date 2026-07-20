@@ -17,7 +17,7 @@ type Pkg = {
 
 const TYPES = ['Honeymoon', 'Family', 'Luxury', 'Group', 'Adventure', 'Solo']
 const REGIONS = ['Domestic', 'International']
-const emptyForm = (): Omit<Pkg, 'rating' | 'reviews'> & { rating: string; reviews: string; foreignPrice: string; foreignDiscountPrice: string } => ({
+const emptyForm = (): Omit<Pkg, 'rating' | 'reviews' | 'foreignPrice' | 'foreignDiscountPrice'> & { rating: string; reviews: string; foreignPrice: string; foreignDiscountPrice: string } => ({
   slug: '', name: '', type: 'Group', region: 'Domestic',
   destination: '', country: 'India', duration: '3 Days / 2 Nights',
   price: 0, discountPrice: 0, rating: '4.5', reviews: '0',
