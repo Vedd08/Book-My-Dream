@@ -8,6 +8,7 @@ type Pkg = {
   slug: string; name: string; type: string; region: string
   destination: string; country: string; duration: string
   price: number; discountPrice: number; rating: number
+  foreignCurrency?: string; foreignPrice?: number; foreignDiscountPrice?: number;
   reviews: number; image: string; featured?: boolean
   highlights: string[]; inclusions: string[]; exclusions: string[];
   itinerary: { day: number; title: string; description: string }[];
@@ -16,10 +17,11 @@ type Pkg = {
 
 const TYPES = ['Honeymoon', 'Family', 'Luxury', 'Group', 'Adventure', 'Solo']
 const REGIONS = ['Domestic', 'International']
-const emptyForm = (): Omit<Pkg, 'rating' | 'reviews'> & { rating: string; reviews: string } => ({
+const emptyForm = (): Omit<Pkg, 'rating' | 'reviews'> & { rating: string; reviews: string; foreignPrice: string; foreignDiscountPrice: string } => ({
   slug: '', name: '', type: 'Group', region: 'Domestic',
   destination: '', country: 'India', duration: '3 Days / 2 Nights',
   price: 0, discountPrice: 0, rating: '4.5', reviews: '0',
+  foreignCurrency: 'USD', foreignPrice: '', foreignDiscountPrice: '',
   image: '/images/dest-goa.png', featured: false,
   highlights: [], inclusions: [], exclusions: [], itinerary: [], faqs: []
 })
@@ -50,6 +52,9 @@ export default function AdminPackages() {
     setForm({ 
       ...pkg, 
       price: pkg.price, discountPrice: pkg.discountPrice, rating: String(pkg.rating), reviews: String(pkg.reviews),
+      foreignCurrency: pkg.foreignCurrency || 'USD',
+      foreignPrice: pkg.foreignPrice ? String(pkg.foreignPrice) : '',
+      foreignDiscountPrice: pkg.foreignDiscountPrice ? String(pkg.foreignDiscountPrice) : '',
       highlights: pkg.highlights ?? [], inclusions: pkg.inclusions ?? [], exclusions: pkg.exclusions ?? [],
       itinerary: pkg.itinerary ?? [], faqs: pkg.faqs ?? []
     })
@@ -64,6 +69,8 @@ export default function AdminPackages() {
       ...form,
       price: Number(form.price), discountPrice: Number(form.discountPrice),
       rating: parseFloat(form.rating), reviews: parseInt(form.reviews),
+      foreignPrice: form.foreignPrice ? Number(form.foreignPrice) : undefined,
+      foreignDiscountPrice: form.foreignDiscountPrice ? Number(form.foreignDiscountPrice) : undefined,
     }
     const method = editing ? 'PUT' : 'POST'
     const url    = editing ? `/api/admin/packages/${editing}` : '/api/admin/packages'
@@ -226,6 +233,22 @@ export default function AdminPackages() {
                       <input type="number" step="0.1" value={String((form as any)[key])} onChange={e => update(key, e.target.value)} style={inputStyle} />
                     </label>
                   ))}
+                  {form.region === 'International' && (
+                    <>
+                      <label>
+                        <span style={labelStyle}>Foreign Currency (e.g. USD)</span>
+                        <input value={form.foreignCurrency || ''} onChange={e => update('foreignCurrency', e.target.value)} style={inputStyle} />
+                      </label>
+                      <label>
+                        <span style={labelStyle}>Foreign Price</span>
+                        <input type="number" step="0.1" value={String(form.foreignPrice)} onChange={e => update('foreignPrice', e.target.value)} style={inputStyle} />
+                      </label>
+                      <label>
+                        <span style={labelStyle}>Foreign Sale Price</span>
+                        <input type="number" step="0.1" value={String(form.foreignDiscountPrice)} onChange={e => update('foreignDiscountPrice', e.target.value)} style={inputStyle} />
+                      </label>
+                    </>
+                  )}
                   <label style={{ gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '.75rem', cursor: 'pointer' }}>
                     <input type="checkbox" checked={!!form.featured} onChange={e => update('featured', e.target.checked)} style={{ width: 18, height: 18 }} />
                     <span style={{ fontWeight: 500, fontSize: '.875rem' }}>Mark as Featured Package</span>

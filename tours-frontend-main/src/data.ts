@@ -12,6 +12,9 @@ export type Package = {
   duration: string
   price: number
   discountPrice: number
+  foreignCurrency?: string
+  foreignPrice?: number
+  foreignDiscountPrice?: number
   rating: number
   reviews: number
   image: string

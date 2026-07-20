@@ -112,6 +112,11 @@ const FeaturedPackagesEditorial: React.FC<FeaturedPackagesEditorialProps> = ({ p
                   <div className="flex flex-col md:items-end">
                     <span className="text-gray-400 line-through text-lg mb-1">{inr(pkg.price)}</span>
                     <span className="font-serif text-3xl md:text-5xl font-bold text-[#e49d21]">{inr(pkg.discountPrice)}</span>
+                    {pkg.foreignPrice ? (
+                      <span className="font-serif text-xl md:text-2xl font-bold text-white mt-1">
+                        / {pkg.foreignCurrency || ''} {pkg.foreignDiscountPrice || pkg.foreignPrice}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
 

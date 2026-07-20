@@ -10,6 +10,9 @@ export interface IPackage extends Document {
   duration: string;
   price: number;
   discountPrice: number;
+  foreignCurrency?: string;
+  foreignPrice?: number;
+  foreignDiscountPrice?: number;
   rating: number;
   reviews: number;
   image: string;
@@ -31,6 +34,9 @@ const PackageSchema: Schema = new Schema({
   duration: { type: String, required: true },
   price: { type: Number, required: true },
   discountPrice: { type: Number, required: true },
+  foreignCurrency: { type: String },
+  foreignPrice: { type: Number },
+  foreignDiscountPrice: { type: Number },
   rating: { type: Number, default: 0 },
   reviews: { type: Number, default: 0 },
   image: { type: String, required: true },

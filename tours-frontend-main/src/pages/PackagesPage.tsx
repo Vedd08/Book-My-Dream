@@ -221,7 +221,10 @@ export default function PackagesPage() {
             <div style={{ position: 'relative', marginBottom: '2rem' }}>
               <img src={getImageUrl(topFeatured.image)} alt={topFeatured.name} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: '8px' }} />
               <div className="top-featured-card" style={{ position: 'absolute', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 20px 40px rgba(24, 106, 118, 0.1)' }}>
-                <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>{topFeatured.discountPrice ? inr(topFeatured.discountPrice) : inr(topFeatured.price)}</div>
+                <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
+                  {topFeatured.discountPrice ? inr(topFeatured.discountPrice) : inr(topFeatured.price)}
+                  {topFeatured.foreignPrice ? ` / ${topFeatured.foreignCurrency || ''} ${topFeatured.foreignDiscountPrice || topFeatured.foreignPrice}` : ''}
+                </div>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#186a76', margin: '0 0 0.5rem 0' }}>{topFeatured.name}</h3>
                 <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                   {topFeatured.duration} - {topFeatured.destination}, {topFeatured.country}
@@ -237,7 +240,10 @@ export default function PackagesPage() {
               {otherFeatured.map((pkg) => (
                 <div key={pkg.slug} style={{ display: 'flex', gap: '1.5rem' }}>
                   <div style={{ flex: 1 }}>
-                    <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>{pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}</div>
+                    <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
+                      {pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
+                      {pkg.foreignPrice ? ` / ${pkg.foreignCurrency || ''} ${pkg.foreignDiscountPrice || pkg.foreignPrice}` : ''}
+                    </div>
                     <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#186a76', margin: '0 0 0.25rem 0' }}>{pkg.name}</h3>
                     <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '1rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {pkg.duration} - {pkg.destination}, {pkg.country}

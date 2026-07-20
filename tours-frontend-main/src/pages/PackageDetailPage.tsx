@@ -233,9 +233,17 @@ export default function PackageDetailPage() {
               <div style={{ borderRadius: 20, overflow: 'hidden', border: '1px solid var(--border)', boxShadow: '0 12px 40px -10px rgba(168,230,207,.22)' }}>
                 <div style={{ background: 'var(--primary)', padding: '1.35rem 1.5rem', color: '#fff' }}>
                   <p style={{ fontSize: '.65rem', opacity: .75, margin: '0 0 .3rem', textTransform: 'uppercase', letterSpacing: '.08em' }}>Starting from</p>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem' }}>
-                    <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
-                    {discount > 0 && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{inr(pkg.price)}</span>}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem' }}>
+                      <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
+                      {discount > 0 && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{inr(pkg.price)}</span>}
+                    </div>
+                    {pkg.foreignPrice ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.25rem', color: 'rgba(255,255,255,0.9)' }}>
+                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{pkg.foreignCurrency || ''} {pkg.foreignDiscountPrice || pkg.foreignPrice}</span>
+                        {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.75rem', textDecoration: 'line-through', opacity: .6 }}>{pkg.foreignCurrency || ''} {pkg.foreignPrice}</span>}
+                      </div>
+                    ) : null}
                   </div>
                   <p style={{ fontSize: '.68rem', opacity: .7, margin: '.3rem 0 0' }}>per person · twin sharing</p>
                   {discount > 0 && (
