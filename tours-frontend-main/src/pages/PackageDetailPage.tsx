@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../config'
 import { Clock, MapPin, Star, CheckCircle2, X, ArrowRight, ChevronDown, Users, Calendar, Shield, Award, Camera } from 'lucide-react'
-import { inr } from '../data'
+import { inr, formatCurrency } from '../data'
 import type { Package } from '../data'
 import InquiryForm from '../components/InquiryForm'
 import PackageCard from '../components/PackageCard'
@@ -240,8 +240,8 @@ export default function PackageDetailPage() {
                     </div>
                     {pkg.foreignPrice ? (
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.25rem', color: 'rgba(255,255,255,0.9)' }}>
-                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{pkg.foreignCurrency || ''} {pkg.foreignDiscountPrice || pkg.foreignPrice}</span>
-                        {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.75rem', textDecoration: 'line-through', opacity: .6 }}>{pkg.foreignCurrency || ''} {pkg.foreignPrice}</span>}
+                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>
+                        {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.75rem', textDecoration: 'line-through', opacity: .6 }}>{formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>}
                       </div>
                     ) : null}
                   </div>

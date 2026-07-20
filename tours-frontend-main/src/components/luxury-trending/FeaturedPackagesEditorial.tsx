@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Package, inr } from '../../data';
+import { Package, inr, formatCurrency } from '../../data';
 import { getImageUrl } from '../../config';
 
 interface FeaturedPackagesEditorialProps {
@@ -114,7 +114,7 @@ const FeaturedPackagesEditorial: React.FC<FeaturedPackagesEditorialProps> = ({ p
                     <span className="font-serif text-3xl md:text-5xl font-bold text-[#e49d21]">{inr(pkg.discountPrice)}</span>
                     {pkg.foreignPrice ? (
                       <span className="font-serif text-xl md:text-2xl font-bold text-white mt-1">
-                        / {pkg.foreignCurrency || ''} {pkg.foreignDiscountPrice || pkg.foreignPrice}
+                        / {formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
                       </span>
                     ) : null}
                   </div>

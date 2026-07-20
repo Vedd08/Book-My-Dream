@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { inr, type Package } from '../data'
+import { inr, formatCurrency, type Package } from '../data'
 import { getImageUrl } from '../config'
 
 export default function PackageCard({ pkg }: { pkg: Package }) {
@@ -64,7 +64,7 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
           boxShadow: '0 4px 10px rgba(212, 175, 55, 0.3)'
         }}>
           {pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
-          {pkg.foreignPrice ? ` / ${pkg.foreignCurrency || ''} ${pkg.foreignDiscountPrice || pkg.foreignPrice}` : ''}
+          {pkg.foreignPrice ? ` / ${formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}` : ''}
         </div>
 
         <h3 style={{

@@ -93,3 +93,11 @@ export const COMPANY = {
 export function inr(amount: number) {
   return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount)
 }
+
+export function formatCurrency(amount: number, currencyCode: string) {
+  try {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(amount)
+  } catch (e) {
+    return `${currencyCode} ${amount}`
+  }
+}
