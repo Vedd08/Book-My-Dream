@@ -65,7 +65,7 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
         }}>
           {pkg.region === 'International' && pkg.foreignPrice ? (
             <>
-              {formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
+              {formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
               {' / '}{pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
             </>
           ) : (

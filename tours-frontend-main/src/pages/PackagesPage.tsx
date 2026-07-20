@@ -224,7 +224,7 @@ export default function PackagesPage() {
                 <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
                   {topFeatured.region === 'International' && topFeatured.foreignPrice ? (
                     <>
-                      {formatCurrency(topFeatured.foreignDiscountPrice || topFeatured.foreignPrice, topFeatured.foreignCurrency || 'USD')}
+                      {formatCurrency(topFeatured.foreignPrice, topFeatured.foreignCurrency || 'USD')}
                       {' / '}{topFeatured.discountPrice ? inr(topFeatured.discountPrice) : inr(topFeatured.price)}
                     </>
                   ) : (
@@ -249,7 +249,7 @@ export default function PackagesPage() {
                     <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
                       {pkg.region === 'International' && pkg.foreignPrice ? (
                         <>
-                          {formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
+                          {formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}
                           {' / '}{pkg.discountPrice ? inr(pkg.discountPrice) : inr(pkg.price)}
                         </>
                       ) : (

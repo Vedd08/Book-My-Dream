@@ -72,10 +72,10 @@ export default function AdminPackages() {
           const rate = data.rates[form.foreignCurrency!];
           if (rate) {
             setForm(f => {
-              const newFP = String((Number(f.price) * rate).toFixed(2));
-              const newFDP = String((Number(f.discountPrice) * rate).toFixed(2));
-              if (f.foreignPrice !== newFP || f.foreignDiscountPrice !== newFDP) {
-                return { ...f, foreignPrice: newFP, foreignDiscountPrice: newFDP };
+              const priceToConvert = Number(f.discountPrice) > 0 ? Number(f.discountPrice) : Number(f.price);
+              const newFP = String((priceToConvert * rate).toFixed(2));
+              if (f.foreignPrice !== newFP) {
+                return { ...f, foreignPrice: newFP, foreignDiscountPrice: '' };
               }
               return f;
             });
@@ -287,10 +287,6 @@ export default function AdminPackages() {
                       <label>
                         <span style={labelStyle}>Foreign Price (Auto)</span>
                         <input type="number" step="0.1" value={String(form.foreignPrice)} readOnly style={{ ...inputStyle, background: '#f8fafc' }} />
-                      </label>
-                      <label>
-                        <span style={labelStyle}>Foreign Sale Price (Auto)</span>
-                        <input type="number" step="0.1" value={String(form.foreignDiscountPrice)} readOnly style={{ ...inputStyle, background: '#f8fafc' }} />
                       </label>
                     </>
                   )}

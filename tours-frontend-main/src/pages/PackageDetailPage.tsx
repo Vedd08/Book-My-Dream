@@ -237,8 +237,7 @@ export default function PackageDetailPage() {
                     {pkg.region === 'International' && pkg.foreignPrice ? (
                       <>
                         <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', color: '#fff' }}>
-                          <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{formatCurrency(pkg.foreignDiscountPrice || pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>
-                          {pkg.foreignDiscountPrice && pkg.foreignDiscountPrice < pkg.foreignPrice && <span style={{ fontSize: '.85rem', textDecoration: 'line-through', opacity: .6 }}>{formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>}
+                          <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 800, lineHeight: 1 }}>{formatCurrency(pkg.foreignPrice, pkg.foreignCurrency || 'USD')}</span>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.25rem', color: 'rgba(255,255,255,0.9)' }}>
                           <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, lineHeight: 1 }}>{inr(pkg.discountPrice)}</span>
