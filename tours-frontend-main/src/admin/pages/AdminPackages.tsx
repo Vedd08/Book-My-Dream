@@ -236,8 +236,10 @@ export default function AdminPackages() {
                   {form.region === 'International' && (
                     <>
                       <label>
-                        <span style={labelStyle}>Foreign Currency (e.g. USD)</span>
-                        <input value={form.foreignCurrency || ''} onChange={e => update('foreignCurrency', e.target.value)} style={inputStyle} />
+                        <span style={labelStyle}>Foreign Currency</span>
+                        <select value={form.foreignCurrency || 'USD'} onChange={e => update('foreignCurrency', e.target.value)} style={inputStyle}>
+                          {['USD', 'EUR', 'AED', 'GBP', 'AUD', 'SGD', 'CAD', 'CHF'].map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
                       </label>
                       <label>
                         <span style={labelStyle}>Foreign Price</span>
