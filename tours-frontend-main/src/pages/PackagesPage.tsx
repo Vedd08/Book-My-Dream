@@ -25,7 +25,7 @@ export default function PackagesPage() {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading,  setLoading]  = useState(true)
   const carouselRef = useRef<HTMLDivElement>(null)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const q = (searchParams.get('q') || '').trim()
 
   useEffect(() => {
@@ -196,13 +196,36 @@ export default function PackagesPage() {
           <p className="hero-text-anim" style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', fontWeight: 500, marginTop: '0.5rem', marginBottom: '1.5rem', opacity: 0.9 }}>
             From the Himalayas to the backwaters, welcome to your dream journey.
           </p>
-          <div className="hero-text-anim" style={{ display: 'flex', gap: '0.75rem' }}>
-            {[Search, Mail, Phone].map((Icon, i) => (
-              <div key={i} style={{ width: 36, height: 36, borderRadius: '50%', background: '#186a76', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s' }} onMouseEnter={e => e.currentTarget.style.transform='scale(1.1)'} onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}>
-                <Icon size={16} color="white" />
-              </div>
-            ))}
-          </div>
+          <form 
+            className="hero-text-anim" 
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const query = formData.get('q') as string;
+              if (query.trim()) {
+                setSearchParams({ q: query.trim() });
+              } else {
+                setSearchParams({});
+              }
+            }}
+            style={{ display: 'flex', alignItems: 'center', background: 'white', borderRadius: '99px', padding: '0.25rem 0.25rem 0.25rem 1.25rem', width: '100%', maxWidth: '400px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+          >
+            <input 
+              type="text" 
+              name="q" 
+              defaultValue={q} 
+              placeholder="Search packages, destinations..." 
+              style={{ border: 'none', outline: 'none', background: 'transparent', color: '#16304a', width: '100%', fontSize: '1rem', fontFamily: 'Inter, sans-serif' }} 
+            />
+            <button 
+              type="submit" 
+              style={{ width: 44, height: 44, borderRadius: '50%', background: '#186a76', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s', marginLeft: '0.5rem', flexShrink: 0 }} 
+              onMouseEnter={e => e.currentTarget.style.transform='scale(1.05)'} 
+              onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}
+            >
+              <Search size={20} color="white" />
+            </button>
+          </form>
         </div>
 
         <svg className="wave-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none">
