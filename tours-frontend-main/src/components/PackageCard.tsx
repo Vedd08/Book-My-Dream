@@ -35,6 +35,29 @@ export default function PackageCard({ pkg }: { pkg: Package }) {
             transform: hovered ? 'scale(1.05)' : 'scale(1)',
           }}
         />
+
+        {/* Region Badge Top Right */}
+        <div style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          background: (pkg.region || '').toLowerCase() === 'domestic' || (pkg.country || '').toLowerCase() === 'india'
+            ? 'rgba(217, 119, 6, 0.9)'
+            : 'rgba(13, 148, 136, 0.9)',
+          color: 'white',
+          fontSize: '0.65rem',
+          fontWeight: 700,
+          padding: '3px 10px',
+          borderRadius: '999px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+          backdropFilter: 'blur(4px)',
+          border: '1px solid rgba(255,255,255,0.3)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+          zIndex: 2,
+        }}>
+          {(pkg.region || ((pkg.country || '').toLowerCase() === 'india' ? 'Domestic' : 'International'))}
+        </div>
       </div>
 
       {/* Overlapping White Content Box */}

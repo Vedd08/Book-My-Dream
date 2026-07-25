@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { API_URL, getImageUrl } from '../config'
 import { Link, useSearchParams } from 'react-router-dom'
-import { Search, Mail, Phone, ArrowLeft, ArrowRight, Plane, Map, Coffee, Mountain, Users } from 'lucide-react'
+import { Search, Mail, Phone, ArrowLeft, ArrowRight, Plane, Map, Coffee, Mountain, Users, Compass, MapPin, Globe } from 'lucide-react'
 import type { Package } from '../data'
 import { inr, formatCurrency } from '../data'
 import PackageCard from '../components/PackageCard'
@@ -26,12 +26,27 @@ export default function PackagesPage() {
   const [loading,  setLoading]  = useState(true)
   const carouselRef = useRef<HTMLDivElement>(null)
   const [searchParams, setSearchParams] = useSearchParams()
+
   const q = (searchParams.get('q') || '').trim()
+  const rawRegionParam = (searchParams.get('region') || searchParams.get('type') || 'all').toLowerCase()
+  const activeTab = ['all', 'domestic', 'international'].includes(rawRegionParam) ? rawRegionParam : 'all'
+
+  const handleTabChange = (tab: string) => {
+    const newParams = new URLSearchParams(searchParams)
+    if (tab === 'all') {
+      newParams.delete('region')
+      newParams.delete('type')
+    } else {
+      newParams.set('region', tab)
+      newParams.delete('type')
+    }
+    setSearchParams(newParams)
+  }
 
   useEffect(() => {
     fetch(`${API_URL}/api/packages`)
       .then(r => r.json())
-      .then(data => { setPackages(data); setLoading(false) })
+      .then(data => { setPackages(Array.isArray(data) ? data : []); setLoading(false) })
       .catch(() => setLoading(false))
   }, [])
 
@@ -64,10 +79,20 @@ export default function PackagesPage() {
     return () => clearTimeout(timer)
   }, [loading, packages.length])
 
+  const getPackageRegion = (p: Package): 'Domestic' | 'International' => {
+    const reg = (p.region || '').toLowerCase();
+    const country = (p.country || '').toLowerCase();
+    if (reg === 'domestic' || country === 'india' || country === 'indiaindia') return 'Domestic';
+    return 'International';
+  };
+
   const filteredPackages = q
     ? packages.filter(p => `${p.name} ${p.destination} ${p.country} ${p.region} ${p.type}`
         .toLowerCase().includes(q.toLowerCase()))
     : packages
+
+  const domesticPackages = filteredPackages.filter(p => getPackageRegion(p) === 'Domestic')
+  const internationalPackages = filteredPackages.filter(p => getPackageRegion(p) === 'International')
 
   // A search/filter narrows straight to results — the generic "Featured
   // Journeys" hero doesn't apply once the user is looking for something specific.
@@ -295,50 +320,189 @@ export default function PackagesPage() {
         </section>
       )}
 
-      {!loading && (allOther.length > 0 || q) && (
-        <section className="gsap-reveal" style={{ marginTop: q ? '6rem' : '12rem', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
-           <div className="wavy-container">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '3rem' }}>
-                <div>
-                  <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>
-                    {q ? `Results for "${q}"` : 'All Packages'}
-                  </h2>
-                  {q && <p style={{ color: '#666', marginTop: '0.5rem' }}>{allOther.length} package{allOther.length === 1 ? '' : 's'} found</p>}
-                </div>
-                {q && <Link to="/packages" className="btn-navy" style={{ textDecoration: 'none' }}>Clear Search</Link>}
-              </div>
+      {/* Tab filter bar */}
+      {!loading && (
+        <section className="gsap-reveal" style={{ marginTop: '5rem', marginBottom: '3rem' }}>
+          <div className="wavy-container">
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+              <button
+                onClick={() => handleTabChange('all')}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '999px',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  border: '1px solid #186a76',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  background: activeTab === 'all' ? '#186a76' : 'white',
+                  color: activeTab === 'all' ? 'white' : '#186a76',
+                  boxShadow: activeTab === 'all' ? '0 4px 12px rgba(24,106,118,0.25)' : 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <Compass size={18} />
+                All Packages ({filteredPackages.length})
+              </button>
 
-              {allOther.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '4rem 0', color: '#666' }}>
-                  <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>No packages match "{q}" yet.</p>
-                  <Link to="/packages" className="btn-navy" style={{ textDecoration: 'none' }}>View All Packages</Link>
+              <button
+                onClick={() => handleTabChange('domestic')}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '999px',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  border: '1px solid #186a76',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  background: activeTab === 'domestic' ? '#186a76' : 'white',
+                  color: activeTab === 'domestic' ? 'white' : '#186a76',
+                  boxShadow: activeTab === 'domestic' ? '0 4px 12px rgba(24,106,118,0.25)' : 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <MapPin size={18} style={{ color: activeTab === 'domestic' ? '#D4AF37' : '#d97706' }} />
+                Domestic Packages ({domesticPackages.length})
+              </button>
+
+              <button
+                onClick={() => handleTabChange('international')}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '999px',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  border: '1px solid #186a76',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  background: activeTab === 'international' ? '#186a76' : 'white',
+                  color: activeTab === 'international' ? 'white' : '#186a76',
+                  boxShadow: activeTab === 'international' ? '0 4px 12px rgba(24,106,118,0.25)' : 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <Globe size={18} style={{ color: activeTab === 'international' ? '#D4AF37' : '#0d9488' }} />
+                International Packages ({internationalPackages.length})
+              </button>
+            </div>
+
+            {q && (
+              <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+                <p style={{ color: '#666', fontSize: '0.95rem' }}>Showing search results for "<strong>{q}</strong>"</p>
+                <Link to="/packages" className="btn-navy" style={{ display: 'inline-block', marginTop: '0.5rem', textDecoration: 'none', padding: '0.4rem 1.25rem', fontSize: '0.8rem' }}>Clear Search</Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── Domestic Packages Section ── */}
+      {!loading && (activeTab === 'all' || activeTab === 'domestic') && (
+        <section className="gsap-reveal" style={{ marginBottom: '6rem', position: 'relative' }}>
+          <div className="wavy-container">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem', borderBottom: '1px solid rgba(24, 106, 118, 0.15)', paddingBottom: '1rem' }}>
+              <div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 0.75rem', borderRadius: '999px', background: 'rgba(217, 119, 6, 0.1)', border: '1px solid rgba(217, 119, 6, 0.25)', color: '#b45309', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                  <MapPin size={13} />
+                  Incredible India
                 </div>
-              ) : (
-                <div style={{ position: 'relative' }}>
+                <h2 className="heading-serif text-reveal" style={{ fontSize: '3rem', color: '#186a76', margin: 0 }}>
+                  Domestic <span style={{ color: '#D4AF37' }}>Packages</span>
+                </h2>
+                <p style={{ color: '#666', marginTop: '0.35rem', fontSize: '0.95rem' }}>
+                  Explore curated holiday packages across majestic mountains, pristine beaches, and vibrant heritage sites in India.
+                </p>
+              </div>
+              <span style={{ padding: '0.4rem 1rem', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, color: '#186a76' }}>
+                {domesticPackages.length} {domesticPackages.length === 1 ? 'Package' : 'Packages'}
+              </span>
+            </div>
+
+            {domesticPackages.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '4rem 0', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', color: '#666' }}>
+                <MapPin size={40} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
+                <p style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0 }}>No domestic packages found {q ? `matching "${q}"` : ''}.</p>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                  gap: '2rem',
+                  padding: '1rem 0'
+                }}
+              >
+                {domesticPackages.map(pkg => (
                   <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-                      gap: '2rem',
-                      padding: '1rem 0'
-                    }}
+                    key={'dom-' + pkg.slug}
+                    style={{ transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                   >
-                    {allOther.map(pkg => (
-                      <div
-                        key={pkg.slug}
-                        style={{
-                          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
-                        onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-                      >
-                         <PackageCard pkg={pkg} />
-                      </div>
-                    ))}
+                    <PackageCard pkg={pkg} />
                   </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── International Packages Section ── */}
+      {!loading && (activeTab === 'all' || activeTab === 'international') && (
+        <section className="gsap-reveal" style={{ marginBottom: '6rem', position: 'relative' }}>
+          <div className="wavy-container">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem', borderBottom: '1px solid rgba(24, 106, 118, 0.15)', paddingBottom: '1rem' }}>
+              <div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 0.75rem', borderRadius: '999px', background: 'rgba(13, 148, 136, 0.1)', border: '1px solid rgba(13, 148, 136, 0.25)', color: '#0f766e', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
+                  <Globe size={13} />
+                  Global Getaways
                 </div>
-              )}
-           </div>
+                <h2 className="heading-serif text-reveal" style={{ fontSize: '3rem', color: '#186a76', margin: 0 }}>
+                  International <span style={{ color: '#D4AF37' }}>Packages</span>
+                </h2>
+                <p style={{ color: '#666', marginTop: '0.35rem', fontSize: '0.95rem' }}>
+                  Embark on dream vacations to tropical islands, exotic wonders, and iconic world destinations.
+                </p>
+              </div>
+              <span style={{ padding: '0.4rem 1rem', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, color: '#186a76' }}>
+                {internationalPackages.length} {internationalPackages.length === 1 ? 'Package' : 'Packages'}
+              </span>
+            </div>
+
+            {internationalPackages.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '4rem 0', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', color: '#666' }}>
+                <Globe size={40} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
+                <p style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0 }}>No international packages found {q ? `matching "${q}"` : ''}.</p>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                  gap: '2rem',
+                  padding: '1rem 0'
+                }}
+              >
+                {internationalPackages.map(pkg => (
+                  <div
+                    key={'intl-' + pkg.slug}
+                    style={{ transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-10px)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <PackageCard pkg={pkg} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </section>
       )}
 
