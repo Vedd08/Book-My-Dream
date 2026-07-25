@@ -259,14 +259,14 @@ export default function PackagesPage() {
       </section>
 
       {!loading && topFeatured && (
-        <section className="wavy-container gsap-reveal" style={{ marginTop: '8rem', position: 'relative' }}>
+        <section className="wavy-container gsap-reveal" style={{ marginTop: '8rem', marginBottom: '10rem', position: 'relative' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
             <h2 className="heading-serif text-reveal" style={{ fontSize: '3.5rem', color: '#186a76', margin: 0 }}>Featured Journeys</h2>
             <Link to="/contact" className="btn-navy text-reveal">EXPLORE ALL OFFERS</Link>
           </div>
 
           <div className="featured-grid">
-            <div style={{ position: 'relative', marginBottom: '2rem' }}>
+            <div style={{ position: 'relative', marginBottom: '6rem' }}>
               <img src={getImageUrl(topFeatured.image)} alt={topFeatured.name} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: '8px' }} />
               <div className="top-featured-card" style={{ position: 'absolute', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 20px 40px rgba(24, 106, 118, 0.1)' }}>
                 <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
@@ -322,7 +322,7 @@ export default function PackagesPage() {
 
       {/* Tab filter bar */}
       {!loading && (
-        <section className="gsap-reveal" style={{ marginTop: '5rem', marginBottom: '3rem' }}>
+        <section className="gsap-reveal" style={{ marginTop: '2rem', marginBottom: '5rem' }}>
           <div className="wavy-container">
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
               <button
