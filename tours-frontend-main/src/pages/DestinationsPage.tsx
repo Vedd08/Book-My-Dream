@@ -1,41 +1,58 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { API_URL, getImageUrl } from '../config';
 import type { Destination } from '../data';
-import { Star, MapPin, ArrowUpRight, Compass, Heart, Mountain, Users, Gem, ArrowRight, ShieldCheck, Clock, Plane } from 'lucide-react';
-
-import bgImageFallback1 from '../assets/destination1.png';
-import bgImageFallback2 from '../assets/destination2.png';
-import baliImg from '../assets/bali.jpg';
-import switzerlandImg from '../assets/switzerland.jpg';
-import maldivesImg from '../assets/maldives.jpg';
-import dubaiImg from '../assets/dubai.jpg';
+import { Star, MapPin, ArrowUpRight, Compass, Heart, Mountain, Users, Gem, ArrowRight, ShieldCheck, Clock, Plane, Globe } from 'lucide-react';
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const rawTab = (searchParams.get('type') || searchParams.get('region') || 'all').toLowerCase();
+  const activeTab = ['all', 'domestic', 'international'].includes(rawTab) ? rawTab : 'all';
+
+  const handleTabChange = (tab: string) => {
+    if (tab === 'all') {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('type');
+      newParams.delete('region');
+      setSearchParams(newParams);
+    } else {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('type', tab);
+      newParams.delete('region');
+      setSearchParams(newParams);
+    }
+  };
 
   useEffect(() => {
     fetch(`${API_URL}/api/destinations`)
       .then(r => r.json())
-      .then(data => setDestinations(data))
+      .then(data => setDestinations(Array.isArray(data) ? data : []))
       .catch(err => console.error(err));
   }, []);
 
-  // Use only the admin-added destinations without dummy fallback
-  const displayDestinations = destinations;
+  const getRegion = (d: Destination): 'Domestic' | 'International' => {
+    const reg = (d.region || '').toLowerCase();
+    const country = (d.country || '').toLowerCase();
+    if (reg === 'domestic' || country === 'india' || country === 'indiaindia') return 'Domestic';
+    if (reg === 'international') return 'International';
+    return 'International';
+  };
 
-  // We assign varying sizes to cards to create a dense masonry layout without empty spaces
+  const domesticList = destinations.filter(d => getRegion(d) === 'Domestic');
+  const internationalList = destinations.filter(d => getRegion(d) === 'International');
+
   const getSpanClasses = (index: number) => {
-    // A repeating pattern of spans to make a dense, irregular grid
     const patterns = [
-      "col-span-1 md:col-span-2 row-span-2", // large
-      "col-span-1 md:col-span-1 row-span-1", // small
-      "col-span-1 md:col-span-1 row-span-1", // small
-      "col-span-1 md:col-span-2 row-span-1", // wide
-      "col-span-1 md:col-span-1 row-span-2", // tall
-      "col-span-1 md:col-span-1 row-span-1", // small
-      "col-span-1 md:col-span-2 row-span-2", // large
-      "col-span-1 md:col-span-1 row-span-1", // small
+      "col-span-1 md:col-span-2 row-span-2",
+      "col-span-1 md:col-span-1 row-span-1",
+      "col-span-1 md:col-span-1 row-span-1",
+      "col-span-1 md:col-span-2 row-span-1",
+      "col-span-1 md:col-span-1 row-span-2",
+      "col-span-1 md:col-span-1 row-span-1",
+      "col-span-1 md:col-span-2 row-span-2",
+      "col-span-1 md:col-span-1 row-span-1",
     ];
     return patterns[index % patterns.length];
   };
@@ -53,6 +70,75 @@ export default function DestinationsPage() {
     { title: "Secure & Trusted", icon: <ShieldCheck className="w-6 h-6 text-[#186a76]" />, desc: "Book with confidence knowing your transactions and travel plans are fully protected." },
     { title: "Global Network", icon: <Plane className="w-6 h-6 text-[#186a76]" />, desc: "Exclusive partnerships with premium properties and airlines worldwide for the best rates." },
   ];
+
+  const renderDestinationGrid = (list: Destination[], sectionTag: string) => (
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 w-full grid-flow-dense" style={{ gridAutoRows: '250px' }}>
+      {list.map((d, index) => (
+        <Link 
+          to={`/destinations/${d.slug}`}
+          key={sectionTag + '-' + d.slug + '-' + index} 
+          className={`group relative rounded-3xl overflow-hidden block ${getSpanClasses(index)} bg-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500`}
+        >
+          <img
+            src={getImageUrl(d.image)}
+            alt={d.name}
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            style={{ backgroundColor: '#1a1a2e' }}
+          />
+         
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80 opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-[#186a76]/30 opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-500" />
+          
+          {/* Region Badge Top Right */}
+          <div className="absolute top-4 right-4 z-10">
+            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md border shadow-sm ${
+              getRegion(d) === 'Domestic' 
+                ? 'bg-amber-500/90 text-white border-amber-300/40' 
+                : 'bg-teal-600/90 text-white border-teal-300/40'
+            }`}>
+              {getRegion(d)}
+            </span>
+          </div>
+
+          {/* Content */}
+          <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+            <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+              
+              <div className="flex items-center justify-between mb-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-wider">
+                  <MapPin size={12} />
+                  { (d.country === 'INDIAINDIA' ? 'India' : d.country) || d.name }
+                </div>
+                
+                <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 scale-50 group-hover:scale-100">
+                  <ArrowUpRight size={20} />
+                </div>
+              </div>
+              
+              <h3 className="text-2xl md:text-3xl font-bold text-white font-serif mb-2">
+                {d.name} Tours
+              </h3>
+              
+              <div className="flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                <div className="flex items-center gap-1 text-[#D4AF37]">
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                  <Star size={14} fill="currentColor" />
+                </div>
+                <div className="text-white font-semibold text-sm">
+                  Explore packages <ArrowUpRight className="inline" size={14} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
 
   return (
     <main className="relative w-full bg-[#fafafa] text-gray-900 overflow-hidden min-h-screen">
@@ -88,81 +174,127 @@ export default function DestinationsPage() {
       <div className="container relative mx-auto px-4 pt-32 lg:pt-40 z-10">
         
         {/* ── Header Section ── */}
-        <section className="fade-in-up mb-16 flex flex-col md:flex-row justify-between items-end gap-6 border-b border-gray-200 pb-10">
+        <section className="fade-in-up mb-12 flex flex-col md:flex-row justify-between items-end gap-6 border-b border-gray-200 pb-10">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-sm font-semibold tracking-wide uppercase">
               <Compass size={14} />
-              <span>Global Reach</span>
+              <span>Global & Domestic Reach</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold font-serif leading-none tracking-tight text-[#186a76]">
-              Trending <span className="italic text-[#D4AF37]">Destinations</span>
+              Explore <span className="italic text-[#D4AF37]">Destinations</span>
             </h1>
           </div>
           <p className="text-gray-600 max-w-sm md:text-right leading-relaxed font-sans">
-            Discover the most sought-after locations for your next unforgettable adventure. Handpicked exclusively for our luxury travelers.
+            Discover breathtaking places across India and around the world, separated for your seamless browsing.
           </p>
         </section>
 
-        {/* ── Dense Masonry Grid ── */}
-        <section className="fade-in-up w-full mb-24" style={{ animationDelay: '0.2s' }}>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 w-full grid-flow-dense" style={{ gridAutoRows: '250px' }}>
-            {displayDestinations.map((d, index) => (
-              <Link 
-                to={`/destinations/${d.slug}`}
-                key={d.slug + index} 
-                className={`group relative rounded-3xl overflow-hidden block ${getSpanClasses(index)} bg-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500`}
-              >
-                <img
-                  src={getImageUrl(d.image)}
-                  alt={d.name}
-                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  style={{
-                    backgroundColor: '#1a1a2e', // fallback color if no image
-                  }}
-                />
-               
-                {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                <div className="absolute inset-0 bg-[#186a76]/30 opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                    
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-wider">
-                        <MapPin size={12} />
-                        { (d.country === 'INDIAINDIA' ? 'India' : d.country) || d.name }
-                      </div>
-                      
-                      <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 scale-50 group-hover:scale-100">
-                        <ArrowUpRight size={20} />
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-2xl md:text-3xl font-bold text-white font-serif mb-2">
-                      {d.name} Tours
-                    </h3>
-                    
-                    <div className="flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                      <div className="flex items-center gap-1 text-[#D4AF37]">
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                      </div>
-                      <div className="text-white font-semibold text-sm">
-                        Explore packages <ArrowUpRight className="inline" size={14} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+        {/* ── Tab Filter Switcher ── */}
+        <section className="fade-in-up mb-14" style={{ animationDelay: '0.1s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => handleTabChange('all')}
+              className={`px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
+                activeTab === 'all'
+                  ? 'bg-[#186a76] text-white shadow-lg shadow-[#186a76]/20 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <Compass size={18} />
+              All Destinations ({destinations.length})
+            </button>
+
+            <button
+              onClick={() => handleTabChange('domestic')}
+              className={`px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
+                activeTab === 'domestic'
+                  ? 'bg-[#186a76] text-white shadow-lg shadow-[#186a76]/20 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <MapPin size={18} className={activeTab === 'domestic' ? 'text-[#D4AF37]' : 'text-amber-500'} />
+              Domestic Destinations ({domesticList.length})
+            </button>
+
+            <button
+              onClick={() => handleTabChange('international')}
+              className={`px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
+                activeTab === 'international'
+                  ? 'bg-[#186a76] text-white shadow-lg shadow-[#186a76]/20 scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              <Globe size={18} className={activeTab === 'international' ? 'text-[#D4AF37]' : 'text-teal-600'} />
+              International Destinations ({internationalList.length})
+            </button>
           </div>
         </section>
+
+        {/* ── Domestic Destinations Section ── */}
+        {(activeTab === 'all' || activeTab === 'domestic') && (
+          <section className="fade-in-up w-full mb-24" style={{ animationDelay: '0.2s' }}>
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 text-xs font-bold uppercase tracking-wider">
+                  <MapPin size={13} />
+                  Incredible India
+                </div>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#186a76]">
+                  Domestic <span className="text-[#D4AF37] italic">Destinations</span>
+                </h2>
+                <p className="text-gray-500 text-sm mt-1">
+                  Discover stunning beaches, mountains, backwaters, and heritage sites across India.
+                </p>
+              </div>
+              <span className="hidden sm:inline-block px-4 py-1.5 bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold rounded-full">
+                {domesticList.length} {domesticList.length === 1 ? 'Destination' : 'Destinations'}
+              </span>
+            </div>
+
+            {domesticList.length > 0 ? (
+              renderDestinationGrid(domesticList, 'domestic')
+            ) : (
+              <div className="bg-white rounded-3xl p-12 text-center border border-gray-200">
+                <MapPin className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-700 mb-2">No Domestic Destinations Found</h3>
+                <p className="text-gray-500 text-sm">Check back soon for new domestic tour destinations!</p>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* ── International Destinations Section ── */}
+        {(activeTab === 'all' || activeTab === 'international') && (
+          <section className="fade-in-up w-full mb-24" style={{ animationDelay: '0.3s' }}>
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-700 text-xs font-bold uppercase tracking-wider">
+                  <Globe size={13} />
+                  Global Getaways
+                </div>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#186a76]">
+                  International <span className="text-[#D4AF37] italic">Destinations</span>
+                </h2>
+                <p className="text-gray-500 text-sm mt-1">
+                  Embark on memorable journeys to exotic locations, tropical islands, and iconic global cities.
+                </p>
+              </div>
+              <span className="hidden sm:inline-block px-4 py-1.5 bg-teal-50 text-teal-800 border border-teal-200 text-xs font-bold rounded-full">
+                {internationalList.length} {internationalList.length === 1 ? 'Destination' : 'Destinations'}
+              </span>
+            </div>
+
+            {internationalList.length > 0 ? (
+              renderDestinationGrid(internationalList, 'intl')
+            ) : (
+              <div className="bg-white rounded-3xl p-12 text-center border border-gray-200">
+                <Globe className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-700 mb-2">No International Destinations Found</h3>
+                <p className="text-gray-500 text-sm">Check back soon for new international tour destinations!</p>
+              </div>
+            )}
+          </section>
+        )}
 
         {/* ── Travel Types Section ── */}
         <section className="py-24 border-t border-gray-200">
