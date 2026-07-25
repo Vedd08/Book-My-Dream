@@ -75,7 +75,7 @@ const heroImages = [kerelaImg, baliImg, maldivesImg, dubaiImg, switzerlandImg]
 
 const offerCards = [
   {
-    id: 'domestic', to: '/packages?q=Domestic',
+    id: 'domestic', to: '/packages?region=Domestic',
     img: kerelaImg,
     eyebrow: '🔥 Limited-Time Offer',
     title: 'Best Domestic Deals',
@@ -87,7 +87,7 @@ const offerCards = [
     featured: true,
   },
   {
-    id: 'international', to: '/packages?q=International',
+    id: 'international', to: '/packages?region=International',
     img: switzerlandImg,
     eyebrow: "✈️ Editor's Pick",
     title: 'International Tours',
