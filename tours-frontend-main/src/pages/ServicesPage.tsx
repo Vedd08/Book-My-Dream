@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { services, galleryImages } from '../data'
 import {
-  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase, Plane, Heart, ChevronLeft, ChevronRight
+  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase, Plane, Heart, ChevronLeft, ChevronRight, ArrowRight
 } from 'lucide-react'
 
 import { API_URL } from '../config'
@@ -11,6 +12,17 @@ import { API_URL } from '../config'
 const iconMap: Record<string, React.ElementType> = {
   MapPin, Globe, Sparkles, Hotel, Plane, TrainFront, Ship, FileCheck, BookUser, Heart, Users, Briefcase,
 }
+
+const getServiceLink = (title: string): string => {
+  const t = title.trim().toLowerCase();
+  if (t === 'domestic holiday packages') {
+    return '/packages?region=Domestic';
+  }
+  if (t === 'international holiday packages') {
+    return '/packages?region=International';
+  }
+  return '/contact';
+};
 
 export default function ServicesPage() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -68,10 +80,12 @@ export default function ServicesPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
+  const [dragDistance, setDragDistance] = useState(0)
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return
     setIsDragging(true)
+    setDragDistance(0)
     setStartX(e.pageX - scrollRef.current.offsetLeft)
     setScrollLeft(scrollRef.current.scrollLeft)
     scrollRef.current.style.scrollSnapType = 'none'
@@ -91,6 +105,7 @@ export default function ServicesPage() {
     e.preventDefault()
     const x = e.pageX - scrollRef.current.offsetLeft
     const walk = (x - startX) * 1.5
+    setDragDistance(Math.abs(walk))
     scrollRef.current.scrollLeft = scrollLeft - walk
   }
 
@@ -124,6 +139,8 @@ export default function ServicesPage() {
           padding-bottom: 5rem;
           border-right: 1px solid rgba(255,255,255,0.05);
           user-select: none;
+          text-decoration: none;
+          color: inherit;
         }
 
         @media (max-width: 1024px) {
@@ -227,6 +244,30 @@ export default function ServicesPage() {
           margin-top: 1rem;
         }
 
+        .svc-action-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-top: 1rem;
+          padding: 0.5rem 1.25rem;
+          border-radius: 9999px;
+          background: rgba(255,255,255,0.15);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: #fff;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          transition: all 0.3s ease;
+          opacity: 0;
+        }
+        .svc-slide:hover .svc-action-badge {
+          opacity: 1;
+          background: var(--accent, #D4AF37);
+          color: #000;
+        }
+
         /* Nav Buttons */
         .svc-nav-btn {
           position: absolute;
@@ -258,6 +299,7 @@ export default function ServicesPage() {
           .svc-category { font-size: 1.5rem; }
           .svc-title { font-size: 1.35rem; }
           .svc-desc { font-size: 0.875rem; opacity: 1; height: auto; transform: translateY(0); margin-top: 0.75rem; }
+          .svc-action-badge { opacity: 1; margin-top: 0.75rem; }
           .svc-slide-content { transform: translateY(0); padding: 0 1.25rem; }
           .svc-icon-wrapper { width: 56px; height: 56px; margin-bottom: 1rem; }
           
@@ -286,26 +328,40 @@ export default function ServicesPage() {
           {services.map((svc, i) => {
             const Icon = iconMap[svc.icon] || Sparkles
             const bgImage = svc.image || galleryImgs[i % galleryImgs.length]?.src || '/images/hero-maldives.png'
+            const targetUrl = getServiceLink(svc.title)
             
             return (
-              <div key={svc.title} className="svc-slide">
-              <div 
-                className="svc-slide-bg" 
-                style={{ backgroundImage: `url('${bgImage}')` }} 
-              />
-              <div className="svc-slide-overlay" />
-              <div className="svc-slide-content">
-                <div className="svc-icon-wrapper">
-                  <Icon size={30} strokeWidth={1.5} />
+              <Link
+                key={svc.title}
+                to={targetUrl}
+                className="svc-slide"
+                onClick={(e) => {
+                  if (dragDistance > 10) {
+                    e.preventDefault();
+                  }
+                }}
+              >
+                <div 
+                  className="svc-slide-bg" 
+                  style={{ backgroundImage: `url('${bgImage}')` }} 
+                />
+                <div className="svc-slide-overlay" />
+                <div className="svc-slide-content">
+                  <div className="svc-icon-wrapper">
+                    <Icon size={30} strokeWidth={1.5} />
+                  </div>
+                  <h4 className="svc-category">Book My Dream</h4>
+                  <h2 className="svc-title">{svc.title}</h2>
+                  <p className="svc-desc">{svc.description}</p>
+                  <div className="svc-action-badge">
+                    {targetUrl.startsWith('/packages') ? 'Explore Packages' : 'Contact Us'} <ArrowRight size={14} />
+                  </div>
                 </div>
-                <h4 className="svc-category">Book My Dream</h4>
-                <h2 className="svc-title">{svc.title}</h2>
-                <p className="svc-desc">{svc.description}</p>
-              </div>
-            </div>
-          )
+              </Link>
+            )
         })}
       </div>
     </main>
   )
 }
+
