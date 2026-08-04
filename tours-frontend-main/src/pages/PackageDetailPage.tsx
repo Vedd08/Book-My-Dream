@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { API_URL } from '../config'
 import { Clock, MapPin, Star, CheckCircle2, X, ArrowRight, ChevronDown, Users, Calendar, Shield, Award, Camera } from 'lucide-react'
-import { inr, formatCurrency } from '../data'
+import { inr, formatCurrency, packages as staticPackages } from '../data'
 import type { Package } from '../data'
 import InquiryForm from '../components/InquiryForm'
 import PackageCard from '../components/PackageCard'
@@ -17,12 +17,27 @@ export default function PackageDetailPage() {
 
   useEffect(() => {
     setLoading(true)
+    setNotFound(false)
     fetch(`${API_URL}/api/packages/${slug}`)
-      .then(r => { if (!r.ok) throw new Error('Not found'); return r.json() })
-      .then(data => { setPkg(data); return fetch(`${API_URL}/api/packages?region=${data.region}`) })
-      .then(r => r.json())
-      .then(data => { setRelated(Array.isArray(data) ? data.filter((p: Package) => p.slug !== slug).slice(0, 3) : []) })
-      .catch(() => setNotFound(true))
+      .then(r => {
+        if (!r.ok) throw new Error('Not found')
+        return r.json()
+      })
+      .then(data => {
+        setPkg(data)
+        fetch(`${API_URL}/api/packages?region=${data.region}`)
+          .then(r => r.json())
+          .then(relData => { setRelated(Array.isArray(relData) ? relData.filter((p: Package) => p.slug !== slug).slice(0, 3) : []) })
+          .catch(() => setRelated([]))
+      })
+      .catch(() => {
+        const fallback = staticPackages.find(p => p.slug === slug)
+        if (fallback) {
+          setPkg(fallback)
+        } else {
+          setNotFound(true)
+        }
+      })
       .finally(() => setLoading(false))
   }, [slug])
 

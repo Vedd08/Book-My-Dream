@@ -4,6 +4,7 @@ import { MapPin, CalendarDays, Compass, Lightbulb, ArrowRight } from 'lucide-rea
 import PageHero from '../components/PageHero'
 import { API_URL, getImageUrl } from '../config'
 import type { Destination } from '../data'
+import { destinations as staticDestinations } from '../data'
 
 export default function DestinationDetailPage() {
   const { slug } = useParams()
@@ -19,7 +20,15 @@ export default function DestinationDetailPage() {
         return r.json()
       })
       .then(data => { setDest(data); setLoading(false) })
-      .catch(() => { setError(true); setLoading(false) })
+      .catch(() => {
+        const fallback = staticDestinations.find(d => d.slug === slug)
+        if (fallback) {
+          setDest(fallback)
+        } else {
+          setError(true)
+        }
+        setLoading(false)
+      })
   }, [slug])
 
   if (loading) {

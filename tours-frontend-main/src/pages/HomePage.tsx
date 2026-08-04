@@ -255,6 +255,7 @@ export default function HomePage() {
   const [featured, setFeatured] = useState<Package[]>(staticPackages.filter(p => p.featured))
   const [trending, setTrending] = useState<Package[]>(staticPackages.slice(0, 12))
   const [popularDest, setPopularDest] = useState<Destination[]>([])
+  const [allDests, setAllDests] = useState<Destination[]>([])
   const [departureCities, setDepartureCities] = useState<Destination[]>([])
   const [galleryImgs, setGalleryImgs] = useState<{ src: string, title: string, category: string }[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -295,6 +296,7 @@ export default function HomePage() {
       const sorted = Array.isArray(data)
         ? data.sort((a, b) => (a.region === 'Domestic' && b.region !== 'Domestic' ? -1 : a.region !== 'Domestic' && b.region === 'Domestic' ? 1 : 0))
         : []
+      setAllDests(sorted)
       setPopularDest(sorted.slice(0, 8))
       setDepartureCities(sorted.filter((d: any) => d.isDepartureCity))
     }).catch(() => { /* no destinations fallback */ })
@@ -1384,15 +1386,21 @@ export default function HomePage() {
           TRENDING PACKAGES (EDITORIAL)
       ═══════════════════════════════════════════════ */}
       <DestinationEditorial
-        destinations={trending.map(pkg => ({
-          slug: pkg.slug,
-          image: pkg.image,
-          country: pkg.country || pkg.destination,
-          title: pkg.name,
-          description: `Experience the breathtaking beauty of ${pkg.destination}. A premium journey designed for the elite traveler.`,
-          price: pkg.discountPrice > 0 ? pkg.discountPrice : pkg.price,
-          region: pkg.region,
-        }))}
+        destinations={trending.map(pkg => {
+          const destStr = (pkg.destination || '').toLowerCase().trim();
+          const matchedDest = allDests.find(d => d.name.toLowerCase().trim() === destStr || d.slug.toLowerCase().trim() === destStr);
+          const computedDestSlug = matchedDest ? matchedDest.slug : destStr.replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+          return {
+            slug: pkg.slug,
+            destinationSlug: computedDestSlug || pkg.slug,
+            image: pkg.image,
+            country: pkg.country || pkg.destination,
+            title: pkg.name,
+            description: `Experience the breathtaking beauty of ${pkg.destination}. A premium journey designed for the elite traveler.`,
+            price: pkg.discountPrice > 0 ? pkg.discountPrice : pkg.price,
+            region: pkg.region,
+          };
+        })}
       />
 
       {/* ═══════════════════════════════════════════════
