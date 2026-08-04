@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, Clock, Globe, Plane, Star, ChevronLeft, ChevronRight, Compass, Sparkles } from 'lucide-react';
 
 export interface EditorialDestination {
@@ -253,6 +253,7 @@ const DestListItem: React.FC<{
 
 /* -- Main Component -------------------------------------------- */
 const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destinations }) => {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState<'All' | 'International' | 'Domestic'>('All');
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -457,7 +458,7 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
                   </div>
                 )}
 
-                <Link to={`/destinations/${activeItem.slug}`} style={{
+                <Link to={`/packages/${activeItem.slug}`} style={{
                   display: 'inline-flex', alignItems: 'center', gap: 10,
                   padding: '0.75rem 1.75rem', borderRadius: 999,
                   background: 'linear-gradient(135deg, #D4AF37 0%, #C9A86A 100%)',
@@ -469,7 +470,7 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,175,55,0.6)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(212,175,55,0.45)'; }}
                 >
-                  Explore Destination <ArrowRight size={16} />
+                  Explore Package <ArrowRight size={16} />
                 </Link>
 
                 <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
@@ -523,7 +524,7 @@ const DestinationEditorial: React.FC<DestinationEditorialProps> = ({ destination
 
           <div style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 0', scrollbarWidth: 'thin', scrollbarColor: 'rgba(212,175,55,0.2) transparent' }}>
             {items.map((item, i) => (
-              <DestListItem key={item.slug} item={item} index={i} isActive={i === activeIndex} onClick={() => goTo(i)} />
+              <DestListItem key={item.slug} item={item} index={i} isActive={i === activeIndex} onClick={() => navigate(`/packages/${item.slug}`)} />
             ))}
           </div>
 
