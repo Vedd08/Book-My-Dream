@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Plus, Pencil, Trash2, X, Save, MapPin, RefreshCw } from 'lucide-react'
 import { useApi } from '../AuthContext'
 import { getImageUrl } from '../../config'
+import { COUNTRIES } from '../../data'
 
 type Destination = {
   slug: string
@@ -176,7 +177,10 @@ export default function AdminDestinations() {
                 </label>
                 <label style={{ gridColumn: 'span 1' }}>
                   <span style={labelStyle}>Country</span>
-                  <input required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} />
+                  <input list="dest-country-options" required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} placeholder="Search or select..." />
+                  <datalist id="dest-country-options">
+                    {COUNTRIES.map(c => <option key={c} value={c} />)}
+                  </datalist>
                 </label>
                 <label>
                   <span style={labelStyle}>Region</span>

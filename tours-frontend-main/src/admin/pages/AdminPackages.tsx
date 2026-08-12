@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Plus, Pencil, Trash2, X, Save, Package as PkgIcon } from 'lucide-react'
 import { getImageUrl } from '../../config'
 import { useApi } from '../AuthContext'
-import { inr } from '../../data'
+import { inr, COUNTRIES } from '../../data'
 
 type Pkg = {
   slug: string; name: string; type: string; region: string
@@ -222,7 +222,10 @@ export default function AdminPackages() {
                   </label>
                   <label style={{ gridColumn: 'span 1' }}>
                     <span style={labelStyle}>Country</span>
-                    <input required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} />
+                    <input list="pkg-country-options" required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} placeholder="Search or select..." />
+                    <datalist id="pkg-country-options">
+                      {COUNTRIES.map(c => <option key={c} value={c} />)}
+                    </datalist>
                   </label>
                   <label style={{ gridColumn: 'span 2' }}>
                     <span style={labelStyle}>Duration</span>
