@@ -222,10 +222,10 @@ export default function AdminPackages() {
                   </label>
                   <label style={{ gridColumn: 'span 1' }}>
                     <span style={labelStyle}>Country</span>
-                    <input list="pkg-country-options" required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} placeholder="Search or select..." />
-                    <datalist id="pkg-country-options">
-                      {COUNTRIES.map(c => <option key={c} value={c} />)}
-                    </datalist>
+                    <select required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle}>
+                      <option value="">Select Country...</option>
+                      {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
                   </label>
                   <label style={{ gridColumn: 'span 2' }}>
                     <span style={labelStyle}>Duration</span>

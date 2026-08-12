@@ -177,10 +177,10 @@ export default function AdminDestinations() {
                 </label>
                 <label style={{ gridColumn: 'span 1' }}>
                   <span style={labelStyle}>Country</span>
-                  <input list="dest-country-options" required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle} placeholder="Search or select..." />
-                  <datalist id="dest-country-options">
-                    {COUNTRIES.map(c => <option key={c} value={c} />)}
-                  </datalist>
+                  <select required value={form.country} onChange={e => update('country', e.target.value)} style={inputStyle}>
+                    <option value="">Select Country...</option>
+                    {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
                 </label>
                 <label>
                   <span style={labelStyle}>Region</span>
