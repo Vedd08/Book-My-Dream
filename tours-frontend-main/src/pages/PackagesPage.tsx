@@ -5,6 +5,7 @@ import { Search, Mail, Phone, ArrowLeft, ArrowRight, Plane, Map, Coffee, Mountai
 import type { Package } from '../data'
 import { inr, formatCurrency } from '../data'
 import PackageCard from '../components/PackageCard'
+import SEO from '../components/SEO'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import switzerlandImg from '../assets/switzerland.jpg'
@@ -150,6 +151,7 @@ export default function PackagesPage() {
 
   return (
     <div className="page-bg" style={{ minHeight: '100vh', paddingBottom: '0' }}>
+      <SEO title="Holiday Packages | Book My Dream Travels" description="Browse our curated collection of luxury, adventure, honeymoon, and family holiday packages worldwide." keywords="holiday packages, tour packages, honeymoon packages, international tours" />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap');
         
@@ -213,7 +215,7 @@ export default function PackagesPage() {
       `}</style>
 
       <section className="hero-section">
-        <img src={switzerlandImg} className="hero-img" alt="Landscape" />
+        <img src={switzerlandImg} className="hero-img" alt="Landscape" loading="eager" decoding="async" />
         <div className="hero-overlay" />
         
         <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'white', paddingTop: '4rem' }}>
@@ -267,7 +269,7 @@ export default function PackagesPage() {
 
           <div className="featured-grid">
             <div style={{ position: 'relative', marginBottom: '6rem' }}>
-              <img src={getImageUrl(topFeatured.image)} alt={topFeatured.name} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: '8px' }} />
+              <img src={getImageUrl(topFeatured.image)} alt={topFeatured.name} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: '8px' }} loading="lazy" decoding="async" />
               <div className="top-featured-card" style={{ position: 'absolute', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 20px 40px rgba(24, 106, 118, 0.1)' }}>
                 <div style={{ color: '#D4AF37', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
                   {topFeatured.region === 'International' && topFeatured.foreignPrice ? (
@@ -513,7 +515,7 @@ export default function PackagesPage() {
           <path d="M0,60 C320,120 420,0 720,60 C1020,120 1120,0 1440,60 L1440,120 L0,120 Z" fill="#F4EEDF" />
         </svg>
 
-        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop" alt="Mountains" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} />
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop" alt="Mountains" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} loading="lazy" decoding="async" />
         
         <div className="wavy-container" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
           <div style={{ color: 'white' }}>

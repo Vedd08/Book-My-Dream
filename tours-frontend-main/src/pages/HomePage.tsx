@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import { blogPosts, galleryImages, testimonials, services, inr, packages as staticPackages } from '../data'
 import type { Package, Destination } from '../data'
 import SectionHeading from '../components/SectionHeading'
+import SEO from '../components/SEO'
 
 import MagneticButton from '../components/MagneticButton'
 import LottieAirplane from '../components/LottieAirplane'
@@ -446,6 +447,7 @@ export default function HomePage() {
 
   return (
     <main style={{ position: 'relative' }}>
+      <SEO title="Book My Dream Travels | Luxury Tours & Holiday Packages" description="Explore handcrafted domestic and international tour packages, customized travel plans, visa assistance, and luxury holidays with Book My Dream Travels." />
       {/* Background Sprinkles */}
       <FloatingBalloons />
       {/*
@@ -1129,7 +1131,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           {heroImages.map((img, idx) => (
             <div key={idx} className={`hero-slide${idx === currentSlide ? ' active' : ''}`}>
-              <img src={img} alt={slideDestinations[idx]?.name || 'Destination'} className="hero-slide-img" loading={idx === 0 ? 'eager' : 'lazy'} />
+              <img src={img} alt={slideDestinations[idx]?.name || 'Destination'} className="hero-slide-img" loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
             </div>
           ))}
         </div>
@@ -1207,14 +1209,14 @@ export default function HomePage() {
           <div className="hero-quick-links hero-text-item" style={{ display: 'flex', gap: '2.5rem', justifyContent: 'center', marginTop: '2.5rem' }}>
             <Link to="/packages" className="hero-quick-link" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }}>
               <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 25px rgba(0,0,0,0.2)', transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', overflow: 'hidden' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-                <img src="/images/holiday-packages-3d.png" alt="Holiday Packages" style={{ width: '120%', height: '120%', objectFit: 'cover' }} />
+                <img src="/images/holiday-packages-3d.png" alt="Holiday Packages" style={{ width: '120%', height: '120%', objectFit: 'cover' }} loading="lazy" decoding="async" />
               </div>
               <span style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.6)', lineHeight: 1.1, textAlign: 'center' }}>Holiday<br/>Packages</span>
             </Link>
 
             <Link to="/destinations" className="hero-quick-link" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }}>
               <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 25px rgba(0,0,0,0.2)', transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)', overflow: 'hidden' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-                <img src="/images/destinations-signpost.png" alt="Destinations" style={{ width: '120%', height: '120%', objectFit: 'cover' }} />
+                <img src="/images/destinations-signpost.png" alt="Destinations" style={{ width: '120%', height: '120%', objectFit: 'cover' }} loading="lazy" decoding="async" />
               </div>
               <span style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.6)', lineHeight: 1.1, textAlign: 'center' }}>Destinations</span>
             </Link>
@@ -1294,7 +1296,7 @@ export default function HomePage() {
 
             {/* ── Large featured card (left, spans 2 rows) ── */}
             <Link to="/packages?q=Domestic" className="offer-card-new offers-featured" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }}>
-              <img src={kerelaImg} alt="Domestic Deals" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={kerelaImg} alt="Domestic Deals" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.08) 100%)' }} />
               <div style={{ position: 'absolute', inset: 0, padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -1314,7 +1316,7 @@ export default function HomePage() {
 
             {/* ── Right top card ── */}
             <Link to="/packages?q=International" className="offer-card-new offers-sm" style={{ boxShadow: '0 10px 36px rgba(0,0,0,0.15)' }}>
-              <img src={switzerlandImg} alt="International Tours" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={switzerlandImg} alt="International Tours" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.18) 60%, transparent 100%)' }} />
               <div style={{ position: 'absolute', inset: 0, padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -1331,7 +1333,7 @@ export default function HomePage() {
 
             {/* ── Right bottom card ── */}
             <Link to="/packages?q=Adventure" className="offer-card-new offers-sm" style={{ boxShadow: '0 10px 36px rgba(0,0,0,0.15)' }}>
-              <img src={dubaiImg} alt="Adventure Escapes" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={dubaiImg} alt="Adventure Escapes" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.18) 60%, transparent 100%)' }} />
               <div style={{ position: 'absolute', inset: 0, padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -1541,7 +1543,7 @@ export default function HomePage() {
                   <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                     <Quote size={20} style={{ color: '#e2e8f0', flexShrink: 0, marginTop: 2 }} />
                     <p style={{ fontSize: '0.84rem', color: '#555', lineHeight: 1.65, margin: 0, flex: 1 }}>{r.review.replace(/^"|"$/g, '')}</p>
-                    {r.image && <img src={r.image} alt={r.tour} style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover', flexShrink: 0, border: '2px solid #e2e8f0' }} />}
+                    {r.image && <img src={r.image} alt={r.tour} style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover', flexShrink: 0, border: '2px solid #e2e8f0' }} loading="lazy" decoding="async" />}
                   </div>
                   <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
@@ -1688,7 +1690,7 @@ export default function HomePage() {
               const spans = [3, 5, 4, 5, 4, 3];
               return (
                 <div key={i} className="gallery-thumb" style={{ position: 'relative', height: '280px', gridColumn: `span ${spans[i]}` }}>
-                  <img src={getImageUrl(img.src)} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={getImageUrl(img.src)} alt={img.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%)', pointerEvents: 'none' }}></div>
                   <span style={{ position: 'absolute', bottom: '1.25rem', left: '1.25rem', color: '#fff', fontSize: '.95rem', fontWeight: 400, letterSpacing: '.02em' }}>{img.title}</span>
                 </div>

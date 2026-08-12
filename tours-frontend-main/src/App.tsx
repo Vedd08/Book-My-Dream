@@ -35,11 +35,12 @@ function SmoothScroll() {
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0, // Reduced from 1.2 for snappier scrolling
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
+      wheelMultiplier: 1.1, // slightly faster wheel tracking
     })
 
     lenis.on('scroll', ScrollTrigger.update)
@@ -48,7 +49,6 @@ function SmoothScroll() {
       lenis.raf(time * 1000)
     })
 
-    gsap.ticker.lagSmoothing(0)
 
     // Exposed so modals/overlays can pause it — Lenis drives scroll via its
     // own RAF loop, so `overflow:hidden` on body alone doesn't stop it.
