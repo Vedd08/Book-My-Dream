@@ -1240,7 +1240,7 @@ export default function HomePage() {
 
         {/* ── Prev / Next arrows ── */}
         {([{ fn: prevSlide, side: 'left', Icon: ChevronLeft }, { fn: nextSlide, side: 'right', Icon: ChevronRight }] as const).map(({ fn, side, Icon }) => (
-          <button key={side} onClick={fn} className={`hero-nav-btn hero-nav-${side}`}>
+          <button key={side} onClick={fn} className={`hero-nav-btn hero-nav-${side}`} aria-label={`${side} slide`}>
             <Icon size={20} />
           </button>
         ))}

@@ -210,6 +210,7 @@ export default function SiteHeader() {
 
                   {l.children && (
                     <button
+                      aria-label="Toggle submenu"
                       onClick={() => setOpenSubmenu(openSubmenu === l.href ? null : l.href)}
                       style={{ background: 'none', border: 'none', padding: '0.75rem', cursor: 'pointer' }}
                     >
