@@ -34,6 +34,38 @@ export default function AdminDestinations() {
 
   const [uploadingImage, setUploadingImage] = useState(false)
   const [imageError, setImageError] = useState('')
+  const [statesList, setStatesList] = useState<string[]>([])
+  const [loadingStates, setLoadingStates] = useState(false)
+
+  useEffect(() => {
+    let active = true
+    if (form.country) {
+      let cleanCountry = form.country.replace(/\s*\(.*\)/, '').trim();
+      if (cleanCountry === 'United States of America') cleanCountry = 'United States';
+      
+      setLoadingStates(true)
+      fetch('https://countriesnow.space/api/v0.1/countries/states', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ country: cleanCountry })
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (active) {
+          if (!d.error && d.data && d.data.states) {
+            setStatesList(d.data.states.map((s: any) => s.name))
+          } else {
+            setStatesList([])
+          }
+        }
+      })
+      .catch(() => { if (active) setStatesList([]) })
+      .finally(() => { if (active) setLoadingStates(false) })
+    } else {
+      setStatesList([])
+    }
+    return () => { active = false }
+  }, [form.country])
 
   const load = useCallback(() => {
     setLoading(true)
@@ -158,22 +190,20 @@ export default function AdminDestinations() {
                   <input required disabled={!!editing} value={form.slug} onChange={e => update('slug', e.target.value)} style={{ ...inputStyle, background: editing ? '#f8fafc' : '#fff' }} />
                 </label>
                 <label style={{ gridColumn: 'span 1' }}>
-                  <span style={labelStyle}>State / Province</span>
-                  {form.country.toLowerCase() === 'india' ? (
-                    <select required value={form.state} onChange={e => update('state', e.target.value)} style={inputStyle}>
-                      <option value="">Select State/UT...</option>
-                      {[
+                  <span style={labelStyle}>State / Province {loadingStates && <span style={{fontSize: 10, color: '#94a3b8', textTransform: 'none'}}>(Loading...)</span>}</span>
+                  <input list="state-options" required value={form.state} onChange={e => update('state', e.target.value)} style={inputStyle} placeholder="Type to search or enter state..." />
+                  <datalist id="state-options">
+                    {statesList.length > 0 ? statesList.map(s => <option key={s} value={s} />) : (
+                      form.country.toLowerCase() === 'india' ? [
                         "Andaman & Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
                         "Chandigarh", "Chhattisgarh", "Dadra & Nagar Haveli and Daman & Diu", "Delhi", "Goa",
                         "Gujarat", "Haryana", "Himachal Pradesh", "Jammu & Kashmir", "Jharkhand", "Karnataka",
                         "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
                         "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
                         "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
-                      ].map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                  ) : (
-                    <input required value={form.state} onChange={e => update('state', e.target.value)} style={inputStyle} />
-                  )}
+                      ].map(s => <option key={s} value={s} />) : []
+                    )}
+                  </datalist>
                 </label>
                 <label style={{ gridColumn: 'span 1' }}>
                   <span style={labelStyle}>Country</span>
